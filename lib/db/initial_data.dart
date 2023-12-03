@@ -1,6 +1,4 @@
-import 'package:doshop_app/utils/constants.dart';
-
-import '../models/exports.dart';
+import '../exports.dart';
 
 List<Category> categories = [
   Category(

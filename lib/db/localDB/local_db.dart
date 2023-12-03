@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-import 'package:doshop_app/models/models/category.dart';
+import 'package:doshop_app/models/category.dart';
 import 'package:doshop_app/db/localDB/sql_tables.dart';
 
 class LocalDB {
@@ -38,6 +38,7 @@ class LocalDB {
   Future _createDB(Database db, int version) async {
     await db.execute('PRAGMA foreign_keys=on;');
     await db.execute(SqlTables.createCategories);
+
     // await db.execute(SqlTables.createCars);
     // await db.execute(SqlTables.createCalendarEvents);
     // await db.execute(SqlTables.createClientsCars);
@@ -45,5 +46,18 @@ class LocalDB {
     // await db.execute(SqlTables.createIndexVin);
     // await db.execute(SqlTables.createIndexBrand);
     // await db.execute(SqlTables.createIndexEventId);
+  }
+
+  //utils functions
+  Future<void> deleteDB() async {
+    logger.i('WOW $_database');
+    final db = await instance.database;
+    logger.i('DB: $db');
+    return deleteDatabase(_dbPath!);
+  }
+
+  Future getAllTablesNames() async {
+    final db = await instance.database;
+    logger.d('Tables!!! ${await db?.query("sqlite_master") ?? "NOOOO"}');
   }
 }
