@@ -1,1 +1,1 @@
-export 'models/category.dart';
+export 'models/models/category.dart';

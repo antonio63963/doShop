@@ -1,7 +1,3 @@
-import 'package:logger/logger.dart';
-
-var logger = Logger();
-
 const String tableProducts = 'products';
 
 class ProductFields {

@@ -1,7 +1,7 @@
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-import 'package:doshop_app/models/category.dart';
+import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/db/localDB/sql_tables.dart';
 
 class LocalDB {
