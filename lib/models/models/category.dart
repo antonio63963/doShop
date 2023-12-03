@@ -8,7 +8,7 @@ class CategoryFields {
   static const String id = 'id';
   static const String title = 'title';
   static const String subtitle = 'subtitle';
-  static const String isShown = '1';
+  static const String isShown = 'isShown';
   static const String img = 'img';
   static const String parentId = 'parentId';
   static const String subcategories = 'subcategories';

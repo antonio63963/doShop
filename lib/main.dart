@@ -1,7 +1,7 @@
 import 'package:doshop_app/db/localDB/local_db.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async{
   runApp(const MyApp());
 }
 
@@ -46,7 +46,7 @@ class _MyHomePageState extends State<MyHomePage> {
           
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            // ElevatedButton(onPressed: () => LocalDB.instance., child: const Text('init db')),
+            ElevatedButton(onPressed: () => LocalDB.instance.database, child: const Text('init db')),
             ElevatedButton(onPressed: () => LocalDB.instance.getAllTablesNames(), child: const Text('All tables')),
             ElevatedButton(onPressed: () => LocalDB.instance.deleteDB(), child: const Text('Delete DB')),
 

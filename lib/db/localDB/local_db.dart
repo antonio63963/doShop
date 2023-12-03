@@ -35,9 +35,10 @@ class LocalDB {
     );
   }
 
-  Future _createDB(Database db, int version) async {
+  Future<void> _createDB(Database db, int version) async {
     await db.execute('PRAGMA foreign_keys=on;');
     await db.execute(SqlTables.createCategories);
+    await db.execute(SqlTables.createProducts);
 
     // await db.execute(SqlTables.createCars);
     // await db.execute(SqlTables.createCalendarEvents);
@@ -47,6 +48,8 @@ class LocalDB {
     // await db.execute(SqlTables.createIndexBrand);
     // await db.execute(SqlTables.createIndexEventId);
   }
+
+  savePhoto() {}
 
   //utils functions
   Future<void> deleteDB() async {
