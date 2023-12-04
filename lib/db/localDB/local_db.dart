@@ -1,10 +1,13 @@
+import 'package:doshop_app/db/abstractDB.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/db/localDB/sql_tables.dart';
 
-class LocalDB {
+import 'sql_queries.dart';
+
+class LocalDB implements AbstractDB{
   static final LocalDB instance = LocalDB._init();
 
   static Database? _database;
@@ -49,6 +52,15 @@ class LocalDB {
     // await db.execute(SqlTables.createIndexEventId);
   }
 
+  //Categories
+  @override
+  Future<List<Category>?> getCategories() async{
+    final db = await instance.database;
+    final response = await db?.rawQuery(SqlQueries.allCategories);
+    logger.i('Categories: $response');
+    return response?.map((res) => Category.fromJSON(res)).toList();
+  }
+
   savePhoto() {}
 
   //utils functions
@@ -63,4 +75,5 @@ class LocalDB {
     final db = await instance.database;
     logger.d('Tables!!! ${await db?.query("sqlite_master") ?? "NOOOO"}');
   }
+  
 }

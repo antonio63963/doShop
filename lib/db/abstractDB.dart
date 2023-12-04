@@ -1,7 +1,5 @@
 import 'package:doshop_app/exports.dart';
 
-abstract class abstractDB {
-  Future<List<Category>?> getCategories() {
-    
-  }
+abstract class AbstractDB {
+  Future<List<Category>?> getCategories();
 }
