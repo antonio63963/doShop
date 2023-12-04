@@ -15,6 +15,7 @@ class MyColors {
   static const Color teal = Color.fromRGBO(91, 137, 180, 1);
   static const Color green1 = Color.fromRGBO(127, 183, 173, 1);
   static const Color green2 = Color.fromRGBO(128, 183, 127, 1);
+  static const Color danger = Color.fromRGBO(252, 43, 43, 1);
 
 
   static const List<Color> avatarColors = [
