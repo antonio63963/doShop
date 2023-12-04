@@ -2,6 +2,8 @@ import 'package:doshop_app/db/localDB/local_db.dart';
 import 'package:flutter/material.dart';
 
 void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
+  LocalDB.instance.database;
   runApp(const MyApp());
 }
 
