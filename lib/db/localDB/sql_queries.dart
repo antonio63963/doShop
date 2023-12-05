@@ -7,7 +7,7 @@ class SqlQueries {
     final values = categories.map((cat) => '''
     (${cat.id}, "${cat.title}","${cat.img}",
     ${cat.isShown != null && cat.isShown! ? 1 : 0},
-    ${cat.subcategories != null && cat.subcategories! ? 1 : 0},
+    ${cat.subcategories != null && cat.subcategories! ? 1 : 0})
   ''');
     final valuesString = values.join(',');
     return '''
@@ -19,11 +19,11 @@ class SqlQueries {
     final values = subcategories.map((sub) => '''
     (${sub.id}, "${sub.title}", "${sub.subtitle}",
     ${sub.isShown != null && sub.isShown! ? 1 : 0}, "${sub.img}",
-    ${sub.parentId}
+    ${sub.parentId})
   ''');
     final valuesString = values.join(',');
     return '''
-        INSERT INTO $tableSubcategories (${CategoryFields.values})
+        INSERT INTO $tableSubcategories (${SubcategoryFields.values})
         VALUES $valuesString
       ''';
   }

@@ -6,7 +6,7 @@ const String tableCategories = 'categories';
 
 class CategoryFields {
   static String values = '''
-    id, title, subtitle, img, isShown, subcategories, parentId
+    id, title, img, isShown, subcategories
   ''';
   static const String id = 'id';
   static const String title = 'title';
@@ -54,7 +54,7 @@ class Category {
         colorBg: colorBg ?? this.colorBg,
       );
 
-  static Category fromJSONtoCategory(Map<String, Object?> json) {
+  static Category fromJSON(Map<String, Object?> json) {
     return Category(
       id: json[CategoryFields.id] as int,
       title: json[CategoryFields.title] as String,

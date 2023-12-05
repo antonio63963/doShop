@@ -65,7 +65,7 @@ class LocalDB implements AbstractDB{
     final db = await instance.database;
     final response = await db?.rawQuery(SqlQueries.allCategories);
     logger.i('Categories: $response');
-    final a = response?.map((res) => Category.fromJSONtoCategory(res)).toList();
+    final a = response?.map((res) => Category.fromJSON(res)).toList();
     logger.w('AAAAAA: $a');
     return a;
   }

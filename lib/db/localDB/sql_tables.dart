@@ -11,7 +11,7 @@ class SqlTables {
       ${CategoryFields.title} $textType,
       ${CategoryFields.img} TEXT,
       ${CategoryFields.isShown} INTEGER DEFAULT 1 NOT NULL,
-      ${CategoryFields.subcategories} INTEGER DEFAULT 0 NOT NULL,
+      ${CategoryFields.subcategories} INTEGER DEFAULT 0 NOT NULL
     );
   ''';
 
@@ -38,7 +38,7 @@ class SqlTables {
       ${ProductFields.isShown} INTEGER DEFAULT 1 NOT NULL
     );
   ''';
-  
+
   static String createPhotos = '''
     CREATE TABLE IF NOT EXISTS $tablePhotos(
       ${PhotoFields.id} $idType,

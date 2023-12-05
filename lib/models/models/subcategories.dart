@@ -2,7 +2,7 @@ const String tableSubcategories = 'subcategories';
 
 class SubcategoryFields {
   static String values = '''
-    id, title, subtitle, img, isShown, subcategories, parentId
+    id, title, subtitle, img, isShown, parentId
   ''';
   static const String id = 'id';
   static const String title = 'title';
