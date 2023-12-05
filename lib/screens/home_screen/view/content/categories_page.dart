@@ -1,6 +1,7 @@
 import 'package:doshop_app/db/localDB/sql_queries.dart';
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/categories_provider.dart';
+import 'package:doshop_app/screens/home_screen/view/content/widgets/category_item.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +30,6 @@ class _CategoriesPageState extends State<CategoriesPage> {
   @override
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoriesProvider>(context);
-    final theme = Theme.of(context);
 
     logger.d('CatPage: ${categoriesProvider.categories}');
     return RefreshIndicator(
@@ -47,36 +47,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
             itemCount: categoriesProvider.categories.length,
             itemBuilder: (ctx, index) {
               final cat = categoriesProvider.categories[index];
-              return Material(
-                elevation: 5,
-                shadowColor: MyColors.primary,
-                type: MaterialType.transparency,
-                child: Ink(
-                  decoration: BoxDecoration(
-                    color: Color(cat.colorBg ?? MyColors.defaultBG),
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-                  child: InkWell(
-                      borderRadius: const BorderRadius.all(Radius.circular(5)),
-                      onTap: () {},
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          children: [
-                            Image.asset(
-                              fit: BoxFit.contain,
-                              cat.img ?? 'assets/img/categories/hobby.png',
-                              height: 132,
-                              width: 180,
-                            ),
-                            Text(cat.title, style: theme.textTheme.headlineMedium)
-                          ],
-                        ),
-                      )),
-                ),
-              );
+              return CategoryItem(category: cat);
             }),
       ),
     );
