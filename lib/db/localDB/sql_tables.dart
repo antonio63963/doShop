@@ -11,7 +11,8 @@ class SqlTables {
       ${CategoryFields.title} $textType,
       ${CategoryFields.img} TEXT,
       ${CategoryFields.isShown} INTEGER DEFAULT 1 NOT NULL,
-      ${CategoryFields.subcategories} INTEGER DEFAULT 0 NOT NULL
+      ${CategoryFields.subcategories} INTEGER DEFAULT 0 NOT NULL,
+      ${CategoryFields.colorBg} INTEGER
     );
   ''';
 

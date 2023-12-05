@@ -6,7 +6,7 @@ const String tableCategories = 'categories';
 
 class CategoryFields {
   static String values = '''
-    id, title, img, isShown, subcategories
+    id, title, img, isShown, subcategories, colorBg
   ''';
   static const String id = 'id';
   static const String title = 'title';
@@ -24,7 +24,7 @@ class Category {
   bool? isShown;
 
   bool? subcategories;
-  String? colorBg;
+  int? colorBg;
 
   Category({
     this.id,
@@ -43,7 +43,7 @@ class Category {
     String? img,
     bool? isShown,
     bool? subcategories,
-    String? colorBg,
+    int? colorBg,
   }) =>
       Category(
         id: id ?? this.id,
@@ -61,7 +61,7 @@ class Category {
       img: json[CategoryFields.img] as String,
       isShown: intToBool(json[CategoryFields.isShown] as int),
       subcategories: intToBool(json[CategoryFields.subcategories] as int),
-      // colorBg: json[CategoryFields.colorBg] as String,
+      colorBg: json[CategoryFields.colorBg] as int,
     );
   }
 

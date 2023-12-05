@@ -5,9 +5,12 @@ import '../../models/exports.dart';
 class SqlQueries {
   static String initCategories() {
     final values = categories.map((cat) => '''
-    (${cat.id}, "${cat.title}","${cat.img}",
-    ${cat.isShown != null && cat.isShown! ? 1 : 0},
-    ${cat.subcategories != null && cat.subcategories! ? 1 : 0})
+    (
+      ${cat.id}, "${cat.title}","${cat.img}",
+      ${cat.isShown != null && cat.isShown! ? 1 : 0},
+      ${cat.subcategories != null && cat.subcategories! ? 1 : 0},
+      ${cat.colorBg}
+    )
   ''');
     final valuesString = values.join(',');
     return '''
@@ -17,9 +20,11 @@ class SqlQueries {
   }
   static String initSubcategories() {
     final values = subcategories.map((sub) => '''
-    (${sub.id}, "${sub.title}", "${sub.subtitle}",
-    ${sub.isShown != null && sub.isShown! ? 1 : 0}, "${sub.img}",
-    ${sub.parentId})
+    (
+      ${sub.id}, "${sub.title}", "${sub.subtitle}",
+      ${sub.isShown != null && sub.isShown! ? 1 : 0}, "${sub.img}",
+      ${sub.parentId}
+    )
   ''');
     final valuesString = values.join(',');
     return '''
@@ -29,7 +34,8 @@ class SqlQueries {
   }
 
   static String allCategories = '''
-    SELECT ${CategoryFields.id}, ${CategoryFields.title}, ${CategoryFields.isShown}, ${CategoryFields.img}, ${CategoryFields.subcategories}
+    SELECT ${CategoryFields.id}, ${CategoryFields.title}, ${CategoryFields.isShown}, ${CategoryFields.img}, ${CategoryFields.subcategories}, 
+    ${CategoryFields.colorBg}
     FROM $tableCategories
   ''';
 }

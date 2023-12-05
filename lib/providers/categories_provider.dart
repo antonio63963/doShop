@@ -1,6 +1,6 @@
+import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/error_handler.dart';
 
-import 'package:doshop_app/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 

@@ -1,4 +1,5 @@
 
+import 'package:doshop_app/themes/appTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,7 @@ class DoshopApp extends StatelessWidget {
     child: MaterialApp(
       title: 'DoShop',
       routes: routes,
+      theme: appTheme,
     ),
     );
   }

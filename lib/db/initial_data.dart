@@ -1,6 +1,5 @@
+import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/models/models/subcategories.dart';
-
-import '../exports.dart';
 
 List<Category> categories = [
   Category(
@@ -9,6 +8,7 @@ List<Category> categories = [
     isShown: true,
     subcategories: true,
     img: 'assets/img/categories/grocery.png',
+    colorBg: 0xFF7F83B7,
   ),
   Category(
     id: 2,
@@ -16,6 +16,7 @@ List<Category> categories = [
     isShown: true,
     subcategories: false,
     img: 'assets/img/categories/alcohol.png',
+    colorBg: 0xFFB06565,
   ),
   Category(
     id: 3,
@@ -23,6 +24,7 @@ List<Category> categories = [
     isShown: true,
     subcategories: false,
     img: 'assets/img/categories/hoz.png',
+    colorBg: 0xFF5B89B4,
   ),
   Category(
     id: 4,
@@ -30,6 +32,7 @@ List<Category> categories = [
     isShown: true,
     subcategories: false,
     img: 'assets/img/categories/chem.png',
+    colorBg: 0xFF6D5BB4,
   ),
   Category(
     id: 5,
@@ -37,6 +40,7 @@ List<Category> categories = [
     isShown: true,
     subcategories: false,
     img: 'assets/img/categories/pets.png',
+    colorBg: 0xFF7FB7AD,
   ),
   Category(
     id: 6,
@@ -44,6 +48,7 @@ List<Category> categories = [
     isShown: true,
     subcategories: false,
     img: 'assets/img/categories/clothes.png',
+    colorBg: 0xFFB7977F,
   ),
   Category(
     id: 7,
@@ -51,6 +56,7 @@ List<Category> categories = [
     isShown: true,
     subcategories: false,
     img: 'assets/img/categories/garden.png',
+    colorBg: 0xFF80B77F,
   ),
   Category(
     id: 8,
@@ -58,6 +64,7 @@ List<Category> categories = [
     isShown: true,
     subcategories: false,
     img: 'assets/img/categories/pills.png',
+    colorBg: 0xFF7F95B7,
   ),
   Category(
     id: 9,
@@ -65,6 +72,7 @@ List<Category> categories = [
     isShown: true,
     subcategories: false,
     img: 'assets/img/categories/baby.png',
+    colorBg: 0xFFB77F7F,
   ),
   Category(
     id: 10,
@@ -72,6 +80,7 @@ List<Category> categories = [
     isShown: true,
     subcategories: false,
     img: 'assets/img/categories/cosmetics.png',
+    colorBg: 0xFFB77FA1,
   ),
 ];
 

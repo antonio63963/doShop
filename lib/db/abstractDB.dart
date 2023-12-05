@@ -1,4 +1,4 @@
-import 'package:doshop_app/exports.dart';
+import 'package:doshop_app/models/exports.dart';
 
 abstract class AbstractDB {
   Future<List<Category>?> getCategories();

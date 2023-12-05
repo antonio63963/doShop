@@ -1,3 +1,5 @@
+import 'package:doshop_app/utils/constants.dart';
+
 const String tableSubcategories = 'subcategories';
 
 class SubcategoryFields {
@@ -20,7 +22,7 @@ class Subcategory {
   String? img;
   bool? isShown;
   int parentId;
-  String? colorBg;
+  int? colorBg = MyColors.defaultBG;
 
   Subcategory({
     this.id,
@@ -29,7 +31,7 @@ class Subcategory {
     this.img,
     this.isShown = true,
     required this.parentId,
-    this.colorBg,
+    this.colorBg = MyColors.defaultBG,
   });
 
   Subcategory copy({
@@ -39,7 +41,7 @@ class Subcategory {
     String? img,
     bool? isShown,
     int? parentId,
-    String? colorBg,
+    int? colorBg,
   }) =>
       Subcategory(
         id: id ?? this.id,
@@ -61,7 +63,7 @@ class Subcategory {
       img: json[SubcategoryFields.img] as String,
       isShown: intToBool(json[SubcategoryFields.isShown] as int),
       parentId: json[SubcategoryFields.parentId] as int,
-      colorBg: json[SubcategoryFields.colorBg] as String,
+      colorBg: json[SubcategoryFields.colorBg] as int,
     );
   }
 
@@ -71,7 +73,6 @@ class Subcategory {
         SubcategoryFields.isShown: isShown != null && isShown! ? 1 : 0,
         SubcategoryFields.img: img,
         SubcategoryFields.parentId: parentId,
-        SubcategoryFields.colorBg: colorBg
       };
 
   static bool intToBool(int value) => value == 1;
