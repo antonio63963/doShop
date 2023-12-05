@@ -13,18 +13,30 @@ class CategoriesProvider extends ErrorHandler {
     return _categories;
   }
 
-  void getCategoriesList(
+  Future<void> getCategoriesList(
     BuildContext context,
-  ) {
-    GetIt.I<AbstractDB>()
-        .getCategories()
-        .then((categoriesList) => _categories = categoriesList ?? [])
-        .catchError((err) {
+  ) async {
+    try {
+      final categoriesList = await GetIt.I<AbstractDB>().getCategories();
+      logger.w('wow it comes: $categoriesList');
+      if (categoriesList == null) {
+        _categories = [];
+      } else {
+        _categories = categoriesList;
+      }
+      notifyListeners();
+    } catch (err) {
       logger.e("GetCategoriesError: $err");
+      // ignore: use_build_context_synchronously
       setErrorAlert(
           context: context,
           message:
               'Что-то пошло не так. Не удалось получить Список Категорий!');
-    });
+    }
   }
+  // GetIt.I<AbstractDB>().getCategories().then((categoriesList) => _categories = categoriesList ?? [] ).catchError((err) {
+  //       logger.e("GetCategoriesError: $err");
+  //     setErrorAlert(context: context, message: 'Что-то пошло не так. Не удалось получить Список Категорий!');
+
+  // });
 }

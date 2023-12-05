@@ -41,7 +41,14 @@ class LocalDB implements AbstractDB{
   Future<void> _createDB(Database db, int version) async {
     await db.execute('PRAGMA foreign_keys=on;');
     await db.execute(SqlTables.createCategories);
+    await db.execute(SqlTables.createSubcategories);
     await db.execute(SqlTables.createProducts);
+
+    final response = await db.rawQuery(SqlQueries.initCategories());
+    logger.d('Added Categ: $response');
+    final subs = await db.rawQuery(SqlQueries.initSubcategories());
+    logger.d('Added SUB: $subs');
+
 
     // await db.execute(SqlTables.createCars);
     // await db.execute(SqlTables.createCalendarEvents);
@@ -58,7 +65,9 @@ class LocalDB implements AbstractDB{
     final db = await instance.database;
     final response = await db?.rawQuery(SqlQueries.allCategories);
     logger.i('Categories: $response');
-    return response?.map((res) => Category.fromJSON(res)).toList();
+    final a = response?.map((res) => Category.fromJSONtoCategory(res)).toList();
+    logger.w('AAAAAA: $a');
+    return a;
   }
 
   savePhoto() {}
@@ -67,7 +76,7 @@ class LocalDB implements AbstractDB{
   Future<void> deleteDB() async {
     logger.i('WOW $_database');
     final db = await instance.database;
-    logger.i('DB: $db');
+    logger.i('DB DELETED: $db');
     return deleteDatabase(_dbPath!);
   }
 

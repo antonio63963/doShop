@@ -1,7 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:path/path.dart';
-
 const String tablePhotos = 'photos';
 
 class PhotoFields {
