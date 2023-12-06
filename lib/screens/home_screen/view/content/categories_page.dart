@@ -17,6 +17,7 @@ class CategoriesPage extends StatefulWidget {
 class _CategoriesPageState extends State<CategoriesPage> {
   bool isInit = false;
   bool isLoaded = false;
+  // late List<Category> categoryList;
 
   @override
   void didChangeDependencies() {
@@ -37,18 +38,36 @@ class _CategoriesPageState extends State<CategoriesPage> {
       // child: ElevatedButton(child: Text('test'), onPressed: () => SqlQueries.initCategories(),)
 
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: ListView(
+          children: [
+            SizedBox(height: 16,),
+            Flexible(
+              child: TextFormField(
+                decoration: InputDecoration(
+                  suffix: Text('hi'),
+                  hintText: 'Введите название товара',
+                  hintStyle: const TextStyle(color: MyColors.primary),
+                ),
+              ),
             ),
-            itemCount: categoriesProvider.categories.length,
-            itemBuilder: (ctx, index) {
-              final cat = categoriesProvider.categories[index];
-              return CategoryItem(category: cat);
-            }),
+            SizedBox(height: 16,),
+            GridView.builder(
+              shrinkWrap: true,
+              physics: NeverScrollableScrollPhysics(),
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                maxCrossAxisExtent: 200,
+                crossAxisSpacing: 8,
+                mainAxisSpacing: 8,
+              ),
+              itemCount: categoriesProvider.categories.length,
+              itemBuilder: (ctx, index) {
+                final cat = categoriesProvider.categories[index];
+                return CategoryItem(category: cat);
+              },
+            ),
+          ]
+        ),
       ),
     );
   }
