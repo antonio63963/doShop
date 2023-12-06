@@ -4,7 +4,7 @@ var logger = Logger();
 
 const String tableCategories = 'categories';
 
-class CategoryFields {
+class CategoryProdFields {
   static String values = '''
     id, title, img, isShown, subcategories, colorBg
   ''';
@@ -16,7 +16,7 @@ class CategoryFields {
   static const String colorBg = 'colorBg';
 }
 
-class Category {
+class CategoryProd {
   int? id;
   String title;
 
@@ -26,7 +26,7 @@ class Category {
   bool? subcategories;
   int? colorBg;
 
-  Category({
+  CategoryProd({
     this.id,
     required this.title,
 
@@ -37,7 +37,7 @@ class Category {
     this.colorBg,
   });
 
-  Category copy({
+  CategoryProd copy({
     int? id,
     String? title,
     String? img,
@@ -45,7 +45,7 @@ class Category {
     bool? subcategories,
     int? colorBg,
   }) =>
-      Category(
+      CategoryProd(
         id: id ?? this.id,
         title: title ?? this.title,
         img: img ?? this.img,
@@ -54,24 +54,24 @@ class Category {
         colorBg: colorBg ?? this.colorBg,
       );
 
-  static Category fromJSON(Map<String, Object?> json) {
-    return Category(
-      id: json[CategoryFields.id] as int,
-      title: json[CategoryFields.title] as String,
-      img: json[CategoryFields.img] as String,
-      isShown: intToBool(json[CategoryFields.isShown] as int),
-      subcategories: intToBool(json[CategoryFields.subcategories] as int),
-      colorBg: json[CategoryFields.colorBg] as int,
+  static CategoryProd fromJSON(Map<String, Object?> json) {
+    return CategoryProd(
+      id: json[CategoryProdFields.id] as int,
+      title: json[CategoryProdFields.title] as String,
+      img: json[CategoryProdFields.img] as String,
+      isShown: intToBool(json[CategoryProdFields.isShown] as int),
+      subcategories: intToBool(json[CategoryProdFields.subcategories] as int),
+      colorBg: json[CategoryProdFields.colorBg] as int,
     );
   }
 
   Map<String, Object?> toJSON() => {
-        CategoryFields.title: title,
-        CategoryFields.isShown: isShown != null && isShown! ? 1 : 0,
-        CategoryFields.img: img,
-        CategoryFields.subcategories:
+        CategoryProdFields.title: title,
+        CategoryProdFields.isShown: isShown != null && isShown! ? 1 : 0,
+        CategoryProdFields.img: img,
+        CategoryProdFields.subcategories:
             subcategories != null && subcategories! ? 1 : 0,
-        CategoryFields.colorBg: colorBg
+        CategoryProdFields.colorBg: colorBg
       };
 
   static bool intToBool(int value) => value == 1;

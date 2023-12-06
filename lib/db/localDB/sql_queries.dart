@@ -14,7 +14,7 @@ class SqlQueries {
   ''');
     final valuesString = values.join(',');
     return '''
-        INSERT INTO $tableCategories (${CategoryFields.values})
+        INSERT INTO $tableCategories (${CategoryProdFields.values})
         VALUES $valuesString
       ''';
   }
@@ -34,8 +34,8 @@ class SqlQueries {
   }
 
   static String allCategories = '''
-    SELECT ${CategoryFields.id}, ${CategoryFields.title}, ${CategoryFields.isShown}, ${CategoryFields.img}, ${CategoryFields.subcategories}, 
-    ${CategoryFields.colorBg}
+    SELECT ${CategoryProdFields.id}, ${CategoryProdFields.title}, ${CategoryProdFields.isShown}, ${CategoryProdFields.img}, ${CategoryProdFields.subcategories}, 
+    ${CategoryProdFields.colorBg}
     FROM $tableCategories
   ''';
 }

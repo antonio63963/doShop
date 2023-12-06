@@ -1,8 +1,8 @@
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/models/models/subcategories.dart';
 
-List<Category> categories = [
-  Category(
+List<CategoryProd> categories = [
+  CategoryProd(
     id: 1,
     title: 'Продукты',
     isShown: true,
@@ -10,7 +10,7 @@ List<Category> categories = [
     img: 'assets/img/categories/grocery.png',
     colorBg: 0xFF7F83B7,
   ),
-  Category(
+  CategoryProd(
     id: 2,
     title: 'Алкоголь',
     isShown: true,
@@ -18,7 +18,7 @@ List<Category> categories = [
     img: 'assets/img/categories/alcohol.png',
     colorBg: 0xFFB06565,
   ),
-  Category(
+  CategoryProd(
     id: 3,
     title: 'Хозтовары',
     isShown: true,
@@ -26,7 +26,7 @@ List<Category> categories = [
     img: 'assets/img/categories/hoz.png',
     colorBg: 0xFF5B89B4,
   ),
-  Category(
+  CategoryProd(
     id: 4,
     title: 'Химия',
     isShown: true,
@@ -34,7 +34,7 @@ List<Category> categories = [
     img: 'assets/img/categories/chem.png',
     colorBg: 0xFF6D5BB4,
   ),
-  Category(
+  CategoryProd(
     id: 5,
     title: 'Любимцы',
     isShown: true,
@@ -42,7 +42,7 @@ List<Category> categories = [
     img: 'assets/img/categories/pets.png',
     colorBg: 0xFF7FB7AD,
   ),
-  Category(
+  CategoryProd(
     id: 6,
     title: 'Одежда, обувь',
     isShown: true,
@@ -50,7 +50,7 @@ List<Category> categories = [
     img: 'assets/img/categories/clothes.png',
     colorBg: 0xFFB7977F,
   ),
-  Category(
+  CategoryProd(
     id: 7,
     title: 'Сад',
     isShown: true,
@@ -58,7 +58,7 @@ List<Category> categories = [
     img: 'assets/img/categories/garden.png',
     colorBg: 0xFF80B77F,
   ),
-  Category(
+  CategoryProd(
     id: 8,
     title: 'Аптека',
     isShown: true,
@@ -66,7 +66,7 @@ List<Category> categories = [
     img: 'assets/img/categories/pills.png',
     colorBg: 0xFF7F95B7,
   ),
-  Category(
+  CategoryProd(
     id: 9,
     title: 'Ребенок',
     isShown: true,
@@ -74,7 +74,7 @@ List<Category> categories = [
     img: 'assets/img/categories/baby.png',
     colorBg: 0xFFB77F7F,
   ),
-  Category(
+  CategoryProd(
     id: 10,
     title: 'Косметика',
     isShown: true,

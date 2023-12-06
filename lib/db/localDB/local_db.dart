@@ -61,11 +61,11 @@ class LocalDB implements AbstractDB{
 
   //Categories
   @override
-  Future<List<Category>?> getCategories() async{
+  Future<List<CategoryProd>?> getCategories() async{
     final db = await instance.database;
     final response = await db?.rawQuery(SqlQueries.allCategories);
     logger.i('Categories: $response');
-    final a = response?.map((res) => Category.fromJSON(res)).toList();
+    final a = response?.map((res) => CategoryProd.fromJSON(res)).toList();
     logger.w('AAAAAA: $a');
     return a;
   }

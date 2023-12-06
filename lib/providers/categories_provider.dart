@@ -7,9 +7,9 @@ import 'package:get_it/get_it.dart';
 import '../db/exports.dart';
 
 class CategoriesProvider extends ErrorHandler {
-  List<Category> _categories = [];
+  List<CategoryProd> _categories = [];
 
-  List<Category> get categories {
+  List<CategoryProd> get categories {
     return _categories;
   }
 

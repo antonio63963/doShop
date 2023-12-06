@@ -7,12 +7,12 @@ const textType = 'TEXT NOT NULL';
 class SqlTables {
   static String createCategories = '''
     CREATE TABLE IF NOT EXISTS $tableCategories(
-      ${CategoryFields.id} $idType,
-      ${CategoryFields.title} $textType,
-      ${CategoryFields.img} TEXT,
-      ${CategoryFields.isShown} INTEGER DEFAULT 1 NOT NULL,
-      ${CategoryFields.subcategories} INTEGER DEFAULT 0 NOT NULL,
-      ${CategoryFields.colorBg} INTEGER
+      ${CategoryProdFields.id} $idType,
+      ${CategoryProdFields.title} $textType,
+      ${CategoryProdFields.img} TEXT,
+      ${CategoryProdFields.isShown} INTEGER DEFAULT 1 NOT NULL,
+      ${CategoryProdFields.subcategories} INTEGER DEFAULT 0 NOT NULL,
+      ${CategoryProdFields.colorBg} INTEGER
     );
   ''';
 

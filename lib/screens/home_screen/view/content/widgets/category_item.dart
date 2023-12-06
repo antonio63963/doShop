@@ -3,7 +3,7 @@ import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class CategoryItem extends StatelessWidget {
-  final Category category;
+  final CategoryProd category;
   const CategoryItem({required this.category, super.key});
 
   @override

@@ -68,8 +68,8 @@ class _HomeScreenState extends State<HomeScreen> {
         
         bottomNavigationBar: BottomAppBar(
           color: MyColors.white,
-          shape: const CircularNotchedRectangle(),
-          notchMargin: 10,
+          // shape: const CircularNotchedRectangle(),
+          // notchMargin: 10,
           child: SizedBox(
             height: 60,
             child: Row(
