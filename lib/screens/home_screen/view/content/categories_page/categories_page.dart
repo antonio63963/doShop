@@ -1,10 +1,11 @@
+import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/fast_enter_form.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/categories_provider.dart';
 
-import 'package:doshop_app/screens/home_screen/view/content/widgets/category_item.dart';
+import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/category_item.dart';
 import 'package:doshop_app/widgets/ui/input.dart';
 
 
@@ -31,9 +32,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   @override
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoriesProvider>(context);
-    final TextEditingController enterProductController =
-        TextEditingController();
-
+    
     logger.d('CatPage: ${categoriesProvider.categories}');
     return RefreshIndicator(
       onRefresh: () => categoriesProvider.getCategoriesList(context),
@@ -43,7 +42,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: ListView(children: [
           const SizedBox(height: 16),
-          Input(inputController: enterProductController),
+          FastEnterForm(),
           const SizedBox(height: 16),
           GridView.builder(
             shrinkWrap: true,

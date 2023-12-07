@@ -1,7 +1,7 @@
 
 import 'package:doshop_app/db/exports.dart';
 import 'package:doshop_app/screens/home_screen/view/content/Lists_page.dart';
-import 'package:doshop_app/screens/home_screen/view/content/categories_page.dart';
+import 'package:doshop_app/screens/home_screen/view/content/categories_page/categories_page.dart';
 import 'package:doshop_app/screens/home_screen/view/content/templates_page.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/widgets/exports.dart';

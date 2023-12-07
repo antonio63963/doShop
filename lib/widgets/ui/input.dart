@@ -3,7 +3,12 @@ import 'package:flutter/material.dart';
 
 class Input extends StatefulWidget {
   final TextEditingController inputController;
-  const Input({required this.inputController, super.key});
+  final Function(String)? onChange;
+  const Input({
+    required this.inputController,
+    this.onChange,
+    super.key,
+  });
 
   @override
   State<Input> createState() => _InputState();
@@ -25,7 +30,7 @@ class _InputState extends State<Input> {
                 });
               },
               child: TextField(
-                // focusNode: _focusNode,
+                onChanged: widget.onChange,
                 controller: widget.inputController,
                 textAlignVertical: TextAlignVertical.center,
                 style: const TextStyle(color: MyColors.primary),
@@ -41,7 +46,6 @@ class _InputState extends State<Input> {
                     iconSize: 24,
                     onPressed: () {
                       widget.inputController.text = '';
-                      FocusManager.instance.primaryFocus?.unfocus();
                     },
                   ),
                   labelText: 'Продукт',
