@@ -1,11 +1,12 @@
-import 'package:doshop_app/db/localDB/sql_queries.dart';
-import 'package:doshop_app/models/exports.dart';
-import 'package:doshop_app/providers/categories_provider.dart';
-import 'package:doshop_app/screens/home_screen/view/content/widgets/category_item.dart';
-import 'package:doshop_app/utils/constants.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:doshop_app/models/exports.dart';
+import 'package:doshop_app/providers/categories_provider.dart';
+
+import 'package:doshop_app/screens/home_screen/view/content/widgets/category_item.dart';
+import 'package:doshop_app/widgets/ui/input.dart';
+
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
@@ -17,7 +18,6 @@ class CategoriesPage extends StatefulWidget {
 class _CategoriesPageState extends State<CategoriesPage> {
   bool isInit = false;
   bool isLoaded = false;
-  // late List<Category> categoryList;
 
   @override
   void didChangeDependencies() {
@@ -31,6 +31,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
   @override
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoriesProvider>(context);
+    final TextEditingController enterProductController =
+        TextEditingController();
 
     logger.d('CatPage: ${categoriesProvider.categories}');
     return RefreshIndicator(
@@ -39,35 +41,25 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: ListView(
-          children: [
-            SizedBox(height: 16,),
-            Flexible(
-              child: TextFormField(
-                decoration: InputDecoration(
-                  suffix: Text('hi'),
-                  hintText: 'Введите название товара',
-                  hintStyle: const TextStyle(color: MyColors.primary),
-                ),
-              ),
+        child: ListView(children: [
+          const SizedBox(height: 16),
+          Input(inputController: enterProductController),
+          const SizedBox(height: 16),
+          GridView.builder(
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+              maxCrossAxisExtent: 200,
+              crossAxisSpacing: 8,
+              mainAxisSpacing: 8,
             ),
-            SizedBox(height: 16,),
-            GridView.builder(
-              shrinkWrap: true,
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 200,
-                crossAxisSpacing: 8,
-                mainAxisSpacing: 8,
-              ),
-              itemCount: categoriesProvider.categories.length,
-              itemBuilder: (ctx, index) {
-                final cat = categoriesProvider.categories[index];
-                return CategoryItem(category: cat);
-              },
-            ),
-          ]
-        ),
+            itemCount: categoriesProvider.categories.length,
+            itemBuilder: (ctx, index) {
+              final cat = categoriesProvider.categories[index];
+              return CategoryItem(category: cat);
+            },
+          ),
+        ]),
       ),
     );
   }

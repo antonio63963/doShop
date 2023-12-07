@@ -1,30 +1,14 @@
 
 import 'package:flutter/material.dart';
 
+import 'package:doshop_app/themes/input_theme.dart';
 import 'package:doshop_app/utils/constants.dart';
 
 final appTheme = ThemeData(
   secondaryHeaderColor: MyColors.accent,
   scaffoldBackgroundColor: MyColors.white,
   fontFamily: defaultFont,
-  inputDecorationTheme: const InputDecorationTheme(
-    hintStyle: TextStyle(color: MyColors.accent),
-    focusedBorder: UnderlineInputBorder(
-      borderSide: BorderSide(color: MyColors.accent, width: 2.0),
-    ),
-    border: UnderlineInputBorder(
-      borderSide: BorderSide.none,
-      borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(5),
-        topRight: Radius.circular(5),
-      ),
-    ),
-    enabledBorder: UnderlineInputBorder(
-      borderSide: BorderSide(
-        color: MyColors.white,
-      ),
-    ),
-  ),
+  inputDecorationTheme: inputTheme,
   dividerColor: MyColors.primary,
   floatingActionButtonTheme: const FloatingActionButtonThemeData(
     backgroundColor: MyColors.accent,
