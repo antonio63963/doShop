@@ -54,3 +54,7 @@ class MyColors {
     Color(0xFFFF8A65),
   ];
 }
+
+class AppPadding {
+  static double bodyHorizontal = 16;
+}

@@ -1,10 +1,17 @@
-import 'package:doshop_app/models/exports.dart';
-import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
+
+import 'package:doshop_app/utils/constants.dart';
+import 'package:doshop_app/models/exports.dart';
 
 class CategoryItem extends StatelessWidget {
   final CategoryProd category;
-  const CategoryItem({required this.category, super.key});
+  final Function() onTap;
+
+  const CategoryItem({
+    required this.category,
+    required this.onTap,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +30,7 @@ class CategoryItem extends StatelessWidget {
         ),
         child: InkWell(
             borderRadius: const BorderRadius.all(Radius.circular(5)),
-            onTap: () {},
+            onTap: onTap,
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Column(

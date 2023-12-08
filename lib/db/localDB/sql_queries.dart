@@ -22,7 +22,8 @@ class SqlQueries {
     final values = subcategories.map((sub) => '''
     (
       ${sub.id}, "${sub.title}", "${sub.subtitle}",
-      ${sub.isShown != null && sub.isShown! ? 1 : 0}, "${sub.img}",
+      "${sub.img}",
+      ${sub.isShown != null && sub.isShown! ? 1 : 0}, 
       ${sub.parentId}
     )
   ''');
@@ -38,4 +39,13 @@ class SqlQueries {
     ${CategoryProdFields.colorBg}
     FROM $tableCategories
   ''';
+
+  static String subcategoriesByCatId(int catId) {
+      return '''
+      SELECT $tableSubcategories.*, $tableCategories.${CategoryProdFields.colorBg}
+      FROM $tableSubcategories
+      JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $catId
+      WHERE $tableSubcategories.${SubcategoryFields.parentId} = $catId
+    ''';
+  }
 }

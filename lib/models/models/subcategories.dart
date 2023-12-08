@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:doshop_app/models/models/category.dart';
 import 'package:doshop_app/utils/constants.dart';
 
 const String tableSubcategories = 'subcategories';
@@ -9,10 +12,9 @@ class SubcategoryFields {
   static const String id = 'id';
   static const String title = 'title';
   static const String subtitle = 'subtitle';
-  static const String isShown = 'isShown';
   static const String img = 'img';
+  static const String isShown = 'isShown';
   static const String parentId = 'parentId';
-  static const String colorBg = 'colorBg';
 }
 
 class Subcategory {
@@ -63,7 +65,7 @@ class Subcategory {
       img: json[SubcategoryFields.img] as String,
       isShown: intToBool(json[SubcategoryFields.isShown] as int),
       parentId: json[SubcategoryFields.parentId] as int,
-      colorBg: json[SubcategoryFields.colorBg] as int,
+      colorBg: json[CategoryProdFields.colorBg] as int,
     );
   }
 

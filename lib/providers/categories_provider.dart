@@ -10,7 +10,20 @@ class CategoriesProvider extends ErrorHandler {
   List<CategoryProd> _categories = [];
 
   List<CategoryProd> get categories {
-    return _categories;
+    return [..._categories];
+  }
+
+  Future<List<Subcategory>?> getSubcategoriesList(
+      BuildContext context, int catId) async {
+    try {
+      return await GetIt.I<AbstractDB>().getSubcategories(catId);
+    } catch (err) {
+      logger.e('GetSubcategories: $err');
+      setErrorAlert(
+          context: context,
+          message: 'Не удалось получить Список Подкатегорий!');
+    }
+    return null;
   }
 
   Future<void> getCategoriesList(

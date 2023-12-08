@@ -1,4 +1,4 @@
-import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/fast_enter_form.dart';
+import 'package:doshop_app/screens/products_list_screen/export.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,8 +6,9 @@ import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/categories_provider.dart';
 
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/category_item.dart';
-import 'package:doshop_app/widgets/ui/input.dart';
+import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/fast_enter_form.dart';
 
+import 'package:doshop_app/screens/subcategories_screen/exports.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
@@ -32,7 +33,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   @override
   Widget build(BuildContext context) {
     final categoriesProvider = Provider.of<CategoriesProvider>(context);
-    
+
     logger.d('CatPage: ${categoriesProvider.categories}');
     return RefreshIndicator(
       onRefresh: () => categoriesProvider.getCategoriesList(context),
@@ -41,9 +42,9 @@ class _CategoriesPageState extends State<CategoriesPage> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: ListView(children: [
-          const SizedBox(height: 16),
-          FastEnterForm(),
-          const SizedBox(height: 16),
+          const SizedBox(height: 32),
+          const FastEnterForm(),
+          const SizedBox(height: 32),
           GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
@@ -55,7 +56,17 @@ class _CategoriesPageState extends State<CategoriesPage> {
             itemCount: categoriesProvider.categories.length,
             itemBuilder: (ctx, index) {
               final cat = categoriesProvider.categories[index];
-              return CategoryItem(category: cat);
+              return CategoryItem(
+                category: cat,
+                onTap: () {
+                  Navigator.of(context).pushNamed(
+                    cat.subcategories!
+                        ? SubcategoriesScreen.routeName
+                        : ProductsListScreen.routeName,
+                    arguments: cat.id,
+                  );
+                },
+              );
             },
           ),
         ]),

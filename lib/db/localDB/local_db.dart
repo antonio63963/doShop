@@ -7,7 +7,7 @@ import 'package:doshop_app/db/localDB/sql_tables.dart';
 
 import 'sql_queries.dart';
 
-class LocalDB implements AbstractDB{
+class LocalDB implements AbstractDB {
   static final LocalDB instance = LocalDB._init();
 
   static Database? _database;
@@ -49,7 +49,6 @@ class LocalDB implements AbstractDB{
     final subs = await db.rawQuery(SqlQueries.initSubcategories());
     logger.d('Added SUB: $subs');
 
-
     // await db.execute(SqlTables.createCars);
     // await db.execute(SqlTables.createCalendarEvents);
     // await db.execute(SqlTables.createClientsCars);
@@ -61,12 +60,21 @@ class LocalDB implements AbstractDB{
 
   //Categories
   @override
-  Future<List<CategoryProd>?> getCategories() async{
+  Future<List<CategoryProd>?> getCategories() async {
     final db = await instance.database;
     final response = await db?.rawQuery(SqlQueries.allCategories);
     logger.i('Categories: $response');
-    final a = response?.map((res) => CategoryProd.fromJSON(res)).toList();
-    logger.w('AAAAAA: $a');
+    return response?.map((res) => CategoryProd.fromJSON(res)).toList();
+  }
+
+  @override
+  Future<List<Subcategory>?> getSubcategories(int catId) async {
+    final db = await instance.database;
+    final response = await db?.rawQuery(SqlQueries.subcategoriesByCatId(catId));
+    logger.i('SUbCatEGORIES: $response');
+
+    final a = response?.map((sub) => Subcategory.fromJSON(sub)).toList();
+    logger.d('WOW: $a');
     return a;
   }
 
@@ -84,5 +92,4 @@ class LocalDB implements AbstractDB{
     final db = await instance.database;
     logger.d('Tables!!! ${await db?.query("sqlite_master") ?? "NOOOO"}');
   }
-  
 }

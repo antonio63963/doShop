@@ -106,7 +106,7 @@ List<Subcategory> subcategories = [
     title: 'Сыр',
     subtitle: 'молоко йогурт',
     isShown: true,
-    img: 'assets/img/categories/milk_sheese.png',
+    img: 'assets/img/categories/milk_cheese.png',
     parentId: 1,
   ),
   Subcategory(
@@ -130,7 +130,7 @@ List<Subcategory> subcategories = [
     title: 'Овощи',
     subtitle: 'фрукты, ягоды, орехи',
     isShown: true,
-    img: 'assets/img/categories/fruit.png',
+    img: 'assets/img/categories/fruit1.png',
     parentId: 1,
   ),
 ];
