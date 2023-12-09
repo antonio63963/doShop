@@ -30,6 +30,7 @@ class SqlTables {
   static String createProducts = '''
     CREATE TABLE IF NOT EXISTS $tableProducts(
       ${ProductFields.id} $idType,
+      ${ProductFields.catId} INTEGER NOT NULL,
       ${ProductFields.title} $textType,
       ${ProductFields.subtitle} TEXT,
       ${ProductFields.icon} TEXT,

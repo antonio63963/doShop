@@ -1,5 +1,6 @@
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/exports.dart';
+import 'package:doshop_app/screens/products_list_screen/export.dart';
 import 'package:doshop_app/screens/subcategories_screen/view/subcategory_item.dart';
 import 'package:doshop_app/widgets/exports.dart';
 import 'package:flutter/material.dart';
@@ -112,7 +113,16 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
                     itemCount: _subcategories.length,
                     itemBuilder: (_, idx) {
                       final sub = _subcategories[idx];
-                      return SubcategoryItem(sub: sub);
+                      return SubcategoryItem(
+                        sub: sub,
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                            ProductsListScreen.routeName,
+                            arguments: ProductsScreenArguments(
+                                id: sub.id!, title: sub.title),
+                          );
+                        },
+                      );
                     },
                   )
                 ],

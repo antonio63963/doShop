@@ -19,10 +19,15 @@ class SqlQueries {
   }
 
   static String productsByCategoryId(int catId) => '''
-    SELECT ${ProductFields.id}, ${ProductFields.title}, 
-    ${ProductFields.isShown}, ${ProductFields.subtitle}, 
-    ${ProductFields.units}
+    SELECT $tableProducts.${ProductFields.id},
+    $tableProducts.${ProductFields.catId},
+    $tableProducts.${ProductFields.title},
+    $tableProducts.${ProductFields.isShown},
+    $tableProducts.${ProductFields.subtitle}, 
+    $tableProducts.${ProductFields.units},
+    $tableSubcategories.${SubcategoryFields.img}
     FROM $tableProducts
+    JOIN $tableSubcategories ON $tableSubcategories.${SubcategoryFields.id} = $catId
     WHERE $tableProducts.${ProductFields.catId} = $catId
   ''';
 }

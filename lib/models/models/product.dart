@@ -20,6 +20,7 @@ class Product {
   String title;
   String? subtitle;
   String? icon;
+  String? catImg;
   List<int>? photos;
   String units;
   String? description;
@@ -31,6 +32,7 @@ class Product {
     required this.title,
     this.subtitle,
     this.icon,
+    this.catImg,
     this.photos,
     required this.units,
     this.description,
@@ -43,6 +45,7 @@ class Product {
     String? title,
     String? subtitle,
     String? icon,
+    String? catImg,
     List<int>? photos,
     String? units,
     String? description,
@@ -54,6 +57,7 @@ class Product {
         title: title ?? this.title,
         subtitle: subtitle ?? this.subtitle,
         icon: icon ?? this.icon,
+        catImg: catImg ?? this.catImg,
         photos: photos ?? this.photos,
         units: units ?? this.units,
         description: description ?? this.description,
@@ -66,6 +70,7 @@ class Product {
       catId: json[ProductFields.catId] as int,
       title: json[ProductFields.title] as String,
       units: json[ProductFields.units] as String,
+      catImg: json['catImg'] != null ? json['catImg'] as String : null,
     );
   }
 }

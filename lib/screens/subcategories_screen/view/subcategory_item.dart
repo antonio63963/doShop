@@ -4,14 +4,19 @@ import 'package:flutter/material.dart';
 
 class SubcategoryItem extends StatelessWidget {
   final Subcategory sub;
-  const SubcategoryItem({required this.sub, super.key});
+  final Function onTap;
+  const SubcategoryItem({
+    required this.sub,
+    required this.onTap,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: InkWell(
-        onTap: () {},
+        onTap: () => onTap(),
         child: Ink(
           decoration: BoxDecoration(
             borderRadius: const BorderRadius.all(Radius.circular(5)),

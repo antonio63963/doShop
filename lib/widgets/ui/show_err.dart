@@ -18,14 +18,37 @@ class ShowError extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return AlertDialog(
-      // backgroundColor: MyColors.backgroundLight,
-      title: Text(
-        error.title,
-        style: theme.textTheme.bodyLarge?.copyWith(color: MyColors.danger),
+      backgroundColor: MyColors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(5.0),
+        ),
+      ),
+      title: Row(
+        children: [
+          const Icon(
+            Icons.warning,
+            color: MyColors.danger,
+            size: 24,
+          ),
+          const SizedBox(width: 16),
+          FittedBox(
+            child: Text(
+              error.title,
+              style: theme.textTheme.bodyLarge?.copyWith(
+                color: MyColors.danger,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
       ),
       content: Text(
         error.message,
-        style: theme.textTheme.bodyMedium,
+        style: theme.textTheme.bodyMedium?.copyWith(
+          color: MyColors.primary,
+          fontWeight: FontWeight.w600,
+        ),
       ),
       actions: <Widget>[
         if (onRepeat is Function)

@@ -1,3 +1,4 @@
+import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +28,9 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
       Provider.of<ProductProvider>(context)
           .getProductsByCategory(context, _screenArguments.id)
           .then((value) {
-        _productsList = value ?? [];
+        setState(() {
+          _productsList = value ?? [];
+        });
       });
       isInit = true;
       isLoaded = true;
@@ -40,6 +43,20 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('${_screenArguments.title}')),
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: AppPadding.bodyHorizontal),
+        child: ListView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          itemCount: _productsList.length,
+          itemBuilder: (_, idx) {
+          final prod = _productsList[idx];
+          return ListTile(
+            title: Text(prod.title),
+            subtitle: Text(prod.subtitle ?? ''),
+          );
+        }),
+      ),
     );
   }
 }

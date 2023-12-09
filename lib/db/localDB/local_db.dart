@@ -86,11 +86,15 @@ class LocalDB implements AbstractDB {
 
   //Products
   Future<List<Product>?> getProuductsByCategory(int catId) async {
+    print('IDDDDD::::: $catId');
     final db = await instance.database;
     final response = await db?.rawQuery(SqlQueries.productsByCategoryId(catId));
+    // final response = await db?.rawQuery('SELECT * FROM products WHERE products.catId = 11');
     logger.i('Products by Category: $response');
 
-    return response?.map((sub) => Product.fromJSON(sub)).toList();
+    final a = response?.map((sub) => Product.fromJSON(sub)).toList();
+    logger.i('$a');
+    return a;
   }
 
 
