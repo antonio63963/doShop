@@ -58,3 +58,15 @@ class MyColors {
 class AppPadding {
   static double bodyHorizontal = 16;
 }
+
+class Units {
+  static String thing = "шт.";
+  static String kg = "кг";
+  static String pack = "уп.";
+  static String block = "блок";
+  static String lt = "л.";
+}
+
+class DefaultValues {
+  static String img = 'assets/img/categories/hobby.png';
+}

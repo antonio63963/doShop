@@ -1,4 +1,5 @@
 import 'package:doshop_app/screens/products_list_screen/export.dart';
+import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -63,7 +64,12 @@ class _CategoriesPageState extends State<CategoriesPage> {
                     cat.subcategories!
                         ? SubcategoriesScreen.routeName
                         : ProductsListScreen.routeName,
-                    arguments: cat.id,
+                    arguments: SubcategoriesScreenArguments(
+                      id: cat.id!,
+                      title: cat.title,
+                      colorBg: cat.colorBg ?? MyColors.defaultBG,
+                      catImg: cat.img ?? DefaultValues.img,
+                    ),
                   );
                 },
               );

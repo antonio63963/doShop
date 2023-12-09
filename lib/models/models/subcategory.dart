@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:doshop_app/models/models/category.dart';
 import 'package:doshop_app/utils/constants.dart';
 

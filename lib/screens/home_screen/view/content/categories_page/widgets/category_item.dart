@@ -37,7 +37,7 @@ class CategoryItem extends StatelessWidget {
                 children: [
                   Image.asset(
                     fit: BoxFit.contain,
-                    category.img ?? 'assets/img/categories/hobby.png',
+                    category.img ?? DefaultValues.img,
                     height: 132,
                     width: 180,
                   ),

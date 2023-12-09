@@ -1,4 +1,5 @@
 import 'package:doshop_app/db/abstractDB.dart';
+import 'package:doshop_app/db/localDB/sql_initial_data.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
@@ -44,10 +45,15 @@ class LocalDB implements AbstractDB {
     await db.execute(SqlTables.createSubcategories);
     await db.execute(SqlTables.createProducts);
 
-    final response = await db.rawQuery(SqlQueries.initCategories());
+    final response = await db.rawQuery(SqlInitialData.initCategories());
     logger.d('Added Categ: $response');
-    final subs = await db.rawQuery(SqlQueries.initSubcategories());
+    final subs = await db.rawQuery(SqlInitialData.initSubcategories());
     logger.d('Added SUB: $subs');
+    try{
+      final prods = await db.rawQuery(SqlInitialData.initProducts());
+    } catch(err) {
+      logger.e('ON ADD PRODS: $err');
+    }
 
     // await db.execute(SqlTables.createCars);
     // await db.execute(SqlTables.createCalendarEvents);
@@ -77,6 +83,17 @@ class LocalDB implements AbstractDB {
     logger.d('WOW: $a');
     return a;
   }
+
+  //Products
+  Future<List<Product>?> getProuductsByCategory(int catId) async {
+    final db = await instance.database;
+    final response = await db?.rawQuery(SqlQueries.productsByCategoryId(catId));
+    logger.i('Products by Category: $response');
+
+    return response?.map((sub) => Product.fromJSON(sub)).toList();
+  }
+
+
 
   savePhoto() {}
 

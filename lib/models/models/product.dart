@@ -1,6 +1,8 @@
 const String tableProducts = 'products';
 
 class ProductFields {
+  static String values =
+      'id, catId, title, subtitle, photos, units, description, isShown';
   static const String id = 'id';
   static const String catId = 'catId';
   static const String title = 'title';
@@ -57,4 +59,13 @@ class Product {
         description: description ?? this.description,
         isShown: isShown ?? this.isShown,
       );
+
+  static Product fromJSON(Map<String, Object?> json) {
+    return Product(
+      id: json[ProductFields.id] as int,
+      catId: json[ProductFields.catId] as int,
+      title: json[ProductFields.title] as String,
+      units: json[ProductFields.units] as String,
+    );
+  }
 }

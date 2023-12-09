@@ -21,14 +21,16 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
   List<Subcategory> _subcategories = [];
   bool isInit = false;
   bool isLoaded = false;
+  late SubcategoriesScreenArguments _screenArguments;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!isInit) {
-      final catId = ModalRoute.of(context)?.settings.arguments as int;
+      _screenArguments = ModalRoute.of(context)?.settings.arguments
+          as SubcategoriesScreenArguments;
       Provider.of<CategoriesProvider>(context)
-          .getSubcategoriesList(context, catId)
+          .getSubcategoriesList(context, _screenArguments.id)
           .then((value) {
         logger.d('CatScreen: $value');
         setState(() {
@@ -43,12 +45,56 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Подкатегории'), actions: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.more_vert),
+      // appBar: AppBar(title: const Text('Подкатегории'), actions: [
+      //   IconButton(
+      //     onPressed: () {},
+      //     icon: const Icon(Icons.more_vert),
+      //   ),
+      // ]),
+      appBar: AppBar(
+        backgroundColor: MyColors.white,
+        automaticallyImplyLeading: false,
+        toolbarHeight: 128,
+        title: SizedBox(
+          width: double.infinity,
+          child: Column(
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon: const Icon(Icons.arrow_back, color: MyColors.primary),
+                  ),
+                  IconButton(
+                      onPressed: () {},
+                      icon: const Icon(
+                        Icons.more_vert,
+                        color: MyColors.primary,
+                      ))
+                ],
+              ),
+              Row(
+                children: [
+                  Image.asset(
+                    _screenArguments.catImg,
+                    height: 55.0,
+                    width: 55.0,
+                  ),
+                  const SizedBox(width: 16),
+                  Text(
+                    _screenArguments.title.toUpperCase(),
+                    style: const TextStyle(
+                        fontSize: 20.0, color: MyColors.primary),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              )
+            ],
+          ),
         ),
-      ]),
+      ),
       body: !isLoaded
           ? const Loading()
           : Padding(
