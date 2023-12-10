@@ -6,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/models/exports.dart';
 
+import 'widgets/product_item.dart';
+
 class ProductsListScreen extends StatefulWidget {
   static String routeName = '/products';
 
@@ -48,6 +50,15 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
         padding: EdgeInsets.symmetric(horizontal: AppPadding.bodyHorizontal),
         child: ListView(
           children: [
+            Card(
+              clipBehavior: Clip.hardEdge,
+              child: Container(
+                  color: Color(
+                    _productsList[0].colorBg ?? MyColors.defaultBG,
+                  ),
+                  child: Image.asset(
+                      _productsList[0].catImg ?? DefaultValues.img)),
+            ),
             FastEnterForm(
               paddingBottom: 30,
               paddingTop: 30,
@@ -58,39 +69,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                 itemCount: _productsList.length,
                 itemBuilder: (_, idx) {
                   final prod = _productsList[idx];
-                  return Container(
-                    padding: const EdgeInsets.symmetric(vertical: 4.0),
-                    child: Material(
-                      borderRadius: BorderRadius.circular(5),
-                      elevation: 3,
-                      child: ListTile(
-                        // contentPadding: EdgeInsets.symmetric(
-                        //   vertical: 16, horizontal: 16,
-                        // ),
-                        tileColor: Color(prod.colorBg ?? MyColors.defaultBG),
-                        shape: const RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(5))),
-                        leading: SizedBox(
-                          width: 56,
-                          height: 56,
-                          child: Image.asset(prod.icon ?? prod.catImg ?? DefaultValues.img,
-                              fit: BoxFit.contain),
-                        ),
-                        title: Text(
-                          prod.title,
-                          style: TextStyle(
-                              color: MyColors.white,
-                              fontWeight: FontWeight.w600,
-                              fontSize: 16),
-                        ),
-                        subtitle: prod.subtitle != null
-                            ? Text(prod.subtitle!,
-                                style: TextStyle(
-                                    color: MyColors.white, fontSize: 14))
-                            : null,
-                      ),
-                    ),
-                  );
+                  return ProductItem(prod: prod);
                 }),
           ],
         ),
