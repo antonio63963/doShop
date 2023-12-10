@@ -2,7 +2,7 @@ const String tableProducts = 'products';
 
 class ProductFields {
   static String values =
-      'id, catId, title, subtitle, photos, units, description, isShown';
+      'id, catId, title, subtitle, icon, photos, units, description, isShown';
   static const String id = 'id';
   static const String catId = 'catId';
   static const String title = 'title';
@@ -25,6 +25,7 @@ class Product {
   String units;
   String? description;
   bool isShown;
+  int? colorBg;
 
   Product({
     this.id,
@@ -37,6 +38,7 @@ class Product {
     required this.units,
     this.description,
     this.isShown = true,
+    this.colorBg,
   });
 
   Product copy({
@@ -50,6 +52,7 @@ class Product {
     String? units,
     String? description,
     bool? isShown,
+    int? colorBg,
   }) =>
       Product(
         id: id ?? this.id,
@@ -62,6 +65,7 @@ class Product {
         units: units ?? this.units,
         description: description ?? this.description,
         isShown: isShown ?? this.isShown,
+        colorBg: colorBg ?? this.colorBg,
       );
 
   static Product fromJSON(Map<String, Object?> json) {
@@ -69,8 +73,16 @@ class Product {
       id: json[ProductFields.id] as int,
       catId: json[ProductFields.catId] as int,
       title: json[ProductFields.title] as String,
+      subtitle: json[ProductFields.subtitle] != null &&
+              json[ProductFields.subtitle] != "null"
+          ? json[ProductFields.subtitle] as String
+          : null,
       units: json[ProductFields.units] as String,
-      catImg: json['catImg'] != null ? json['catImg'] as String : null,
+      icon: json[ProductFields.icon] != null
+          ? json[ProductFields.icon] as String
+          : null,
+      catImg: json['img'] != null ? json['img'] as String : null,
+      colorBg: json['colorBg'] != null ? json['colorBg'] as int : null,
     );
   }
 }

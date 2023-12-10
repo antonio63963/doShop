@@ -25,9 +25,12 @@ class SqlQueries {
     $tableProducts.${ProductFields.isShown},
     $tableProducts.${ProductFields.subtitle}, 
     $tableProducts.${ProductFields.units},
-    $tableSubcategories.${SubcategoryFields.img}
+    $tableProducts.${ProductFields.icon},
+    $tableSubcategories.${SubcategoryFields.img},
+    $tableCategories.${CategoryProdFields.colorBg}
     FROM $tableProducts
     JOIN $tableSubcategories ON $tableSubcategories.${SubcategoryFields.id} = $catId
+    JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $tableSubcategories.${SubcategoryFields.parentId}
     WHERE $tableProducts.${ProductFields.catId} = $catId
   ''';
 }
