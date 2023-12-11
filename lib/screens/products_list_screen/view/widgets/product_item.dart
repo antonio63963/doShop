@@ -36,8 +36,9 @@ class ProductItem extends StatelessWidget {
           ),
           subtitle: prod.subtitle != null
               ? Text(prod.subtitle!,
-                  style: TextStyle(color: MyColors.white, fontSize: 14))
+                  style: TextStyle(color: Color.fromARGB(255, 236, 236, 236), fontSize: 14))
               : null,
+          onTap: () => print('Id: ${prod.id}'),
         ),
       ),
     );

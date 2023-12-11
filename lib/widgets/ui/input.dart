@@ -19,50 +19,38 @@ class _InputState extends State<Input> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Flexible(
-          child: FocusScope(
-            child: Focus(
-              onFocusChange: (bool focuse) {
-                setState(() {
-                  _isInputFocused = focuse;
-                });
-              },
-              child: TextField(
-                onChanged: widget.onChange,
-                controller: widget.inputController,
-                textAlignVertical: TextAlignVertical.center,
-                style: const TextStyle(color: MyColors.primary),
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-                  suffix: IconButton(
-                    icon: const Icon(
-                      Icons.close,
-                      color: MyColors.primary,
-                    ),
-                    iconSize: 24,
-                    onPressed: () {
-                      widget.inputController.text = '';
-                    },
-                  ),
-                  labelText: 'Продукт',
-                ),
+    return FocusScope(
+      child: Focus(
+        onFocusChange: (bool focuse) {
+          setState(() {
+            _isInputFocused = focuse;
+          });
+        },
+        child: TextField(
+          controller: widget.inputController,
+          onChanged: widget.onChange,
+          textAlignVertical: TextAlignVertical.center,
+          style: const TextStyle(color: MyColors.primary),
+          decoration: InputDecoration(
+            border: const OutlineInputBorder(),
+            contentPadding:
+                const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+            suffix: IconButton(
+              icon: const Icon(
+                Icons.close,
+                color: MyColors.primary,
               ),
+              iconSize: 24,
+              onPressed: () {
+                widget.inputController.text = '';
+                widget.onChange != null ? widget.onChange!('') : null;
+                FocusManager.instance.primaryFocus?.unfocus();
+              },
             ),
+            labelText: 'Продукт',
           ),
         ),
-        const SizedBox(width: 10),
-        !_isInputFocused
-            ? IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.mic),
-                color: MyColors.primary,
-              )
-            : const SizedBox(),
-      ],
+      ),
     );
   }
 }

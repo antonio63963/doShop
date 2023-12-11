@@ -14,9 +14,15 @@ class SubcategoriesScreenArguments {
 class ProductsScreenArguments {
   final int id;
   final String title;
+  final String subtitle;
+  final int colorBg;
+  final String catImg;
 
   ProductsScreenArguments({
     required this.id,
     required this.title,
+    required this.subtitle,
+    required this.colorBg,
+    required this.catImg,
   });
 }

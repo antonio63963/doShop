@@ -1,5 +1,7 @@
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/fast_enter_form.dart';
+import 'package:doshop_app/screens/products_list_screen/view/widgets/search_input.dart';
 import 'package:doshop_app/utils/constants.dart';
+import 'package:doshop_app/widgets/ui/input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -21,20 +23,25 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   bool isInit = false;
   bool isLoaded = false;
   late ProductsScreenArguments _screenArguments;
-  List<Product> _productsList = [];
+
+  late ProductProvider productProvider;
+  List<Product> productsList = [];
+  String _searchData = '';
+
+  void onInput(String value) {
+    setState(() {
+      _searchData = value;
+    });
+  }
 
   @override
   void didChangeDependencies() {
     if (!isInit) {
       _screenArguments =
           ModalRoute.of(context)?.settings.arguments as ProductsScreenArguments;
+      productProvider = Provider.of<ProductProvider>(context);
       Provider.of<ProductProvider>(context)
-          .getProductsByCategory(context, _screenArguments.id)
-          .then((value) {
-        setState(() {
-          _productsList = value ?? [];
-        });
-      });
+          .getProductsByCategory(context, _screenArguments.id);
       isInit = true;
       isLoaded = true;
     }
@@ -44,34 +51,44 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
 
   @override
   Widget build(BuildContext context) {
+    productsList = productProvider.search(_searchData);
+
     return Scaffold(
       appBar: AppBar(title: Text('${_screenArguments.title}')),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: AppPadding.bodyHorizontal),
-        child: ListView(
-          children: [
-            Card(
-              clipBehavior: Clip.hardEdge,
-              child: Container(
-                  color: Color(
-                    _productsList[0].colorBg ?? MyColors.defaultBG,
-                  ),
-                  child: Image.asset(
-                      _productsList[0].catImg ?? DefaultValues.img)),
+      body: RefreshIndicator(
+        onRefresh: () =>
+            productProvider.getProductsByCategory(context, _screenArguments.id),
+        child: GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: AppPadding.bodyHorizontal),
+            child: ListView(
+              children: [
+                // Card(
+                //   elevation: 5,
+                //   margin: const EdgeInsets.only(top: 30),
+                //   color: Color(
+                //     _screenArguments.colorBg,
+                //   ),
+                //   clipBehavior: Clip.hardEdge,
+                //   child: Image.asset(_screenArguments.catImg),
+                // ),
+
+                SearchInput(onInput: onInput),
+               
+                productsList.isNotEmpty
+                    ? ListView.builder(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemCount: productsList.length,
+                        itemBuilder: (_, idx) {
+                          final prod = productsList[idx];
+                          return ProductItem(prod: prod);
+                        })
+                    : const Center(child: Text('Пока что нет товаров')),
+              ],
             ),
-            FastEnterForm(
-              paddingBottom: 30,
-              paddingTop: 30,
-            ),
-            ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: _productsList.length,
-                itemBuilder: (_, idx) {
-                  final prod = _productsList[idx];
-                  return ProductItem(prod: prod);
-                }),
-          ],
+          ),
         ),
       ),
     );

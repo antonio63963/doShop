@@ -1,13 +1,13 @@
 import 'package:doshop_app/widgets/ui/input.dart';
 import 'package:flutter/material.dart';
 
-class FastEnterForm extends StatefulWidget {
+class FastEnterForm extends StatelessWidget {
   final double? paddingTop;
   final double? paddingBottom;
   final double? paddinRight;
   final double? paddingLeft;
 
-  const FastEnterForm({
+   FastEnterForm({
     this.paddingTop,
     this.paddingBottom,
     this.paddinRight,
@@ -15,25 +15,17 @@ class FastEnterForm extends StatefulWidget {
     super.key,
   });
 
-  @override
-  State<FastEnterForm> createState() => _FastEnterFormState();
-}
-
-class _FastEnterFormState extends State<FastEnterForm> {
   final TextEditingController enterProductController = TextEditingController();
-
-  void onChange(String str) {
-    setState(() {});
-  }
+  void onChange(String str) {}
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(
-        top: widget.paddingTop ?? 0,
-        bottom: widget.paddingBottom ?? 0,
-        right: widget.paddinRight ?? 0,
-        left: widget.paddingLeft ?? 0,
+        top: paddingTop ?? 0,
+        bottom: paddingBottom ?? 0,
+        right: paddinRight ?? 0,
+        left: paddingLeft ?? 0,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -56,7 +48,7 @@ class _FastEnterFormState extends State<FastEnterForm> {
                     onPressed: () {
                       FocusManager.instance.primaryFocus?.unfocus();
                       enterProductController.text = '';
-                      onChange('_');
+                
                     },
                     child: const Text('Отменить'),
                   ),

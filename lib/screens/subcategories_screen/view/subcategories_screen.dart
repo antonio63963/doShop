@@ -103,7 +103,7 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
                   EdgeInsets.symmetric(horizontal: AppPadding.bodyHorizontal),
               child: ListView(
                 children: [
-                  const FastEnterForm(
+                  FastEnterForm(
                     paddingBottom: 30,
                     paddingTop: 30,
                   ),
@@ -119,7 +119,12 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
                           Navigator.of(context).pushNamed(
                             ProductsListScreen.routeName,
                             arguments: ProductsScreenArguments(
-                                id: sub.id!, title: sub.title),
+                              id: sub.id!,
+                              title: sub.title,
+                              catImg: sub.img ?? DefaultValues.img,
+                              subtitle: sub.subtitle ?? '',
+                              colorBg: sub.colorBg ?? MyColors.defaultBG,
+                            ),
                           );
                         },
                       );

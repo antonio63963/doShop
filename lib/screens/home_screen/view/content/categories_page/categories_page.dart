@@ -44,7 +44,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: ListView(children: [
           const SizedBox(height: 32),
-          const FastEnterForm(),
+           FastEnterForm(),
           const SizedBox(height: 32),
           GridView.builder(
             shrinkWrap: true,
