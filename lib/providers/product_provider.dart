@@ -9,6 +9,7 @@ import '../utils/constants.dart';
 
 class ProductProvider extends ErrorHandler {
   List<Product> _products = [];
+  bool isAnySelected = false;
 
   String searchData = '';
 
@@ -23,6 +24,7 @@ class ProductProvider extends ErrorHandler {
 
   void creanProductsList() {
     _products = [];
+    isAnySelected = false;
     notifyListeners();
   }
 
@@ -46,6 +48,7 @@ class ProductProvider extends ErrorHandler {
       _products[existProdIndex].units == Units.kg
           ? _products[existProdIndex].amount += 0.5
           : _products[existProdIndex].amount++;
+      isAnySelected = true;
       notifyListeners();
     } else {
       return;
@@ -60,6 +63,8 @@ class ProductProvider extends ErrorHandler {
       _products[existProdIndex].units == Units.kg
           ? _products[existProdIndex].amount -= 0.5
           : _products[existProdIndex].amount--;
+      _checkIfExistsSelected();
+      logger.i('EEEEEE(()()()) $isAnySelected');
       notifyListeners();
     } else {
       return;
@@ -71,6 +76,17 @@ class ProductProvider extends ErrorHandler {
     if (prod.amount == 0) {
       prod.units == Units.kg ? prod.amount += 0.5 : prod.amount++;
     }
+  }
+
+  void _checkIfExistsSelected() {
+      isAnySelected = false;
+    for(var i=0; i<_products.length; i++) {
+      if(_products[i].amount > 0) {
+        isAnySelected = true;
+        break;
+      }
+    }
+    notifyListeners();
   }
 
   void toggleFire(int? prodId) {

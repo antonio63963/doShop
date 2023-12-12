@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
 import 'package:doshop_app/providers/product_provider.dart';
@@ -25,8 +26,6 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   late ProductProvider productProvider;
   List<Product> _productsList = [];
   String _searchData = '';
-
-  List<SelectedProduct> _selectedProducts = [];
 
   void onInput(String value) {
     setState(() {
@@ -71,18 +70,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                 EdgeInsets.symmetric(horizontal: AppPadding.bodyHorizontal),
             child: ListView(
               children: [
-                // Card(
-                //   elevation: 5,
-                //   margin: const EdgeInsets.only(top: 30),
-                //   color: Color(
-                //     _screenArguments.colorBg,
-                //   ),
-                //   clipBehavior: Clip.hardEdge,
-                //   child: Image.asset(_screenArguments.catImg),
-                // ),
-
                 SearchInput(onInput: onInput),
-
                 _productsList.isNotEmpty
                     ? ListView.builder(
                         shrinkWrap: true,
@@ -105,6 +93,25 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
             ),
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {},
+        shape: const CircleBorder(),
+        backgroundColor: MyColors.primary,
+        child: !productProvider.isAnySelected
+            ? const Icon(
+                Icons.add,
+                size: 24,
+                color: MyColors.white,
+              )
+            : SvgPicture.asset(
+                'assets/icons/addToList.svg',
+                width: 24,
+                colorFilter: const ColorFilter.mode(
+                  MyColors.white,
+                  BlendMode.srcIn,
+                ),
+              ),
       ),
     );
   }

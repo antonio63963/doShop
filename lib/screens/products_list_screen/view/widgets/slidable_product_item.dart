@@ -39,12 +39,12 @@ class SlidableProductItem extends StatelessWidget {
         CustomSlidableAction(
           onPressed: (context) => onToggleFire(prod.id),
           child: SvgPicture.asset(
-            prod.isFire
+            !prod.isFire
                 ? 'assets/icons/fire_fill.svg'
                 : 'assets/icons/fire.svg',
             width: 24,
             colorFilter: ColorFilter.mode(
-              prod.isFire ? MyColors.accent : MyColors.primary,
+              !prod.isFire ? MyColors.accent : MyColors.primary,
               BlendMode.srcIn,
             ),
           ),
