@@ -9,6 +9,7 @@ import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/models/exports.dart';
 
 import 'widgets/product_item.dart';
+import 'widgets/slidable_product_item.dart';
 
 class ProductsListScreen extends StatefulWidget {
   static String routeName = '/products';
@@ -27,6 +28,8 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   late ProductProvider productProvider;
   List<Product> productsList = [];
   String _searchData = '';
+
+  
 
   void onInput(String value) {
     setState(() {
@@ -83,7 +86,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                         itemCount: productsList.length,
                         itemBuilder: (_, idx) {
                           final prod = productsList[idx];
-                          return ProductItem(prod: prod);
+                          return SlidableProductItem(prod: prod, idx: idx,);
                         })
                     : const Center(child: Text('Пока что нет товаров')),
               ],

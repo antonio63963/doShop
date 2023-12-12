@@ -27,8 +27,8 @@ final appTheme = ThemeData(
       ),
       bodyLarge: const TextStyle(
         color: Colors.white,
-        fontWeight: FontWeight.w500,
-        fontSize: 20,
+        fontWeight: FontWeight.w600,
+        fontSize: 24,
       ),
       bodyMedium: const TextStyle(
         color: Colors.white,
