@@ -1,13 +1,18 @@
 import 'package:doshop_app/models/exports.dart';
+import 'package:doshop_app/screens/products_list_screen/view/widgets/icon_fire.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
 class ProductItem extends StatefulWidget {
   final Product prod;
+  final Function(int?) onTap;
+  final Function(int?) onTrailing;
 
   const ProductItem({
     required this.prod,
+    required this.onTap,
+    required this.onTrailing,
     super.key,
   });
 
@@ -16,20 +21,6 @@ class ProductItem extends StatefulWidget {
 }
 
 class _ProductItemState extends State<ProductItem> {
-  int amount = 0;
-
-  void increaseAmount() {
-    setState(() {
-      amount++;
-    });
-  }
-
-  void decreaseAmount() {
-    setState(() {
-      amount--;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -66,12 +57,7 @@ class _ProductItemState extends State<ProductItem> {
                       fontSize: 16),
                 ),
               ),
-              const SizedBox(width: 8),
-              SvgPicture.asset(
-                'assets/icons/fire_fill.svg',
-                width: 24,
-                colorFilter: ColorFilter.mode(MyColors.accent, BlendMode.srcIn),
-              ),
+              IconFire(isFire: widget.prod.isFire, paddingHorizontal: 4),
             ],
           ),
           subtitle: Text(
@@ -82,55 +68,57 @@ class _ProductItemState extends State<ProductItem> {
             ),
           ),
 
-          trailing: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              // SvgPicture.asset(
-              //   'assets/icons/fire_fill.svg',
-              //   width: 24,
-              //   colorFilter: ColorFilter.mode(MyColors.accent, BlendMode.srcIn),
-              // ),
-              // const SizedBox(width: 16),
-              Container(
-                padding: const EdgeInsets.all(10),
-                child: Text(
-                  amount.toString(),
-                  style: theme.textTheme.bodyLarge?.copyWith(
-                    color: MyColors.white,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {},
-                child: Container(
-                  height: 40,
-                  width: 40,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 8, vertical: 5),
-                  decoration: const BoxDecoration(
-                    color: MyColors.label,
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(5),
-                    ),
-                  ),
-                  alignment: Alignment.center,
-                  child: FittedBox(
-                    child: Text(
-                      '-',
-                      style: theme.textTheme.bodyLarge?.copyWith(
-                        color: MyColors.white,
-                        fontWeight: FontWeight.w600,
+          trailing: widget.prod.amount > 0
+              ? Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // SvgPicture.asset(
+                    //   'assets/icons/fire_fill.svg',
+                    //   width: 24,
+                    //   colorFilter: ColorFilter.mode(MyColors.accent, BlendMode.srcIn),
+                    // ),
+                    // const SizedBox(width: 16),
+                    Container(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        widget.prod.amount.toString(),
+                        style: theme.textTheme.bodyLarge?.copyWith(
+                          color: MyColors.white,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              const SizedBox(width: 8),
-            ],
-          ),
-          onTap: () => print('Id: ${widget.prod.id}'),
-          contentPadding: EdgeInsets.only(
+                    GestureDetector(
+                      onTap: () => widget.onTrailing(widget.prod.id),
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 5),
+                        decoration: const BoxDecoration(
+                          color: MyColors.label,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(5),
+                          ),
+                        ),
+                        alignment: Alignment.center,
+                        child: FittedBox(
+                          child: Text(
+                            '-',
+                            style: theme.textTheme.bodyLarge?.copyWith(
+                              color: MyColors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                  ],
+                )
+              : null,
+          onTap: () => widget.onTap(widget.prod.id),
+          contentPadding: const EdgeInsets.only(
             left: 16,
             top: 8,
             bottom: 8,

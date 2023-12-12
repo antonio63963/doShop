@@ -53,4 +53,5 @@ class Units {
 
 class DefaultValues {
   static String img = 'assets/img/categories/hobby.png';
+  static String icon = 'assets/icons/label.png';
 }

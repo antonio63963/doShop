@@ -9,39 +9,52 @@ import 'package:flutter_svg/svg.dart';
 class SlidableProductItem extends StatelessWidget {
   final Product prod;
   final int idx;
-  final Function? onClick;
+  final Function(int?) onClick;
+  final Function(int?) onClickTrailing;
+  final Function(int?) onToggleFire;
+
   const SlidableProductItem({
     required this.prod,
     required this.idx,
-    this.onClick,
+    required this.onClick,
+    required this.onClickTrailing,
+    required this.onToggleFire,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return Slidable(
-        key: ValueKey(idx),
-        startActionPane: ActionPane(
-          motion: const ScrollMotion(),
-          children: [
-            SlidableAction(
-              onPressed: (context) {},
-              icon: Icons.open_in_new,
-            )
-          ],
-        ),
-        endActionPane: ActionPane(motion: const ScrollMotion(), children: [
-          CustomSlidableAction(
+      key: ValueKey(idx),
+      startActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: [
+          SlidableAction(
             onPressed: (context) {},
-            child: SvgPicture.asset(
-              'assets/icons/fire.svg',
-              colorFilter:
-                  const ColorFilter.mode(MyColors.primary, BlendMode.srcIn),
+            icon: Icons.open_in_new,
+          )
+        ],
+      ),
+      endActionPane: ActionPane(motion: const ScrollMotion(), children: [
+        CustomSlidableAction(
+          onPressed: (context) => onToggleFire(prod.id),
+          child: SvgPicture.asset(
+            prod.isFire
+                ? 'assets/icons/fire_fill.svg'
+                : 'assets/icons/fire.svg',
+            width: 24,
+            colorFilter: ColorFilter.mode(
+              prod.isFire ? MyColors.accent : MyColors.primary,
+              BlendMode.srcIn,
             ),
           ),
-        ]),
-        child: ProductItem(
-          prod: prod,
-        ));
+        ),
+      ]),
+      child: ProductItem(
+        onTap: onClick,
+        onTrailing: onClickTrailing,
+        prod: prod,
+      ),
+    );
   }
 }

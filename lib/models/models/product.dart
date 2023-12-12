@@ -26,6 +26,9 @@ class Product {
   String? description;
   bool isShown;
   int? colorBg;
+  // for select
+  double amount = 0;
+  bool isFire = false;
 
   Product({
     this.id,
@@ -39,6 +42,9 @@ class Product {
     this.description,
     this.isShown = true,
     this.colorBg,
+    //for select
+    this.amount = 0,
+    this.isFire = false,
   });
 
   Product copy({

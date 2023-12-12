@@ -1,14 +1,11 @@
-import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/fast_enter_form.dart';
-import 'package:doshop_app/screens/products_list_screen/view/widgets/search_input.dart';
-import 'package:doshop_app/utils/constants.dart';
-import 'package:doshop_app/widgets/ui/input.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/models/exports.dart';
+import 'package:doshop_app/utils/constants.dart';
 
-import 'widgets/product_item.dart';
+import 'widgets/search_input.dart';
 import 'widgets/slidable_product_item.dart';
 
 class ProductsListScreen extends StatefulWidget {
@@ -26,10 +23,10 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   late ProductsScreenArguments _screenArguments;
 
   late ProductProvider productProvider;
-  List<Product> productsList = [];
+  List<Product> _productsList = [];
   String _searchData = '';
 
-  
+  List<SelectedProduct> _selectedProducts = [];
 
   void onInput(String value) {
     setState(() {
@@ -53,8 +50,14 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   }
 
   @override
+  void dispose() {
+    productProvider.creanProductsList();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    productsList = productProvider.search(_searchData);
+    _productsList = productProvider.search(_searchData);
 
     return Scaffold(
       appBar: AppBar(title: Text('${_screenArguments.title}')),
@@ -64,7 +67,8 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
         child: GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: AppPadding.bodyHorizontal),
+            padding:
+                EdgeInsets.symmetric(horizontal: AppPadding.bodyHorizontal),
             child: ListView(
               children: [
                 // Card(
@@ -78,17 +82,25 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                 // ),
 
                 SearchInput(onInput: onInput),
-               
-                productsList.isNotEmpty
+
+                _productsList.isNotEmpty
                     ? ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: productsList.length,
+                        itemCount: _productsList.length,
                         itemBuilder: (_, idx) {
-                          final prod = productsList[idx];
-                          return SlidableProductItem(prod: prod, idx: idx,);
+                          final prod = _productsList[idx];
+                          return SlidableProductItem(
+                            onClick: productProvider.increaseAmount,
+                            onClickTrailing: productProvider.decreaseAmount,
+                            onToggleFire: productProvider.toggleFire,
+                            prod: prod,
+                            idx: idx,
+                          );
                         })
-                    : const Center(child: Text('Пока что нет товаров')),
+                    : const Center(
+                        child: Text('Пока что нет товаров'),
+                      ),
               ],
             ),
           ),
