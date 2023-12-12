@@ -19,37 +19,28 @@ class _InputState extends State<Input> {
 
   @override
   Widget build(BuildContext context) {
-    return FocusScope(
-      child: Focus(
-        onFocusChange: (bool focuse) {
-          setState(() {
-            _isInputFocused = focuse;
-          });
-        },
-        child: TextField(
-          controller: widget.inputController,
-          onChanged: widget.onChange,
-          textAlignVertical: TextAlignVertical.center,
-          style: const TextStyle(color: MyColors.primary),
-          decoration: InputDecoration(
-            border: const OutlineInputBorder(),
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-            suffix: IconButton(
-              icon: const Icon(
-                Icons.close,
-                color: MyColors.primary,
-              ),
-              iconSize: 24,
-              onPressed: () {
-                widget.inputController.text = '';
-                widget.onChange != null ? widget.onChange!('') : null;
-                FocusManager.instance.primaryFocus?.unfocus();
-              },
-            ),
-            labelText: 'Продукт',
+    return TextField(
+      controller: widget.inputController,
+      onChanged: widget.onChange,
+      textAlignVertical: TextAlignVertical.center,
+      style: const TextStyle(color: MyColors.primary, fontSize: 16),
+      decoration: InputDecoration(
+        labelStyle: TextStyle(fontSize: 16),
+        border: const OutlineInputBorder(),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+        suffix: IconButton(
+          icon: const Icon(
+            Icons.close,
+            color: MyColors.primary,
           ),
+          iconSize: 24,
+          onPressed: () {
+            widget.inputController.text = '';
+            widget.onChange != null ? widget.onChange!('') : null;
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
         ),
+        labelText: 'Продукт',
       ),
     );
   }
