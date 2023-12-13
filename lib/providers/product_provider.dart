@@ -91,7 +91,10 @@ class ProductProvider extends ErrorHandler {
       _products[existProdIndex].units == Units.kg
           ? _products[existProdIndex].amount -= 0.5
           : _products[existProdIndex].amount--;
-      _checkIfExistsSelected();
+          if(_products[existProdIndex].amount == 0) {
+            _products[existProdIndex].isFire = false;
+          }
+      _checkIfExistsSelected(); // to set Icon on FAB
       logger.i('EEEEEE(()()()) $isAnySelected');
       notifyListeners();
     } else {
