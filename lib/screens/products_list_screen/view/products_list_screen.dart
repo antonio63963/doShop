@@ -26,13 +26,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
 
   late ProductProvider productProvider;
   List<Product> _productsList = [];
-  String _searchData = '';
 
-  void onInput(String value) {
-    setState(() {
-      _searchData = value;
-    });
-  }
 
   @override
   void didChangeDependencies() {
@@ -57,7 +51,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    _productsList = productProvider.search(_searchData);
+    _productsList = productProvider.products;
 
     return Scaffold(
       appBar: AppBar(
@@ -87,7 +81,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
           child: ListView(
             children: [
-              SearchInput(onInput: onInput),
+              SearchInput(onInput: (String value) => productProvider.setSearchData(value)),
              const TagsSection(),
               _productsList.isNotEmpty
                   ? Padding(

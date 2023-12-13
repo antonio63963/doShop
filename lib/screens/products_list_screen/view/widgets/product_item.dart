@@ -101,12 +101,6 @@ class _ProductItemState extends State<ProductItem> {
                               fontWeight: FontWeight.w700,
                             ),
                           ),
-                          // child: SvgPicture.asset(
-                          //   'assets/icons/basket_minus.svg',
-                          //   width: 24,
-                          //   colorFilter: const ColorFilter.mode(
-                          //       MyColors.white, BlendMode.srcIn),
-                          // ),
                         ),
                       ),
                     ),

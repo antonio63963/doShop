@@ -11,14 +11,21 @@ class ProductProvider extends ErrorHandler {
   List<Product> _products = [];
   List<String> tags = [];
   bool isAnySelected = false;
+  String? _selectedTag;
   String searchData = '';
 
   void setTag(String? tag) {
-    if(tag == null || tags.contains(tag)) {
+    if (tag == null || tags.contains(tag)) {
       return;
-    }else {
+    } else {
       tags.add(tag);
     }
+  }
+
+  void setSelectedTag(String? tag) {
+    logger.f('set Selected $tag');
+    _selectedTag = tag;
+    notifyListeners();
   }
 
   void setSearchData(String data) {
@@ -27,7 +34,17 @@ class ProductProvider extends ErrorHandler {
   }
 
   List<Product> get products {
-    return [..._products];
+    final filterResult = filterByTag(_selectedTag, [..._products]);
+    return filterByInput(searchData, filterResult);
+  }
+
+  List<Product> filterByTag(String? tag, List<Product> productsList) {
+    if (tag != null) {
+      return productsList
+          .where((prod) => prod.tag!.toLowerCase().contains(tag.toLowerCase()))
+          .toList();
+    }
+    return productsList;
   }
 
   void creanProductsList() {
@@ -90,9 +107,9 @@ class ProductProvider extends ErrorHandler {
   }
 
   void _checkIfExistsSelected() {
-      isAnySelected = false;
-    for(var i=0; i<_products.length; i++) {
-      if(_products[i].amount > 0) {
+    isAnySelected = false;
+    for (var i = 0; i < _products.length; i++) {
+      if (_products[i].amount > 0) {
         isAnySelected = true;
         break;
       }
@@ -122,21 +139,12 @@ class ProductProvider extends ErrorHandler {
     return products;
   }
 
-  List<Product> sortByInput(String searchData) {
-    final res = searchData == ''
-        ? sortAZ(products)
-        : products.where((prod) =>
-            prod.title.toLowerCase().contains(searchData.toLowerCase()));
-    return res.toList();
-  }
-
-  List<Product> search(String searchData) {
-    logger.i('Serch data client input on Event create: $searchData $products');
-    if (searchData == '') return [..._products];
-    final res = [...products]
+  List<Product> filterByInput(String searchData, List<Product> productsList) {
+    if (productsList.isEmpty) return [];
+    if (searchData == '') return productsList;
+    return productsList
         .where((prod) =>
             prod.title.toLowerCase().contains(searchData.toLowerCase()))
         .toList();
-    return res;
   }
 }

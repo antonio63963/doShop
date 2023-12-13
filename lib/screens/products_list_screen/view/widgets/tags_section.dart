@@ -13,7 +13,7 @@ class TagsSection extends StatelessWidget {
     final productProvider = Provider.of<ProductProvider>(context);
     final tags = productProvider
         .tags
-        .map((tag) => ElevatedButton(onPressed: () => productProvider.setSearchData(tag), child: Text(tag)), )
+        .map((tag) => ElevatedButton(onPressed: () => productProvider.setSelectedTag(tag), child: Text(tag)), )
         .toList();
     return ScrollableRow(
       widgets: tags,
