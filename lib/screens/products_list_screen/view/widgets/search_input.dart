@@ -1,3 +1,4 @@
+import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 import 'package:doshop_app/widgets/exports.dart';
@@ -19,7 +20,12 @@ class _SearchInputState extends State<SearchInput> {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 30),
+        padding: EdgeInsets.only(
+          top: 30,
+          bottom: 20,
+          left: AppPadding.bodyHorizontal,
+          right: AppPadding.bodyHorizontal,
+        ),
         child: Input(
           inputController: _searchController,
           onChange: widget.onInput,

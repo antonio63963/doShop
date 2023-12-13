@@ -1,3 +1,4 @@
+import 'package:doshop_app/screens/products_list_screen/view/widgets/tags_section.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -59,20 +60,39 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
     _productsList = productProvider.search(_searchData);
 
     return Scaffold(
-      appBar: AppBar(title: Text('${_screenArguments.title}')),
+      appBar: AppBar(
+        title: Text('${_screenArguments.title}  ${_screenArguments.subtitle}'),
+        actions: [
+          IconButton(
+            onPressed: () => Navigator.of(context)
+                .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false),
+            icon: const Icon(
+              Icons.home,
+              color: MyColors.primary,
+            ),
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.more_vert,
+              color: MyColors.primary,
+            ),
+          ),
+        ],
+      ),
       body: RefreshIndicator(
         onRefresh: () =>
             productProvider.getProductsByCategory(context, _screenArguments.id),
         child: GestureDetector(
           onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-          child: Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: AppPadding.bodyHorizontal),
-            child: ListView(
-              children: [
-                SearchInput(onInput: onInput),
-                _productsList.isNotEmpty
-                    ? ListView.builder(
+          child: ListView(
+            children: [
+              SearchInput(onInput: onInput),
+             const TagsSection(),
+              _productsList.isNotEmpty
+                  ? Padding(
+                    padding: EdgeInsets.symmetric(horizontal: AppPadding.bodyHorizontal),
+                    child: ListView.builder(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemCount: _productsList.length,
@@ -85,12 +105,12 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                             prod: prod,
                             idx: idx,
                           );
-                        })
-                    : const Center(
-                        child: Text('Пока что нет товаров'),
-                      ),
-              ],
-            ),
+                        }),
+                  )
+                  : const Center(
+                      child: Text('Пока что нет товаров'),
+                    ),
+            ],
           ),
         ),
       ),

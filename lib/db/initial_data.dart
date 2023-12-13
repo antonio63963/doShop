@@ -143,7 +143,8 @@ List<Product> products = [
     title: "Курица",
     subtitle: 'Охлажденая',
     units: Units.thing,
-    icon: 'assets/icons/grocery/chicken.png'
+    icon: 'assets/icons/grocery/chicken.png',
+    tag: 'Курица',
   ),
   Product(
     id: 2,
@@ -151,6 +152,7 @@ List<Product> products = [
     title: "Курица четверть",
     units: Units.kg,
     icon: 'assets/icons/grocery/hen_repair.png',
+    tag: 'Курица',
   ),
   Product(
     id: 3,
@@ -158,41 +160,47 @@ List<Product> products = [
     title: "Курица крылья",
     units: Units.kg,
     icon: 'assets/icons/grocery/hen_repair.png',
+    tag: 'Курица',
   ),
   Product(
     id: 4,
     catId: 11,
     title: "Курица филе",
     units: Units.kg,
-    icon: 'assets/icons/grocery/hen_repair.png'
+    icon: 'assets/icons/grocery/hen_repair.png',
+    tag: 'Курица',
   ),
   Product(
     id: 5,
     catId: 11,
     title: "Индейка филе",
     units: Units.kg,
-    icon: 'assets/icons/grocery/hen_repair.png'
+    icon: 'assets/icons/grocery/hen_repair.png',
+    tag: 'Индейка',
   ),
   Product(
     id: 6,
     catId: 11,
     title: "Индейка бедро",
     units: Units.kg,
-    icon: 'assets/icons/grocery/hen_repair.png'
+    icon: 'assets/icons/grocery/hen_repair.png',
+    tag: 'Индейка',
   ),
   Product(
     id: 7,
     catId: 11,
     title: "Говядина филе",
     units: Units.kg,
-    icon: 'assets/icons/grocery/steak.png'
+    icon: 'assets/icons/grocery/steak.png',
+    tag: 'Говядина',
   ),
   Product(
     id: 8,
     catId: 11,
     title: "Говядина ребро",
     units: Units.kg,
-    icon: 'assets/icons/grocery/steak.png'
+    icon: 'assets/icons/grocery/steak.png',
+    tag: 'Говядина'
   ),
   Product(
     id: 9,
@@ -201,6 +209,7 @@ List<Product> products = [
     subtitle: 'Свежее',
     units: Units.kg,
     icon: 'assets/icons/grocery/big_leg.png',
+    tag: 'Свинина',
   ),
   Product(
     id: 10,
@@ -209,6 +218,7 @@ List<Product> products = [
     subtitle: 'Свежее',
     units: Units.kg,
     icon: 'assets/icons/grocery/big_leg.png',
+    tag: 'Свинина',
   ),
   Product(
     id: 11,
@@ -217,6 +227,7 @@ List<Product> products = [
     subtitle: 'Заморозка',
     units: Units.kg,
     icon: 'assets/icons/grocery/big_leg.png',
+    tag: 'Свинина',
   ),
   Product(
     id: 12,
@@ -225,6 +236,7 @@ List<Product> products = [
     subtitle: 'Копченный',
     units: Units.kg,
     icon: 'assets/icons/grocery/kolbasa.png',
+    tag: 'Мясопродкуты',
   ),
   Product(
     id: 13,
@@ -233,6 +245,7 @@ List<Product> products = [
     subtitle: 'Свежее',
     units: Units.kg,
     icon: 'assets/icons/grocery/big_leg.png',
+    tag: 'Свинина',
   ),
   Product(
     id: 14,
@@ -240,6 +253,7 @@ List<Product> products = [
     title: "колбаса сыровяленая",
     units: Units.kg,
     icon: 'assets/icons/grocery/kolbasa.png',
+    tag: 'Мясопродкуты',
   ),
   Product(
     id: 15,
@@ -247,6 +261,7 @@ List<Product> products = [
     title: "колбаса вареная",
     units: Units.kg,
     icon: 'assets/icons/grocery/kolbasa.png',
+    tag: 'Мясопродкуты',
   ),
   Product(
     id: 16,
@@ -254,6 +269,7 @@ List<Product> products = [
     title: "Сосиски",
     units: Units.kg,
     icon: 'assets/icons/grocery/kolbasa.png',
+    tag: 'Мясопродкуты',
   ),
   Product(
     id: 17,
@@ -261,6 +277,7 @@ List<Product> products = [
     title: "Сардельки",
     units: Units.kg,
     icon: 'assets/icons/grocery/kolbasa.png',
+    tag: 'Мясопродкуты',
   ),
   // Milk
   Product(
@@ -270,6 +287,7 @@ List<Product> products = [
     subtitle: 'Веселый фермер',
     units: Units.lt,
     icon: 'assets/icons/grocery/milk.png',
+    tag: 'Молоко',
   ),
   Product(
     id: 19,
@@ -278,6 +296,7 @@ List<Product> products = [
     subtitle: 'Веселый фермер',
     units: Units.lt,
     icon: 'assets/icons/grocery/cheese.png',
+    tag: 'Сыр',
   ),
   Product(
     id: 20,
@@ -286,6 +305,7 @@ List<Product> products = [
     subtitle: 'Веселый фермер',
     units: Units.lt,
     icon: 'assets/icons/grocery/cheese.png',
+    tag: 'Сыр',
   ),
   Product(
     id: 21,
@@ -294,6 +314,7 @@ List<Product> products = [
     subtitle: 'Веселый фермер',
     units: Units.lt,
     icon: 'assets/icons/grocery/yogurt.png',
+    tag: 'Молокопродукты',
   ),
   // Fish
   Product(
@@ -302,6 +323,7 @@ List<Product> products = [
     title: "Хек",
     subtitle: 'Заморозка',
     units: Units.kg,
+    tag: 'Мороз',
   ),
   Product(
     id: 23,
@@ -309,6 +331,7 @@ List<Product> products = [
     title: "Минтай",
     subtitle: 'Заморозка',
     units: Units.kg,
+    tag: 'Мороз',
   ),
   Product(
     id: 24,
@@ -316,6 +339,7 @@ List<Product> products = [
     title: "Семга",
     subtitle: 'Заморозка',
     units: Units.kg,
+    tag: 'Мороз',
   ),
   Product(
     id: 25,
@@ -323,6 +347,7 @@ List<Product> products = [
     title: "Скумбрия",
     subtitle: 'Заморозка',
     units: Units.kg,
+    tag: 'Маринад',
   ),
   Product(
     id: 26,
@@ -330,6 +355,7 @@ List<Product> products = [
     title: "Селедка",
     subtitle: 'Соленая',
     units: Units.kg,
+    tag: 'Маринад',
   ),
   Product(
     id: 27,
@@ -337,6 +363,7 @@ List<Product> products = [
     title: "Морская капуста",
     subtitle: 'Готовая',
     units: Units.kg,
+    tag: 'Морепродукты',
   ),
 // bakaleya
   Product(
@@ -345,6 +372,7 @@ List<Product> products = [
     title: "Хлопья Овсяные",
     subtitle: 'Хуторок',
     units: Units.kg,
+    tag: 'Хлопья',
   ),
   Product(
     id: 29,
@@ -352,6 +380,7 @@ List<Product> products = [
     title: "Хлопья 7 злаков",
     subtitle: 'Хуторок',
     units: Units.kg,
+    tag: 'Хлопья',
   ),
   Product(
     id: 30,
@@ -359,6 +388,7 @@ List<Product> products = [
     title: "Крупа гречневая",
     subtitle: 'Хуторок',
     units: Units.kg,
+    tag: 'Крупа',
   ),
   Product(
     id: 31,
@@ -366,36 +396,42 @@ List<Product> products = [
     title: "Крупа кукурузная",
     subtitle: 'Хуторок',
     units: Units.kg,
+    tag: 'Крупа',
   ),
   Product(
     id: 32,
     catId: 14,
     title: "Лапша",
     units: Units.kg,
+    tag: 'Pasta',
   ),
   Product(
     id: 33,
     catId: 14,
     title: "Соль",
     units: Units.kg,
+    tag: '# 1',
   ),
   Product(
     id: 34,
     catId: 14,
     title: "Сахар песок",
     units: Units.kg,
+    tag: '# 1',
   ),
   Product(
     id: 35,
     catId: 14,
     title: "Масло подсолнечное",
     units: Units.lt,
+    tag: '# 1',
   ),
   Product(
     id: 36,
     catId: 14,
     title: "Яйца",
     units: Units.thing,
+    tag: '# 1',
   ),
 // species
   Product(
@@ -449,90 +485,105 @@ List<Product> products = [
     catId: 16,
     title: "Картофель",
     units: Units.kg,
+    tag: 'Овощи',
   ),
   Product(
     id: 45,
     catId: 16,
     title: "Капуста",
     units: Units.kg,
+    tag: 'Овощи',
   ),
   Product(
     id: 46,
     catId: 16,
     title: "Морковь",
     units: Units.kg,
+    tag: 'Овощи',
   ),
   Product(
     id: 47,
     catId: 16,
     title: "Свекла",
     units: Units.kg,
+    tag: 'Овощи',
   ),
   Product(
     id: 48,
     catId: 16,
     title: "Лук репчатый",
     units: Units.kg,
+    tag: 'Овощи',
   ),
   Product(
     id: 49,
     catId: 16,
     title: "Чеснок",
     units: Units.kg,
+    tag: 'Овощи',
   ),
   Product(
     id: 50,
     catId: 16,
     title: "Помидор",
     units: Units.kg,
+    tag: 'Овощи',
   ),
   Product(
     id: 51,
     catId: 16,
     title: "Огурец",
     units: Units.kg,
+    tag: 'Овощи',
   ),
   Product(
     id: 52,
     catId: 16,
     title: "Перец",
     units: Units.kg,
+    tag: 'Овощи',
   ),
   Product(
     id: 53,
     catId: 16,
     title: "Яблоки",
     units: Units.kg,
+    tag: 'Фрукты',
   ),
   Product(
     id: 54,
     catId: 16,
     title: "Апельсины",
     units: Units.kg,
+    tag: 'Фрукты',
   ),
   Product(
     id: 55,
     catId: 16,
     title: "Бананы",
     units: Units.kg,
+    tag: 'Фрукты',
   ),
   Product(
     id: 56,
     catId: 16,
     title: "Укроп",
     units: Units.pack,
+    tag: 'Зелень',
   ),
   Product(
     id: 57,
     catId: 16,
     title: "Петрушка",
     units: Units.pack,
+    tag: 'Зелень',
   ),
   Product(
     id: 58,
     catId: 16,
     title: "Сельдирей",
     units: Units.pack,
+    tag: 'Зелень',
   ),
 
 ];

@@ -2,7 +2,7 @@ const String tableProducts = 'products';
 
 class ProductFields {
   static String values =
-      'id, catId, title, subtitle, icon, photos, units, description, isShown';
+      'id, catId, title, subtitle, icon, photos, units, tag, description, isShown';
   static const String id = 'id';
   static const String catId = 'catId';
   static const String title = 'title';
@@ -10,6 +10,7 @@ class ProductFields {
   static const String icon = 'icon';
   static const String photos = 'photos';
   static const String units = 'units';
+  static const String tag = 'tag';
   static const String description = 'description';
   static const String isShown = 'isShown';
 }
@@ -23,6 +24,7 @@ class Product {
   String? catImg;
   List<int>? photos;
   String units;
+  String? tag;
   String? description;
   bool isShown;
   int? colorBg;
@@ -39,6 +41,7 @@ class Product {
     this.catImg,
     this.photos,
     required this.units,
+    this.tag,
     this.description,
     this.isShown = true,
     this.colorBg,
@@ -56,6 +59,7 @@ class Product {
     String? catImg,
     List<int>? photos,
     String? units,
+    String? tag,
     String? description,
     bool? isShown,
     int? colorBg,
@@ -69,6 +73,7 @@ class Product {
         catImg: catImg ?? this.catImg,
         photos: photos ?? this.photos,
         units: units ?? this.units,
+        tag: tag ?? this.tag,
         description: description ?? this.description,
         isShown: isShown ?? this.isShown,
         colorBg: colorBg ?? this.colorBg,
@@ -84,6 +89,7 @@ class Product {
           ? json[ProductFields.subtitle] as String
           : null,
       units: json[ProductFields.units] as String,
+      tag: json[ProductFields.tag] as String,
       icon: json[ProductFields.icon] != null
           ? json[ProductFields.icon] as String
           : null,

@@ -40,8 +40,8 @@ class SqlInitialData {
     final values = products.map((prod) => '''
     (
       ${prod.id}, ${prod.catId}, "${prod.title}", "${prod.subtitle}",
-      "${prod.icon}", ${prod.photos}, "${prod.units}", "${prod.description}",
-      ${prod.isShown ? 1 : 0}
+      "${prod.icon}", ${prod.photos}, "${prod.units}", "${prod.tag}", 
+      "${prod.description}", ${prod.isShown ? 1 : 0}
     )
   ''');
 

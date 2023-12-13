@@ -36,6 +36,7 @@ class SqlTables {
       ${ProductFields.icon} TEXT,
       ${ProductFields.photos} TEXT,
       ${ProductFields.units} TEXT,
+      ${ProductFields.tag} TEXT,
       ${ProductFields.description} TEXT,
       ${ProductFields.isShown} INTEGER DEFAULT 1 NOT NULL
     );

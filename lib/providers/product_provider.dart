@@ -9,9 +9,17 @@ import '../utils/constants.dart';
 
 class ProductProvider extends ErrorHandler {
   List<Product> _products = [];
+  List<String> tags = [];
   bool isAnySelected = false;
-
   String searchData = '';
+
+  void setTag(String? tag) {
+    if(tag == null || tags.contains(tag)) {
+      return;
+    }else {
+      tags.add(tag);
+    }
+  }
 
   void setSearchData(String data) {
     searchData = data;
@@ -31,6 +39,9 @@ class ProductProvider extends ErrorHandler {
   Future<void> getProductsByCategory(BuildContext context, int catId) async {
     GetIt.I<AbstractDB>().getProuductsByCategory(catId).then((prods) {
       _products = prods != null ? sortAZ(prods) : [];
+      for (var prod in _products) {
+        setTag(prod.tag);
+      }
       notifyListeners();
     }).catchError((err) {
       logger.e('Products by Category: $err');

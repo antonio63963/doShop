@@ -25,6 +25,7 @@ class SqlQueries {
     $tableProducts.${ProductFields.isShown},
     $tableProducts.${ProductFields.subtitle}, 
     $tableProducts.${ProductFields.units},
+    $tableProducts.${ProductFields.tag},
     $tableProducts.${ProductFields.icon},
     $tableSubcategories.${SubcategoryFields.img},
     $tableCategories.${CategoryProdFields.colorBg}

@@ -31,9 +31,6 @@ class _ProductItemState extends State<ProductItem> {
         borderRadius: BorderRadius.circular(5),
         elevation: 3,
         child: ListTile(
-          // contentPadding: EdgeInsets.symmetric(
-          //   vertical: 16, horizontal: 16,
-          // ),
           tileColor: Color(widget.prod.colorBg ?? MyColors.defaultBG),
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -67,17 +64,10 @@ class _ProductItemState extends State<ProductItem> {
               fontSize: 14,
             ),
           ),
-
           trailing: widget.prod.amount > 0
               ? Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    // SvgPicture.asset(
-                    //   'assets/icons/fire_fill.svg',
-                    //   width: 24,
-                    //   colorFilter: ColorFilter.mode(MyColors.accent, BlendMode.srcIn),
-                    // ),
-                    // const SizedBox(width: 16),
                     Container(
                       padding: const EdgeInsets.all(10),
                       child: Text(
@@ -102,14 +92,21 @@ class _ProductItemState extends State<ProductItem> {
                           ),
                         ),
                         alignment: Alignment.center,
-                        child: FittedBox(
+                        child: const FittedBox(
                           child: Text(
                             '-',
-                            style: theme.textTheme.bodyLarge?.copyWith(
+                            style: TextStyle(
                               color: MyColors.white,
-                              fontWeight: FontWeight.w600,
+                              fontSize: 24,
+                              fontWeight: FontWeight.w700,
                             ),
                           ),
+                          // child: SvgPicture.asset(
+                          //   'assets/icons/basket_minus.svg',
+                          //   width: 24,
+                          //   colorFilter: const ColorFilter.mode(
+                          //       MyColors.white, BlendMode.srcIn),
+                          // ),
                         ),
                       ),
                     ),
