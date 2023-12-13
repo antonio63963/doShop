@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../models/exports.dart';
 import 'package:doshop_app/utils/constants.dart';
 
+import 'secondary_button.dart';
+
 class ShowError extends StatelessWidget {
   final ErrorAlert error;
   final BuildContext ctx;
@@ -32,12 +34,14 @@ class ShowError extends StatelessWidget {
             size: 24,
           ),
           const SizedBox(width: 16),
-          FittedBox(
-            child: Text(
-              error.title,
-              style: theme.textTheme.bodyLarge?.copyWith(
-                color: MyColors.danger,
-                fontWeight: FontWeight.w600,
+          Expanded(
+            child: FittedBox(
+              child: Text(
+                error.title,
+                style: theme.textTheme.bodyLarge?.copyWith(
+                  color: MyColors.danger,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
@@ -56,12 +60,12 @@ class ShowError extends StatelessWidget {
             onPressed: onRepeat,
             child: const Text('Обновить'),
           ),
-        // SecondaryButton(
-        //   text: 'Ok',
-        //   onPressed: () {
-        //     Navigator.of(ctx).pop();
-        //   },
-        // )
+        SecondaryButton(
+          text: 'Ok',
+          onPressed: () {
+            Navigator.of(ctx).pop();
+          },
+        )
       ],
     );
   }
