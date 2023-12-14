@@ -8,24 +8,37 @@ class SqlTables {
   static String createCategories = '''
     CREATE TABLE IF NOT EXISTS $tableCategories(
       ${CategoryProdFields.id} $idType,
+      ${CategoryProdFields.parentId} INTEGER,
       ${CategoryProdFields.title} $textType,
+      ${CategoryProdFields.subtitle} $textType,
       ${CategoryProdFields.img} TEXT,
       ${CategoryProdFields.isShown} INTEGER DEFAULT 1 NOT NULL,
-      ${CategoryProdFields.subcategories} INTEGER DEFAULT 0 NOT NULL,
-      ${CategoryProdFields.colorBg} INTEGER
+      ${CategoryProdFields.hasSubcategories} INTEGER DEFAULT 0 NOT NULL,
+      ${CategoryProdFields.colorBg} INTEGER,
+      ${CategoryProdFields.isSubcat} INTEGER
     );
   ''';
+  // static String createCategories = '''
+  //   CREATE TABLE IF NOT EXISTS $tableCategories(
+  //     ${CategoryProdFields.id} $idType,
+  //     ${CategoryProdFields.title} $textType,
+  //     ${CategoryProdFields.img} TEXT,
+  //     ${CategoryProdFields.isShown} INTEGER DEFAULT 1 NOT NULL,
+  //     ${CategoryProdFields.subcategories} INTEGER DEFAULT 0 NOT NULL,
+  //     ${CategoryProdFields.colorBg} INTEGER
+  //   );
+  // ''';
 
-  static String createSubcategories = '''
-    CREATE TABLE IF NOT EXISTS $tableSubcategories(
-      ${SubcategoryFields.id} $idType,
-      ${SubcategoryFields.title} $textType,
-      ${SubcategoryFields.subtitle} TEXT,
-      ${SubcategoryFields.img} TEXT,
-      ${SubcategoryFields.isShown} INTEGER DEFAULT 1 NOT NULL,
-      ${SubcategoryFields.parentId} INTEGER
-    );
-  ''';
+  // static String createSubcategories = '''
+  //   CREATE TABLE IF NOT EXISTS $tableSubcategories(
+  //     ${SubcategoryFields.id} $idType,
+  //     ${SubcategoryFields.title} $textType,
+  //     ${SubcategoryFields.subtitle} TEXT,
+  //     ${SubcategoryFields.img} TEXT,
+  //     ${SubcategoryFields.isShown} INTEGER DEFAULT 1 NOT NULL,
+  //     ${SubcategoryFields.parentId} INTEGER
+  //   );
+  // ''';
 
   static String createProducts = '''
     CREATE TABLE IF NOT EXISTS $tableProducts(

@@ -19,7 +19,7 @@ class SubcategoriesScreen extends StatefulWidget {
 }
 
 class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
-  List<Subcategory> _subcategories = [];
+  List<CategoryProd> _subcategories = [];
   bool isInit = false;
   bool isLoaded = false;
   late SubcategoriesScreenArguments _screenArguments;
@@ -124,12 +124,14 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
                               catImg: sub.img ?? DefaultValues.img,
                               subtitle: sub.subtitle ?? '',
                               colorBg: sub.colorBg ?? MyColors.defaultBG,
+                              isSubcats: sub.isSubcat,
                             ),
                           );
                         },
                       );
                     },
-                  )
+                  ),
+                  const SizedBox(height: 30),
                 ],
               ),
             ),

@@ -42,13 +42,13 @@ class LocalDB implements AbstractDB {
   Future<void> _createDB(Database db, int version) async {
     await db.execute('PRAGMA foreign_keys=on;');
     await db.execute(SqlTables.createCategories);
-    await db.execute(SqlTables.createSubcategories);
+    // await db.execute(SqlTables.createSubcategories);
     await db.execute(SqlTables.createProducts);
 
     final response = await db.rawQuery(SqlInitialData.initCategories());
     logger.d('Added Categ: $response');
-    final subs = await db.rawQuery(SqlInitialData.initSubcategories());
-    logger.d('Added SUB: $subs');
+    // final subs = await db.rawQuery(SqlInitialData.initSubcategories());
+    // logger.d('Added SUB: $subs');
     try{
       final prods = await db.rawQuery(SqlInitialData.initProducts());
     } catch(err) {
@@ -74,17 +74,18 @@ class LocalDB implements AbstractDB {
   }
 
   @override
-  Future<List<Subcategory>?> getSubcategories(int catId) async {
+  Future<List<CategoryProd>?> getSubcategories(int catId) async {
     final db = await instance.database;
     final response = await db?.rawQuery(SqlQueries.subcategoriesByCatId(catId));
     logger.i('SUbCatEGORIES: $response');
 
-    final a = response?.map((sub) => Subcategory.fromJSON(sub)).toList();
+    final a = response?.map((sub) => CategoryProd.fromJSON(sub)).toList();
     logger.d('WOW: $a');
     return a;
   }
 
   //Products
+  @override
   Future<List<Product>?> getProuductsByCategory(int catId) async {
     print('IDDDDD::::: $catId');
     final db = await instance.database;

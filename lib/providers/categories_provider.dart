@@ -13,7 +13,7 @@ class CategoriesProvider extends ErrorHandler {
     return [..._categories];
   }
 
-  Future<List<Subcategory>?> getSubcategoriesList(
+  Future<List<CategoryProd>?> getSubcategoriesList(
       BuildContext context, int catId) async {
     try {
       return await GetIt.I<AbstractDB>().getSubcategories(catId);

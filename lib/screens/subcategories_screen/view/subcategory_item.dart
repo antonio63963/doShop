@@ -3,7 +3,7 @@ import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class SubcategoryItem extends StatelessWidget {
-  final Subcategory sub;
+  final CategoryProd sub;
   final Function onTap;
   const SubcategoryItem({
     required this.sub,

@@ -1,22 +1,30 @@
-import 'package:doshop_app/db/initial_data.dart';
-
 import '../../models/exports.dart';
 
 class SqlQueries {
   static String allCategories = '''
-    SELECT ${CategoryProdFields.id}, ${CategoryProdFields.title}, ${CategoryProdFields.isShown}, ${CategoryProdFields.img}, ${CategoryProdFields.subcategories}, 
+    SELECT
+     ${CategoryProdFields.id}, ${CategoryProdFields.title}, ${CategoryProdFields.isShown}, ${CategoryProdFields.img}, ${CategoryProdFields.hasSubcategories},
+    ${CategoryProdFields.isSubcat},
     ${CategoryProdFields.colorBg}
     FROM $tableCategories
+    WHERE $tableCategories.${CategoryProdFields.isSubcat} = 0
   ''';
 
   static String subcategoriesByCatId(int catId) {
     return '''
-      SELECT $tableSubcategories.*, $tableCategories.${CategoryProdFields.colorBg}
-      FROM $tableSubcategories
-      JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $catId
-      WHERE $tableSubcategories.${SubcategoryFields.parentId} = $catId
+      SELECT $tableCategories.*
+      FROM $tableCategories
+      WHERE $tableCategories.${CategoryProdFields.parentId} = $catId
     ''';
   }
+  // static String subcategoriesByCatId(int catId) {
+  //   return '''
+  //     SELECT $tableSubcategories.*, $tableCategories.${CategoryProdFields.colorBg}
+  //     FROM $tableSubcategories
+  //     JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $catId
+  //     WHERE $tableSubcategories.${SubcategoryFields.parentId} = $catId
+  //   ''';
+  // }
 
   static String productsByCategoryId(int catId) => '''
     SELECT $tableProducts.${ProductFields.id},
@@ -27,11 +35,10 @@ class SqlQueries {
     $tableProducts.${ProductFields.units},
     $tableProducts.${ProductFields.tag},
     $tableProducts.${ProductFields.icon},
-    $tableSubcategories.${SubcategoryFields.img},
+    $tableCategories.${CategoryProdFields.img},
     $tableCategories.${CategoryProdFields.colorBg}
     FROM $tableProducts
-    JOIN $tableSubcategories ON $tableSubcategories.${SubcategoryFields.id} = $catId
-    JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $tableSubcategories.${SubcategoryFields.parentId}
+    JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $catId
     WHERE $tableProducts.${ProductFields.catId} = $catId
   ''';
 }

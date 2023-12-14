@@ -60,7 +60,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
               return CategoryItem(
                 category: cat,
                 onTap: () {
-                  cat.subcategories
+                  cat.hasSubcategories
                       ? Navigator.of(context)
                           .pushNamed(SubcategoriesScreen.routeName,
                               arguments: SubcategoriesScreenArguments(
@@ -76,6 +76,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                             title: cat.title,
                             colorBg: cat.colorBg ?? MyColors.defaultBG,
                             catImg: cat.img ?? DefaultValues.img,
+                            isSubcats: cat.isSubcat,
                           ),
                         );
                 },

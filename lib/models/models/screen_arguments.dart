@@ -17,6 +17,7 @@ class ProductsScreenArguments {
   final String? subtitle;
   final int colorBg;
   final String catImg;
+  final bool isSubcats;
 
   ProductsScreenArguments({
     required this.id,
@@ -24,5 +25,6 @@ class ProductsScreenArguments {
     this.subtitle,
     required this.colorBg,
     required this.catImg,
+    required this.isSubcats,
   });
 }

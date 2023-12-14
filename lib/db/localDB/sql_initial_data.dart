@@ -6,10 +6,12 @@ class SqlInitialData {
   static String initCategories() {
     final values = categories.map((cat) => '''
     (
-      ${cat.id}, "${cat.title}","${cat.img}",
-      ${cat.isShown != null && cat.isShown! ? 1 : 0},
-      ${cat.subcategories != null && cat.subcategories! ? 1 : 0},
-      ${cat.colorBg}
+      ${cat.id}, ${cat.parentId}, "${cat.title}", "${cat.subtitle}", 
+      "${cat.img}",
+      ${cat.isShown ? 1 : 0},
+      ${cat.colorBg},
+      ${cat.isSubcat ? 1 : 0},
+      ${cat.hasSubcategories ? 1 : 0}
     )
   ''');
     final valuesString = values.join(',');
@@ -19,22 +21,22 @@ class SqlInitialData {
       ''';
   }
 
-  static String initSubcategories() {
-    final values = subcategories.map((sub) => '''
-    (
-      ${sub.id}, "${sub.title}", "${sub.subtitle}",
-      "${sub.img}",
-      ${sub.isShown != null && sub.isShown! ? 1 : 0}, 
-      ${sub.parentId}
-    )
-  ''');
+  // static String initSubcategories() {
+  //   final values = subcategories.map((sub) => '''
+  //   (
+  //     ${sub.id}, "${sub.title}", "${sub.subtitle}",
+  //     "${sub.img}",
+  //     ${sub.isShown != null && sub.isShown! ? 1 : 0}, 
+  //     ${sub.parentId}
+  //   )
+  // ''');
 
-    final valuesString = values.join(',');
-    return '''
-        INSERT INTO $tableSubcategories (${SubcategoryFields.values})
-        VALUES $valuesString
-      ''';
-  }
+  //   final valuesString = values.join(',');
+  //   return '''
+  //       INSERT INTO $tableSubcategories (${SubcategoryFields.values})
+  //       VALUES $valuesString
+  //     ''';
+  // }
 
   static String initProducts() {
     final values = products.map((prod) => '''
