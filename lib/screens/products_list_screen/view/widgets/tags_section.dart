@@ -1,3 +1,4 @@
+import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -11,16 +12,25 @@ class TagsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
-    final tags = productProvider.tags
-        .map(
-          (tag) => ElevatedButton(
-            onPressed: () => productProvider.setSelectedTag(tag),
-            style: ElevatedButton.styleFrom(
-                    backgroundColor: MyColors.primary),
-            child: Text(tag, style: TextStyle(color: MyColors.white)),
+    final tags = productProvider.tags.asMap().entries.map((entry) {
+      int idx = entry.key;
+      ProductTag tag = entry.value;
+      return ElevatedButton(
+        onPressed: () => productProvider.setSelectedTag(idx),
+        style: ElevatedButton.styleFrom(
+          backgroundColor:
+              tag.isSelected ? MyColors.primary : MyColors.lightPurple,
+        ),
+        child: Text(
+          tag.tag,
+          style: TextStyle(
+            color: tag.isSelected ? MyColors.white : MyColors.secondary,
+            fontWeight: FontWeight.w600,
           ),
-        )
-        .toList();
+        ),
+      );
+    }).toList();
+    print("TAGFGGG: $tags");
     return ScrollableRow(
       widgets: tags,
       paddingLeft: AppPadding.bodyHorizontal,

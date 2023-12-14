@@ -4,6 +4,8 @@ const String defaultFont = 'Montserrat';
 
 class MyColors {
   static const Color primary = Color.fromRGBO(65, 44, 85, 1);
+  static const Color secondary = Color.fromRGBO(99, 52, 143, 1);
+  static const Color lightPurple = Color.fromRGBO(210, 192, 228, 1);
   static const Color accent = Color(0xFFFC8832);
   // static const Color accent = Color(0xFFEF8630);
   static const Color white = Color.fromRGBO(255, 255, 255, 1);

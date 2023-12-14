@@ -9,22 +9,30 @@ import '../utils/constants.dart';
 
 class ProductProvider extends ErrorHandler {
   List<Product> _products = [];
-  List<String> tags = [];
+  List<ProductTag> tags = [];
   bool isAnySelected = false;
-  String? _selectedTag;
+  int? _selectedTagIdx;
   String searchData = '';
 
-  void setTag(String? tag) {
-    if (tag == null || tags.contains(tag)) {
-      return;
-    } else {
-      tags.add(tag);
+  void setTagToArray(String? tag) {
+    if (tag == null) return;
+    final idx = tags.indexWhere((el) => el.tag == tag);
+    if (idx == -1) {
+      tags.add(ProductTag(tag: tag));
     }
   }
 
-  void setSelectedTag(String? tag) {
-    logger.f('set Selected $tag');
-    _selectedTag = tag;
+  void setSelectedTag(int idx) {
+    if (_selectedTagIdx is int) {
+      tags[_selectedTagIdx!].isSelected = false;
+    }
+
+    if (_selectedTagIdx != idx) {
+      _selectedTagIdx = idx;
+      tags[idx].isSelected = true;
+    } else {
+      _selectedTagIdx = null;
+    }
     notifyListeners();
   }
 
@@ -34,14 +42,15 @@ class ProductProvider extends ErrorHandler {
   }
 
   List<Product> get products {
-    final filterResult = filterByTag(_selectedTag, [..._products]);
+    final filterResult = filterByTag(_selectedTagIdx, [..._products]);
     return filterByInput(searchData, filterResult);
   }
 
-  List<Product> filterByTag(String? tag, List<Product> productsList) {
-    if (tag != null) {
+  List<Product> filterByTag(int? tagIdx, List<Product> productsList) {
+    if (tagIdx != null) {
       return productsList
-          .where((prod) => prod.tag!.toLowerCase().contains(tag.toLowerCase()))
+          .where((prod) =>
+              prod.tag!.toLowerCase().contains(tags[tagIdx].tag.toLowerCase()))
           .toList();
     }
     return productsList;
@@ -51,6 +60,7 @@ class ProductProvider extends ErrorHandler {
     _products = [];
     isAnySelected = false;
     tags = [];
+    _selectedTagIdx = null;
     notifyListeners();
   }
 
@@ -58,7 +68,7 @@ class ProductProvider extends ErrorHandler {
     GetIt.I<AbstractDB>().getProuductsByCategory(catId).then((prods) {
       _products = prods != null ? sortAZ(prods) : [];
       for (var prod in _products) {
-        setTag(prod.tag);
+        setTagToArray(prod.tag);
       }
       notifyListeners();
     }).catchError((err) {
@@ -92,9 +102,9 @@ class ProductProvider extends ErrorHandler {
       _products[existProdIndex].units == Units.kg
           ? _products[existProdIndex].amount -= 0.5
           : _products[existProdIndex].amount--;
-          if(_products[existProdIndex].amount == 0) {
-            _products[existProdIndex].isFire = false;
-          }
+      if (_products[existProdIndex].amount == 0) {
+        _products[existProdIndex].isFire = false;
+      }
       _checkIfExistsSelected(); // to set Icon on FAB
       logger.i('EEEEEE(()()()) $isAnySelected');
       notifyListeners();
