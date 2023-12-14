@@ -49,6 +49,7 @@ class Units {
   static String pack = "уп.";
   static String block = "блок";
   static String lt = "л.";
+  static String couple = 'пара';
 }
 
 class DefaultValues {

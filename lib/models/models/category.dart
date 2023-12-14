@@ -23,7 +23,7 @@ class CategoryProd {
   String? img;
   bool? isShown;
 
-  bool? subcategories;
+  bool subcategories = false;
   int? colorBg;
 
   CategoryProd({
@@ -33,7 +33,7 @@ class CategoryProd {
     this.img,
     this.isShown = true,
 
-    this.subcategories,
+    this.subcategories = false,
     this.colorBg,
   });
 

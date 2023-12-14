@@ -50,6 +50,7 @@ class ProductProvider extends ErrorHandler {
   void creanProductsList() {
     _products = [];
     isAnySelected = false;
+    tags = [];
     notifyListeners();
   }
 

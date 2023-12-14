@@ -98,3 +98,9 @@ class Product {
     );
   }
 }
+
+class ProductTag {
+  final String tag;
+  bool isSelected = false;
+  ProductTag({required this.tag, this.isSelected = false});
+}

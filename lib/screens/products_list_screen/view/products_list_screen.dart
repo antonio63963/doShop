@@ -34,6 +34,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
       _screenArguments =
           ModalRoute.of(context)?.settings.arguments as ProductsScreenArguments;
       productProvider = Provider.of<ProductProvider>(context);
+      logger.d('++++++ProdScreen+++++ : $_screenArguments');
       Provider.of<ProductProvider>(context)
           .getProductsByCategory(context, _screenArguments.id);
       isInit = true;

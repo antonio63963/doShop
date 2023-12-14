@@ -11,9 +11,15 @@ class TagsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final productProvider = Provider.of<ProductProvider>(context);
-    final tags = productProvider
-        .tags
-        .map((tag) => ElevatedButton(onPressed: () => productProvider.setSelectedTag(tag), child: Text(tag)), )
+    final tags = productProvider.tags
+        .map(
+          (tag) => ElevatedButton(
+            onPressed: () => productProvider.setSelectedTag(tag),
+            style: ElevatedButton.styleFrom(
+                    backgroundColor: MyColors.primary),
+            child: Text(tag, style: TextStyle(color: MyColors.white)),
+          ),
+        )
         .toList();
     return ScrollableRow(
       widgets: tags,

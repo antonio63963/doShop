@@ -44,7 +44,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
         child: ListView(children: [
           const SizedBox(height: 32),
-           FastEnterForm(),
+          FastEnterForm(),
           const SizedBox(height: 32),
           GridView.builder(
             shrinkWrap: true,
@@ -60,17 +60,24 @@ class _CategoriesPageState extends State<CategoriesPage> {
               return CategoryItem(
                 category: cat,
                 onTap: () {
-                  Navigator.of(context).pushNamed(
-                    cat.subcategories!
-                        ? SubcategoriesScreen.routeName
-                        : ProductsListScreen.routeName,
-                    arguments: SubcategoriesScreenArguments(
-                      id: cat.id!,
-                      title: cat.title,
-                      colorBg: cat.colorBg ?? MyColors.defaultBG,
-                      catImg: cat.img ?? DefaultValues.img,
-                    ),
-                  );
+                  cat.subcategories
+                      ? Navigator.of(context)
+                          .pushNamed(SubcategoriesScreen.routeName,
+                              arguments: SubcategoriesScreenArguments(
+                                id: cat.id!,
+                                title: cat.title,
+                                colorBg: cat.colorBg ?? MyColors.defaultBG,
+                                catImg: cat.img ?? DefaultValues.img,
+                              ))
+                      : Navigator.of(context).pushNamed(
+                          ProductsListScreen.routeName,
+                          arguments: ProductsScreenArguments(
+                            id: cat.id!,
+                            title: cat.title,
+                            colorBg: cat.colorBg ?? MyColors.defaultBG,
+                            catImg: cat.img ?? DefaultValues.img,
+                          ),
+                        );
                 },
               );
             },
