@@ -24,7 +24,7 @@ class _ProductItemState extends State<ProductItem> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-
+print('ICON: ${widget.prod.icon}');
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Material(
@@ -38,7 +38,7 @@ class _ProductItemState extends State<ProductItem> {
             width: 56,
             height: 56,
             child: Image.asset(
-                widget.prod.icon ?? widget.prod.catImg ?? DefaultValues.img,
+                widget.prod.icon != null ? widget.prod.icon! : DefaultValues.icon,
                 fit: BoxFit.contain),
           ),
           title: Row(

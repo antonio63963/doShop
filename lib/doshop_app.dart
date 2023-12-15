@@ -1,5 +1,6 @@
 
 import 'package:doshop_app/providers/product_provider.dart';
+import 'package:doshop_app/screens/home_screen/exports.dart';
 import 'package:doshop_app/themes/appTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
