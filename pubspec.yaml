@@ -69,7 +69,12 @@ flutter:
   assets:
     - assets/img/categories/
     - assets/icons/grocery/
-    - assets/icons/
+    - assets/icons/grocery/meat/
+    - assets/icons/grocery/milk/
+    - assets/icons/grocery/fish/
+    - assets/icons/grocery/bakaleya/
+    - assets/icons/grocery/fruit/
+    - assets/icons/grocery/species/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -17,14 +17,6 @@ class SqlQueries {
       WHERE $tableCategories.${CategoryProdFields.parentId} = $catId
     ''';
   }
-  // static String subcategoriesByCatId(int catId) {
-  //   return '''
-  //     SELECT $tableSubcategories.*, $tableCategories.${CategoryProdFields.colorBg}
-  //     FROM $tableSubcategories
-  //     JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $catId
-  //     WHERE $tableSubcategories.${SubcategoryFields.parentId} = $catId
-  //   ''';
-  // }
 
   static String productsByCategoryId(int catId) => '''
     SELECT $tableProducts.${ProductFields.id},
@@ -40,5 +32,21 @@ class SqlQueries {
     FROM $tableProducts
     JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $catId
     WHERE $tableProducts.${ProductFields.catId} = $catId
+  ''';
+
+  static String allProductsBySearch(String searchData) => '''
+    SELECT $tableProducts.${ProductFields.id},
+    $tableProducts.${ProductFields.catId},
+    $tableProducts.${ProductFields.title},
+    $tableProducts.${ProductFields.isShown},
+    $tableProducts.${ProductFields.subtitle}, 
+    $tableProducts.${ProductFields.units},
+    $tableProducts.${ProductFields.tag},
+    $tableProducts.${ProductFields.icon},
+    $tableCategories.${CategoryProdFields.img},
+    $tableCategories.${CategoryProdFields.colorBg}
+    FROM $tableProducts
+    JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $tableProducts.${ProductFields.catId}
+    WHERE $tableProducts.${ProductFields.title} LIKE %$searchData%;
   ''';
 }

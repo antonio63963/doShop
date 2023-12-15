@@ -158,7 +158,7 @@ List<Product> products = [
     title: "Курица",
     subtitle: 'Охлажденая',
     units: Units.thing,
-    icon: 'assets/icons/grocery/chicken.png',
+    icon: 'assets/icons/grocery/meat/chicken.png',
     tag: 'Курица',
   ),
   Product(
@@ -166,7 +166,7 @@ List<Product> products = [
     catId: 11,
     title: "Курица четверть",
     units: Units.kg,
-    icon: 'assets/icons/grocery/hen_repair.png',
+    icon: 'assets/icons/grocery/meat/hen_repair.png',
     tag: 'Курица',
   ),
   Product(
@@ -174,7 +174,7 @@ List<Product> products = [
     catId: 11,
     title: "Курица крылья",
     units: Units.kg,
-    icon: 'assets/icons/grocery/hen_repair.png',
+    icon: 'assets/icons/grocery/meat/hen_repair.png',
     tag: 'Курица',
   ),
   Product(
@@ -182,7 +182,7 @@ List<Product> products = [
     catId: 11,
     title: "Курица филе",
     units: Units.kg,
-    icon: 'assets/icons/grocery/hen_repair.png',
+    icon: 'assets/icons/grocery/meat/hen_repair.png',
     tag: 'Курица',
   ),
   Product(
@@ -190,7 +190,7 @@ List<Product> products = [
     catId: 11,
     title: "Индейка филе",
     units: Units.kg,
-    icon: 'assets/icons/grocery/hen_repair.png',
+    icon: 'assets/icons/grocery/meat/hen_repair.png',
     tag: 'Индейка',
   ),
   Product(
@@ -198,7 +198,7 @@ List<Product> products = [
     catId: 11,
     title: "Индейка бедро",
     units: Units.kg,
-    icon: 'assets/icons/grocery/hen_repair.png',
+    icon: 'assets/icons/grocery/meat/hen_repair.png',
     tag: 'Индейка',
   ),
   Product(
@@ -206,7 +206,7 @@ List<Product> products = [
     catId: 11,
     title: "Говядина филе",
     units: Units.kg,
-    icon: 'assets/icons/grocery/steak.png',
+    icon: 'assets/icons/grocery/meat/steak.png',
     tag: 'Говядина',
   ),
   Product(
@@ -214,7 +214,7 @@ List<Product> products = [
       catId: 11,
       title: "Говядина ребро",
       units: Units.kg,
-      icon: 'assets/icons/grocery/steak.png',
+      icon: 'assets/icons/grocery/meat/steak.png',
       tag: 'Говядина'),
   Product(
     id: 9,
@@ -222,7 +222,7 @@ List<Product> products = [
     title: "Свинина ребро",
     subtitle: 'Свежее',
     units: Units.kg,
-    icon: 'assets/icons/grocery/big_leg.png',
+    icon: 'assets/icons/grocery/meat/big_leg.png',
     tag: 'Свинина',
   ),
   Product(
@@ -231,7 +231,7 @@ List<Product> products = [
     title: "Свинина филе",
     subtitle: 'Свежее',
     units: Units.kg,
-    icon: 'assets/icons/grocery/big_leg.png',
+    icon: 'assets/icons/grocery/meat/big_leg.png',
     tag: 'Свинина',
   ),
   Product(
@@ -240,7 +240,7 @@ List<Product> products = [
     title: "Свинина шея",
     subtitle: 'Заморозка',
     units: Units.kg,
-    icon: 'assets/icons/grocery/big_leg.png',
+    icon: 'assets/icons/grocery/meat/big_leg.png',
     tag: 'Свинина',
   ),
   Product(
@@ -249,7 +249,7 @@ List<Product> products = [
     title: "Свинина подчеревок",
     subtitle: 'Копченный',
     units: Units.kg,
-    icon: 'assets/icons/grocery/kolbasa.png',
+    icon: 'assets/icons/grocery/meat/kolbasa.png',
     tag: 'Мясопродкуты',
   ),
   Product(
@@ -258,7 +258,7 @@ List<Product> products = [
     title: "Свинина подчеревок",
     subtitle: 'Свежее',
     units: Units.kg,
-    icon: 'assets/icons/grocery/big_leg.png',
+    icon: 'assets/icons/grocery/meat/big_leg.png',
     tag: 'Свинина',
   ),
   Product(
@@ -266,7 +266,7 @@ List<Product> products = [
     catId: 11,
     title: "колбаса сыровяленая",
     units: Units.kg,
-    icon: 'assets/icons/grocery/kolbasa.png',
+    icon: 'assets/icons/grocery/meat/kolbasa.png',
     tag: 'Мясопродкуты',
   ),
   Product(
@@ -274,7 +274,7 @@ List<Product> products = [
     catId: 11,
     title: "колбаса вареная",
     units: Units.kg,
-    icon: 'assets/icons/grocery/kolbasa.png',
+    icon: 'assets/icons/grocery/meat/kolbasa.png',
     tag: 'Мясопродкуты',
   ),
   Product(
@@ -282,7 +282,7 @@ List<Product> products = [
     catId: 11,
     title: "Сосиски",
     units: Units.kg,
-    icon: 'assets/icons/grocery/kolbasa.png',
+    icon: 'assets/icons/grocery/meat/kolbasa.png',
     tag: 'Мясопродкуты',
   ),
   Product(
@@ -290,7 +290,7 @@ List<Product> products = [
     catId: 11,
     title: "Сардельки",
     units: Units.kg,
-    icon: 'assets/icons/grocery/kolbasa.png',
+    icon: 'assets/icons/grocery/meat/kolbasa.png',
     tag: 'Мясопродкуты',
   ),
   // Milk
@@ -300,7 +300,7 @@ List<Product> products = [
     title: "Молоко 2,5%",
     subtitle: 'Веселый фермер',
     units: Units.lt,
-    icon: 'assets/icons/grocery/milk.png',
+    icon: 'assets/icons/grocery/milk/milk.png',
     tag: 'Молоко',
   ),
   Product(
@@ -309,7 +309,7 @@ List<Product> products = [
     title: "Сыр гауда",
     subtitle: 'Веселый фермер',
     units: Units.lt,
-    icon: 'assets/icons/grocery/cheese.png',
+    icon: 'assets/icons/grocery/milk/cheese.png',
     tag: 'Сыр',
   ),
   Product(
@@ -318,7 +318,7 @@ List<Product> products = [
     title: "Сыр плавленый",
     subtitle: 'Веселый фермер',
     units: Units.lt,
-    icon: 'assets/icons/grocery/cheese.png',
+    icon: 'assets/icons/grocery/milk/cheese.png',
     tag: 'Сыр',
   ),
   Product(
@@ -327,7 +327,7 @@ List<Product> products = [
     title: "Йогурт",
     subtitle: 'Веселый фермер',
     units: Units.lt,
-    icon: 'assets/icons/grocery/yogurt.png',
+    icon: 'assets/icons/grocery/milk/yogurt.png',
     tag: 'Молокопродукты',
   ),
   // Fish
@@ -338,6 +338,7 @@ List<Product> products = [
     subtitle: 'Заморозка',
     units: Units.kg,
     tag: 'Мороз',
+    icon: 'assets/icons/grocery/fish/fish_band.png',
   ),
   Product(
     id: 23,
@@ -346,6 +347,7 @@ List<Product> products = [
     subtitle: 'Заморозка',
     units: Units.kg,
     tag: 'Мороз',
+    icon: 'assets/icons/grocery/fish/fish_band.png',
   ),
   Product(
     id: 24,
@@ -354,6 +356,7 @@ List<Product> products = [
     subtitle: 'Заморозка',
     units: Units.kg,
     tag: 'Мороз',
+    icon: 'assets/icons/grocery/fish/red_fish.png',
   ),
   Product(
     id: 25,
@@ -362,6 +365,7 @@ List<Product> products = [
     subtitle: 'Заморозка',
     units: Units.kg,
     tag: 'Маринад',
+    icon: 'assets/icons/grocery/fish/red_fish.png',
   ),
   Product(
     id: 26,
@@ -370,6 +374,7 @@ List<Product> products = [
     subtitle: 'Соленая',
     units: Units.kg,
     tag: 'Маринад',
+    icon: 'assets/icons/grocery/fish/fish_box.png',
   ),
   Product(
     id: 27,
@@ -378,6 +383,7 @@ List<Product> products = [
     subtitle: 'Готовая',
     units: Units.kg,
     tag: 'Морепродукты',
+    icon: 'assets/icons/grocery/fish/octopus.png',
   ),
 // bakaleya
   Product(
@@ -387,6 +393,7 @@ List<Product> products = [
     subtitle: 'Хуторок',
     units: Units.kg,
     tag: 'Хлопья',
+    icon: 'assets/icons/grocery/bakaleya/boxes.png',
   ),
   Product(
     id: 29,
@@ -395,6 +402,7 @@ List<Product> products = [
     subtitle: 'Хуторок',
     units: Units.kg,
     tag: 'Хлопья',
+    icon: 'assets/icons/grocery/bakaleya/boxes.png',
   ),
   Product(
     id: 30,
@@ -403,6 +411,7 @@ List<Product> products = [
     subtitle: 'Хуторок',
     units: Units.kg,
     tag: 'Крупа',
+    icon: 'assets/icons/grocery/bakaleya/corn.png',
   ),
   Product(
     id: 31,
@@ -411,6 +420,7 @@ List<Product> products = [
     subtitle: 'Хуторок',
     units: Units.kg,
     tag: 'Крупа',
+    icon: 'assets/icons/grocery/bakaleya/corn.png',
   ),
   Product(
     id: 32,
@@ -418,6 +428,7 @@ List<Product> products = [
     title: "Лапша",
     units: Units.kg,
     tag: 'Pasta',
+    icon: 'assets/icons/grocery/bakaleya/pasta.png',
   ),
   Product(
     id: 33,
@@ -425,6 +436,7 @@ List<Product> products = [
     title: "Соль",
     units: Units.kg,
     tag: '# 1',
+    icon: 'assets/icons/grocery/bakaleya/boxes.png',
   ),
   Product(
     id: 34,
@@ -432,6 +444,7 @@ List<Product> products = [
     title: "Сахар песок",
     units: Units.kg,
     tag: '# 1',
+    icon: 'assets/icons/grocery/bakaleya/boxes.png',
   ),
   Product(
     id: 35,
@@ -439,6 +452,7 @@ List<Product> products = [
     title: "Масло подсолнечное",
     units: Units.lt,
     tag: '# 1',
+    icon: 'assets/icons/grocery/bakaleya/oil.png',
   ),
   Product(
     id: 36,
@@ -446,6 +460,7 @@ List<Product> products = [
     title: "Яйца",
     units: Units.thing,
     tag: '# 1',
+    icon: 'assets/icons/grocery/bakaleya/eggs.png',
   ),
 // species
   Product(

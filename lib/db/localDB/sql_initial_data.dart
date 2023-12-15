@@ -2,6 +2,7 @@ import 'package:doshop_app/models/exports.dart';
 
 import '../initial_data.dart';
 
+
 class SqlInitialData {
   static String initCategories() {
     final values = categories.map((cat) => '''
