@@ -2,9 +2,11 @@ import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class Input extends StatefulWidget {
+  final String? label;
   final TextEditingController inputController;
   final Function(String)? onChange;
   const Input({
+    this.label,
     required this.inputController,
     this.onChange,
     super.key,
@@ -40,7 +42,7 @@ class _InputState extends State<Input> {
             FocusManager.instance.primaryFocus?.unfocus();
           },
         ),
-        labelText: 'Продукт',
+        labelText: widget.label ?? 'Продукт',
       ),
     );
   }

@@ -6,6 +6,6 @@ import 'package:doshop_app/screens/subcategories_screen/exports.dart';
 
 final routes = {
   '/': (context) => const HomeScreen(),
-  SubcategoriesScreen.routeName: (context) => SubcategoriesScreen(),
-  ProductsListScreen.routeName: (context) => ProductsListScreen(),
+  SubcategoriesScreen.routeName: (context) => const SubcategoriesScreen(),
+  ProductsListScreen.routeName: (context) => const ProductsListScreen(),
 };
