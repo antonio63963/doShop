@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
-import '../../screens/products_list_screen/view/widgets/search_input.dart';
-
-class PageContent extends StatelessWidget {
+class PageContentWrapper extends StatelessWidget {
   final Future<void> Function() onRefresh;
   final List<Widget> widgets;
 
-  const PageContent({
+  const PageContentWrapper({
     required this.onRefresh,
     required this.widgets,
     super.key,

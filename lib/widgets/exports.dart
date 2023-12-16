@@ -6,4 +6,4 @@ export 'ui/secondary_button.dart';
 export 'ui/modal_bottom/modal_bottom_form_layout.dart';
 export 'ui/fab.dart';
 export 'ui/empty_screen.dart';
-export 'ui/pageContent.dart';
+export 'ui/page_content_wrapper.dart';

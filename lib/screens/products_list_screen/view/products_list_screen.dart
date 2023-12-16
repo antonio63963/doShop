@@ -9,8 +9,6 @@ import 'package:doshop_app/screens/products_list_screen/view/widgets/products_li
 import 'package:doshop_app/screens/products_list_screen/view/widgets/tags_section.dart';
 import 'package:doshop_app/utils/helper.dart';
 import 'package:doshop_app/widgets/exports.dart';
-
-
 import 'widgets/products_list.dart';
 import 'widgets/search_input.dart';
 
@@ -71,7 +69,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
         title: _screenArguments.title,
         subtitle: _screenArguments.subtitle ?? '',
       ),
-      body: PageContent(
+      body: PageContentWrapper(
         onRefresh: () =>
             productProvider.getProductsByCategory(context, _screenArguments.id),
         widgets: [
