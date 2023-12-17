@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/error_handler.dart';
 
@@ -41,6 +43,21 @@ class ProductProvider extends ErrorHandler {
     notifyListeners();
   }
 
+  // List<Product> allProductsBySearch(String searchData) {
+  //   Timer? checkTypingTimer;
+
+  //   startTimer() {
+  //     checkTypingTimer = Timer(const Duration(microseconds:600), () {
+
+  //     });
+  //   }
+
+  //   resetTimer() {
+  //     checkTypingTimer?.cancel();
+  //     startTimer();
+  //   }
+  // }
+  
   List<Product> get products {
     final filterResult = filterByTag(_selectedTagIdx, [..._products]);
     return filterByInput(searchData, filterResult);
