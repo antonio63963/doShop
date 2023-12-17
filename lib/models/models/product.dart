@@ -79,14 +79,6 @@ class Product {
         colorBg: colorBg ?? this.colorBg,
       );
 
-    // Map<String, Object?> toJson() => {
-    //     ProductFields.title: title,
-    //     ProductFields.phone1: phone1,
-    //     ProductFields.phone2: phone2,
-    //     ProductFields.telegram: telegram,
-    //     ProductFields.dateCreated: dateCreated.toIso8601String(),
-    //   };
-
   static Product fromJSON(Map<String, Object?> json) {
     return Product(
       id: json[ProductFields.id] as int,
@@ -98,9 +90,10 @@ class Product {
           : null,
       units: json[ProductFields.units] as String,
       tag: json[ProductFields.tag] as String,
-      icon: json[ProductFields.icon] != null && json[ProductFields.icon] != "null"
-          ? json[ProductFields.icon] as String
-          : null,
+      icon:
+          json[ProductFields.icon] != null && json[ProductFields.icon] != "null"
+              ? json[ProductFields.icon] as String
+              : null,
       catImg: json['img'] != null ? json['img'] as String : null,
       colorBg: json['colorBg'] != null ? json['colorBg'] as int : null,
     );
@@ -111,4 +104,13 @@ class ProductTag {
   final String tag;
   bool isSelected = false;
   ProductTag({required this.tag, this.isSelected = false});
+
+  @override
+  String toString() {
+    super.toString();
+    return '''
+      tag: $tag,
+      isSelected: $isSelected
+    ''';
+  }
 }
