@@ -5,10 +5,15 @@ class Input extends StatefulWidget {
   final String? label;
   final TextEditingController inputController;
   final Function(String)? onChange;
+  final double paddingVertical;
+  final double paddingHorizontal;
+
   const Input({
     this.label,
     required this.inputController,
     this.onChange,
+    this.paddingHorizontal = 16,
+    this.paddingVertical = 16,
     super.key,
   });
 
@@ -17,32 +22,40 @@ class Input extends StatefulWidget {
 }
 
 class _InputState extends State<Input> {
-  bool _isInputFocused = false;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      controller: widget.inputController,
-      onChanged: widget.onChange,
-      textAlignVertical: TextAlignVertical.center,
-      style: const TextStyle(color: MyColors.primary, fontSize: 16),
-      decoration: InputDecoration(
-        labelStyle: TextStyle(fontSize: 16),
-        border: const OutlineInputBorder(),
-        contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
-        suffix: IconButton(
-          icon: const Icon(
-            Icons.close,
-            color: MyColors.primary,
+    final theme = Theme.of(context);
+
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: widget.paddingHorizontal,
+        vertical: widget.paddingVertical,
+      ),
+      child: TextField(
+        controller: widget.inputController,
+        onChanged: widget.onChange,
+        textAlignVertical: TextAlignVertical.center,
+        style: const TextStyle(color: MyColors.primary, fontSize: 16),
+        decoration: InputDecoration(
+          labelStyle: theme.textTheme.labelMedium,
+          border: const OutlineInputBorder(),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 12, vertical: 0),
+          suffix: IconButton(
+            icon: const Icon(
+              Icons.close,
+              color: MyColors.primary,
+            ),
+            iconSize: 24,
+            onPressed: () {
+              widget.inputController.text = '';
+              widget.onChange != null ? widget.onChange!('') : null;
+              FocusManager.instance.primaryFocus?.unfocus();
+            },
           ),
-          iconSize: 24,
-          onPressed: () {
-            widget.inputController.text = '';
-            widget.onChange != null ? widget.onChange!('') : null;
-            FocusManager.instance.primaryFocus?.unfocus();
-          },
+          labelText: widget.label ?? 'Продукт',
         ),
-        labelText: widget.label ?? 'Продукт',
       ),
     );
   }

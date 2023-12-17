@@ -40,13 +40,14 @@ class _CategoriesPageState extends State<CategoriesPage> {
       onRefresh: () => categoriesProvider.getCategoriesList(context),
       // child: ElevatedButton(child: Text('test'), onPressed: () => SqlQueries.initCategories(),)
 
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: ListView(children: [
-          const SizedBox(height: 32),
-          FastEnterForm(),
-          const SizedBox(height: 32),
-          GridView.builder(
+      child: ListView(children: [
+        FastEnterForm(
+          paddingBottom: 16,
+          paddingTop: 16,
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: GridView.builder(
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -83,8 +84,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
               );
             },
           ),
-        ]),
-      ),
+        ),
+      ]),
     );
   }
 }

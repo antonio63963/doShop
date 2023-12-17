@@ -58,3 +58,18 @@ class DefaultValues {
   static String img = 'assets/img/categories/hobby.png';
   static String icon = 'assets/icons/label.png';
 }
+
+class IconsAssets {
+  static List<String> bakaleya = [
+    'boxes.png', 'corn.png', 'eggs.png', 'oil.png', 'pasta.png'
+  ];
+  static List<String> fish = [
+    'fish_band.png', 'fish_box.png', 'octopus.png', 'red_fish.png'
+  ];
+  static List<String> meat = [
+    'big_leg.png', 'chicken.png', 'hen_repair.png', 'kolbasa.png', 'steak.png'
+  ];
+  static List<String> milk = [
+    'cheese.png', 'milk.png', 'yogurt.png'
+  ];
+}

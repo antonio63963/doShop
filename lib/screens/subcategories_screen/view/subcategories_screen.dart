@@ -98,16 +98,13 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
       ),
       body: !isLoaded
           ? const Loading()
-          : Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: AppPadding.bodyHorizontal),
-              child: ListView(
-                children: [
-                  FastEnterForm(
-                    paddingBottom: 30,
-                    paddingTop: 30,
-                  ),
-                  ListView.builder(
+          : ListView(
+              children: [
+                FastEnterForm(),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: AppPadding.bodyHorizontal),
+                  child: ListView.builder(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: _subcategories.length,
@@ -131,9 +128,9 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
                       );
                     },
                   ),
-                  const SizedBox(height: 30),
-                ],
-              ),
+                ),
+                const SizedBox(height: 30),
+              ],
             ),
     );
   }

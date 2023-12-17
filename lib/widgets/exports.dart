@@ -7,3 +7,5 @@ export 'ui/modal_bottom/modal_bottom_form_layout.dart';
 export 'ui/fab.dart';
 export 'ui/empty_screen.dart';
 export 'ui/page_content_wrapper.dart';
+export 'ui/scrollable_row.dart';
+export 'ui/section_title.dart';

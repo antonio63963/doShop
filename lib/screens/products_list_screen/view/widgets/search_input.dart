@@ -19,17 +19,10 @@ class _SearchInputState extends State<SearchInput> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Container(
-        padding: EdgeInsets.only(
-          top: 30,
-          bottom: 20,
-          left: AppPadding.bodyHorizontal,
-          right: AppPadding.bodyHorizontal,
-        ),
-        child: Input(
-          inputController: _searchController,
-          onChange: widget.onInput,
-        ),
+      child: Input(
+        inputController: _searchController,
+        onChange: widget.onInput,
+        paddingVertical: 20,
       ),
     );
   }

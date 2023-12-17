@@ -33,7 +33,9 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
     Helper.showModal(
       context,
       ProductForm(
+        catId: _screenArguments.id,
         catImg: _screenArguments.catImg,
+        colorBg: Color(_screenArguments.colorBg),
       ),
     );
   }

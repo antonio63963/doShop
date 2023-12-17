@@ -22,8 +22,8 @@ final appTheme = ThemeData(
       ),
       labelMedium: const TextStyle(
         fontSize: 14,
-        fontWeight: FontWeight.w300,
-        color: MyColors.primary,
+        fontWeight: FontWeight.w500,
+        color: Color.fromARGB(255, 105, 105, 105),
       ),
       bodyLarge: const TextStyle(
         color: Colors.white,

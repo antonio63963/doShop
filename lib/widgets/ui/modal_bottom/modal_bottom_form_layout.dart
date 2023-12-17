@@ -35,59 +35,69 @@ class ModalBottomFormLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     final MediaQueryData mediaQueryData = MediaQuery.of(context);
 
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Container(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        padding: mediaQueryData.viewInsets,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: horizontalPadding ?? AppPadding.bodyHorizontal,
-            vertical: verticalPadding ?? AppPadding.bodyHorizontal,
-          ),
-          child: Form(
-            key: _formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                ModalHeader(
-                  catImg: catImg,
-                  title: title,
-                  onClose: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                ...widgets,
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SecondaryButton(
-                      onPressed: () {
-                        if (_formKey.currentState!.validate()) {
-                          onSubmit();
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing Data')),
-                          );
-                        }
-                      },
-                      text: submitTitle,
+    return Wrap(
+      children: [
+        GestureDetector(
+          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+          behavior: HitTestBehavior.opaque,
+          child: Container(
+            padding: mediaQueryData.viewInsets,
+            decoration: BoxDecoration(
+                color: Theme.of(context).scaffoldBackgroundColor,
+                borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(5.0),
+                    topRight: Radius.circular(5.0))),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ModalHeader(
+                    title: title,
+                    onClose: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  ...widgets,
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: AppPadding.bodyHorizontal,
+                      right: AppPadding.bodyHorizontal,
+                      bottom: 32,
+                      top: 32,
                     ),
-                    const SizedBox(width: 12),
-                    SecondaryButton(
-                      onPressed: () {
-                        if (onClose is Function) onClose!();
-                        Navigator.pop(context);
-                      },
-                      text: 'Отменить',
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        SecondaryButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              onSubmit();
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Processing Data')),
+                              );
+                            }
+                          },
+                          text: submitTitle,
+                        ),
+                        const SizedBox(width: 12),
+                        SecondaryButton(
+                          onPressed: () {
+                            if (onClose is Function) onClose!();
+                            Navigator.pop(context);
+                          },
+                          text: 'Отменить',
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-                const SizedBox(height: 15)
-              ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

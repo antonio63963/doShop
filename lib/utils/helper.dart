@@ -31,14 +31,10 @@ class Helper {
         backgroundColor: Colors.transparent,
         context: context,
         useRootNavigator: false,
-        // isScrollControlled: true,
+        isScrollControlled: true,
         isDismissible: true,
         builder: (context) {
-          return GestureDetector(
-            onTap: () {},
-            behavior: HitTestBehavior.opaque,
-            child: content,
-          );
+          return content;
         });
   }
 
@@ -84,23 +80,23 @@ class Helper {
 
   // for more radius first(top) and last(bottom) items
   ShapeBorder getBorderRadius(int idx, List<Object> list) {
-  if (idx == 0) {
-    return const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(18),
-            topRight: Radius.circular(18),
-            bottomRight: Radius.circular(5),
-            bottomLeft: Radius.circular(5)));
-  } else if (idx == list.length - 1) {
-    return const RoundedRectangleBorder(
-        borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(5),
-            topRight: Radius.circular(5),
-            bottomRight: Radius.circular(18),
-            bottomLeft: Radius.circular(18)));
-  } else {
-    return const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(Radius.circular(5)));
+    if (idx == 0) {
+      return const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(18),
+              topRight: Radius.circular(18),
+              bottomRight: Radius.circular(5),
+              bottomLeft: Radius.circular(5)));
+    } else if (idx == list.length - 1) {
+      return const RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(5),
+              topRight: Radius.circular(5),
+              bottomRight: Radius.circular(18),
+              bottomLeft: Radius.circular(18)));
+    } else {
+      return const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(5)));
+    }
   }
-}
 }
