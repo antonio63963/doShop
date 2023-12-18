@@ -18,6 +18,7 @@ class TagsSection extends StatelessWidget {
       return ElevatedButton(
         onPressed: () => productProvider.setSelectedTag(idx),
         style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.symmetric(horizontal: 12, vertical: 0),
           backgroundColor:
               tag.isSelected ? MyColors.primary : MyColors.lightPurple,
         ),

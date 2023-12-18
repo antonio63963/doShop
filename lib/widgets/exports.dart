@@ -9,3 +9,4 @@ export 'ui/empty_screen.dart';
 export 'ui/page_content_wrapper.dart';
 export 'ui/scrollable_row.dart';
 export 'ui/section_title.dart';
+export 'ui/tag_item.dart';

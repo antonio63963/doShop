@@ -40,7 +40,7 @@ class ModalHeader extends StatelessWidget {
               color: MyColors.primary,
             ),
             color: Colors.red,
-            highlightColor: MyColors.primary,
+            highlightColor: MyColors.lightPurple,
           ),
         ],
       ),

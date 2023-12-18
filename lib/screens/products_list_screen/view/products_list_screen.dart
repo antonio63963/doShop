@@ -1,3 +1,4 @@
+import 'package:doshop_app/utils/show_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,7 +8,6 @@ import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/screens/products_list_screen/view/form/product_form.dart';
 import 'package:doshop_app/screens/products_list_screen/view/widgets/products_list_appbar.dart';
 import 'package:doshop_app/screens/products_list_screen/view/widgets/tags_section.dart';
-import 'package:doshop_app/utils/helper.dart';
 import 'package:doshop_app/widgets/exports.dart';
 import 'widgets/products_list.dart';
 import 'widgets/search_input.dart';
@@ -30,7 +30,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   List<Product> _productsList = [];
 
   void openModal() {
-    Helper.showModal(
+    showModal(
       context,
       ProductForm(
         catId: _screenArguments.id,

@@ -1,3 +1,4 @@
+import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class ScrollableRow extends StatelessWidget {
@@ -41,7 +42,7 @@ class ScrollableRow extends StatelessWidget {
               Wrap(
                 spacing: 12,
                 runSpacing: 12,
-                children: widgets,
+                children: [SizedBox(width: AppPadding.bodyHorizontal / 2), ...widgets],
               ),
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 8.0),

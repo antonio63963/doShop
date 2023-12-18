@@ -6,6 +6,9 @@ final inputTheme = InputDecorationTheme(
   // focusedBorder: const UnderlineInputBorder(
   //   borderSide: BorderSide(color: MyColors.accent, width: 1.0),
   // ),
+  focusedBorder: const OutlineInputBorder(
+    borderSide: BorderSide(color: MyColors.accent, width: 1.0),
+  ),
   enabledBorder: OutlineInputBorder(
     borderSide: const BorderSide(color: MyColors.primary, width: 1.0),
     borderRadius: BorderRadius.circular(5),

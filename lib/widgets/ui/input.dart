@@ -5,15 +5,19 @@ class Input extends StatefulWidget {
   final String? label;
   final TextEditingController inputController;
   final Function(String)? onChange;
+  final bool autofocus;
   final double paddingVertical;
   final double paddingHorizontal;
+  final int maxLines;
 
   const Input({
     this.label,
     required this.inputController,
     this.onChange,
+    this.autofocus = false,
     this.paddingHorizontal = 16,
     this.paddingVertical = 16,
+    this.maxLines = 1,
     super.key,
   });
 
@@ -33,9 +37,11 @@ class _InputState extends State<Input> {
         vertical: widget.paddingVertical,
       ),
       child: TextField(
+        maxLines: widget.maxLines,
+        autofocus: widget.autofocus,
         controller: widget.inputController,
         onChanged: widget.onChange,
-        textAlignVertical: TextAlignVertical.center,
+        textAlign: TextAlign.center,
         style: const TextStyle(color: MyColors.primary, fontSize: 16),
         decoration: InputDecoration(
           labelStyle: theme.textTheme.labelMedium,

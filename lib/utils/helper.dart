@@ -19,25 +19,6 @@ class Helper {
     );
   }
 
-  static showModal(BuildContext context, Widget content) {
-    print("MOOOOODAAAL!!!!");
-    showModalBottomSheet(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        context: context,
-        useRootNavigator: false,
-        isScrollControlled: true,
-        isDismissible: true,
-        builder: (context) {
-          return content;
-        });
-  }
-
   static void showInfoAlert(BuildContext context, InfoAlert alert) {
     final theme = Theme.of(context);
     showDialog(

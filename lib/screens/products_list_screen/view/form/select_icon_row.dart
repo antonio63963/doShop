@@ -25,7 +25,6 @@ class SelectIconRow extends StatelessWidget {
           paddingTop: 32,
         ),
         ScrollableRow(
-          paddingLeft: AppPadding.bodyHorizontal,
           widthRow: 800,
           widgets: iconsList.asMap().entries.map((icon) {
             return GestureDetector(

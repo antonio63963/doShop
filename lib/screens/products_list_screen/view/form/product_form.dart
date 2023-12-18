@@ -1,15 +1,16 @@
-import 'package:doshop_app/models/exports.dart';
-import 'package:doshop_app/models/models/category.dart';
-import 'package:doshop_app/providers/product.service.dart';
-import 'package:doshop_app/screens/products_list_screen/view/form/select_icon_row.dart';
-import 'package:doshop_app/screens/products_list_screen/view/form/select_unit_row.dart';
-import 'package:doshop_app/widgets/ui/scrollable_row.dart';
+import 'package:doshop_app/screens/products_list_screen/view/form/info_input.dart';
+import 'package:doshop_app/screens/products_list_screen/view/form/tag_input.dart';
+import 'package:doshop_app/widgets/ui/tag_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 
-import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/utils/constants.dart';
+import 'package:doshop_app/providers/product_provider.dart';
+import 'package:doshop_app/models/exports.dart';
+import 'package:doshop_app/providers/product.service.dart';
+
+import 'package:doshop_app/screens/products_list_screen/view/form/select_icon_row.dart';
+import 'package:doshop_app/screens/products_list_screen/view/form/select_unit_row.dart';
 
 import 'package:doshop_app/widgets/exports.dart';
 
@@ -32,8 +33,14 @@ class ProductForm extends StatefulWidget {
 class _ProductFormState extends State<ProductForm> {
   TextEditingController titleController = TextEditingController();
   TextEditingController subtitleController = TextEditingController();
+  TextEditingController tagController = TextEditingController();
+  TextEditingController infoController = TextEditingController();
+  String selectedUnit = Units.kg;
+  String selectedIcon = DefaultValues.icon;
+
   List<ProductTag> iconsList = [];
   List<ProductTag> unitsList = [];
+  List<ProductTag> tagsList = [];
 
   void markIconAsSelected(int idx) {
     setState(() {
@@ -41,6 +48,7 @@ class _ProductFormState extends State<ProductForm> {
         e.isSelected = false;
       }
       iconsList[idx].isSelected = true;
+      selectedIcon = iconsList[idx].tag;
     });
   }
 
@@ -50,14 +58,16 @@ class _ProductFormState extends State<ProductForm> {
         e.isSelected = false;
       }
       unitsList[idx].isSelected = true;
+      selectedUnit = unitsList[idx].tag;
     });
   }
 
   @override
-  void initState() {
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
     iconsList = ProductService.getIconsByCat(widget.catId);
     unitsList = ProductService.unitsList;
+    tagsList = Provider.of<ProductProvider>(context).tags;
   }
 
   @override
@@ -67,13 +77,17 @@ class _ProductFormState extends State<ProductForm> {
       title: 'Добавить продукт',
       widgets: [
         Input(
-          label: 'Название товара',
+          label: 'Название товара*',
           inputController: titleController,
+          paddingVertical: 10,
         ),
         Input(
           label: 'Краткое описание',
           inputController: subtitleController,
+          paddingVertical: 10,
         ),
+        // InfoInput(infoController: infoController),
+        const TagInput(),
         SelectUnitRow(
           unitsList: unitsList,
           markUnitAsSelected: markUnitAsSelected,
@@ -82,7 +96,7 @@ class _ProductFormState extends State<ProductForm> {
           iconsList: iconsList,
           markIconAsSelected: markIconAsSelected,
           colorBg: widget.colorBg,
-        )
+        ),
       ],
       onSubmit: () {},
     );

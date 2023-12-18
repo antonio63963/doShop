@@ -24,14 +24,14 @@ class ProductProvider extends ErrorHandler {
     }
   }
 
-  void setSelectedTag(int idx) {
+  void setSelectedTag(int? idx) {
     if (_selectedTagIdx is int) {
       tags[_selectedTagIdx!].isSelected = false;
     }
 
-    if (_selectedTagIdx != idx) {
+    if (_selectedTagIdx != null && _selectedTagIdx != idx) {
       _selectedTagIdx = idx;
-      tags[idx].isSelected = true;
+      tags[idx!].isSelected = true;
     } else {
       _selectedTagIdx = null;
     }
