@@ -31,6 +31,9 @@ class Product {
   // for select
   double amount = 0;
   bool isFire = false;
+  // for full data
+  String? categoryTitle;
+  String? categorySubtitle;
 
   Product({
     this.id,
@@ -48,6 +51,8 @@ class Product {
     //for select
     this.amount = 0,
     this.isFire = false,
+    this.categoryTitle,
+    this.categorySubtitle,
   });
 
   Product copy({
@@ -63,6 +68,8 @@ class Product {
     String? info,
     bool? isShown,
     int? colorBg,
+    String? categoryTitle,
+    String? categorySubtitle,
   }) =>
       Product(
         id: id ?? this.id,
@@ -77,6 +84,8 @@ class Product {
         info: info ?? this.info,
         isShown: isShown ?? this.isShown,
         colorBg: colorBg ?? this.colorBg,
+        categoryTitle: categoryTitle ?? this.categoryTitle,
+        categorySubtitle: categorySubtitle ?? this.categorySubtitle,
       );
 
   Map<String, Object?> toJSON() => {
@@ -106,6 +115,8 @@ class Product {
               : null,
       catImg: json['img'] != null ? json['img'] as String : null,
       colorBg: json['colorBg'] != null ? json['colorBg'] as int : null,
+      categorySubtitle: json['categorySubtitle'] != null ? json['categorySubtitle'] as String : null,
+      categoryTitle: json['categoryTitle'] != null ? json['categoryTitle'] as String : null,
     );
   }
 }
