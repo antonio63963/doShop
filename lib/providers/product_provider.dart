@@ -29,13 +29,20 @@ class ProductProvider extends ErrorHandler {
       tags[_selectedTagIdx!].isSelected = false;
     }
 
-    if (_selectedTagIdx != null && _selectedTagIdx != idx) {
+    if (idx != null && _selectedTagIdx != idx) {
       _selectedTagIdx = idx;
-      tags[idx!].isSelected = true;
+      tags[idx].isSelected = true;
     } else {
       _selectedTagIdx = null;
     }
     notifyListeners();
+  }
+
+  List<ProductTag> copyTagsList() {
+    return tags.map((t) {
+      t.isSelected = false;
+      return t;
+    }).toList();
   }
 
   void setSearchData(String data) {
@@ -79,6 +86,24 @@ class ProductProvider extends ErrorHandler {
     tags = [];
     _selectedTagIdx = null;
     notifyListeners();
+  }
+
+    Future<Product?> createProduct(BuildContext context, Product product) async {
+    GetIt.I<AbstractDB>().createProduct(product).then((response) {
+      if(response != null) {
+        logger.d('CreatedProduct: ${response.toString()}');
+        _products.add(response);
+        if(response.tag != null) {
+          setTagToArray(response.tag);
+        }
+        notifyListeners();
+        return response;
+      }
+    }).catchError((err) {
+      logger.e('Create product, $err');
+      setErrorAlert(context: context, message: 'Не удалось создать продукт!');
+    });
+    return null;
   }
 
   Future<void> getProductsByCategory(BuildContext context, int catId) async {
