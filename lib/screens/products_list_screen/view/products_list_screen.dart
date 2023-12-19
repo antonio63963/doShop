@@ -24,7 +24,7 @@ class ProductsListScreen extends StatefulWidget {
 class _ProductsListScreenState extends State<ProductsListScreen> {
   bool isInit = false;
   bool isLoaded = false;
-  late ProductsScreenArguments _screenArguments;
+  late ProductsListScreenArguments _screenArguments;
 
   late ProductProvider productProvider;
   List<Product> _productsList = [];
@@ -45,7 +45,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   void didChangeDependencies() {
     if (!isInit) {
       _screenArguments =
-          ModalRoute.of(context)?.settings.arguments as ProductsScreenArguments;
+          ModalRoute.of(context)?.settings.arguments as ProductsListScreenArguments;
       productProvider = Provider.of<ProductProvider>(context);
       Provider.of<ProductProvider>(context)
           .getProductsByCategory(context, _screenArguments.id);

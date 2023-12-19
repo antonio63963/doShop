@@ -14,20 +14,21 @@ class TagItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onClick,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 8,
-        ),
-        decoration: BoxDecoration(
-          borderRadius: const BorderRadius.all(Radius.circular(20)),
-          color: tag.isSelected ? MyColors.primary : MyColors.lightPurple,
-        ),
-        child: Row(
-          children: [
-            Row(
+    return Wrap(
+      children: [
+        GestureDetector(
+          onTap: onClick,
+          child: Container(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 12,
+              vertical: 8,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              color: tag.isSelected ? MyColors.primary : MyColors.lightPurple,
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 tag.isSelected
                     ? const Padding(
@@ -46,9 +47,9 @@ class TagItem extends StatelessWidget {
                 ),
               ],
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

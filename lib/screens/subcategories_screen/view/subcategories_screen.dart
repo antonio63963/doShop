@@ -115,7 +115,7 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
                         onTap: () {
                           Navigator.of(context).pushNamed(
                             ProductsListScreen.routeName,
-                            arguments: ProductsScreenArguments(
+                            arguments: ProductsListScreenArguments(
                               id: sub.id!,
                               title: sub.title,
                               catImg: sub.img ?? DefaultValues.img,
