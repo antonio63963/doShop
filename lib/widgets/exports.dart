@@ -10,3 +10,4 @@ export 'ui/page_content_wrapper.dart';
 export 'ui/scrollable_row.dart';
 export 'ui/section_title.dart';
 export 'ui/tag_item.dart';
+export 'ui/single_product_icon.dart';
