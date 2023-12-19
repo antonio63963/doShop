@@ -8,7 +8,14 @@ import 'package:provider/provider.dart';
 import 'package:doshop_app/widgets/exports.dart';
 
 class TagInput extends StatefulWidget {
-  const TagInput({super.key});
+  final List<ProductTag> tagsList;
+  final TextEditingController tagController;
+
+  const TagInput({
+    required this.tagsList,
+    required this.tagController,
+    super.key,
+  });
 
   @override
   State<TagInput> createState() => _TagInputState();
@@ -28,17 +35,8 @@ class _TagInputState extends State<TagInput> {
   }
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    tagsList = Provider.of<ProductProvider>(context).tags.map((e) {
-      e.isSelected = false;
-      return e;
-    }).toList();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    final productProvider = Provider.of<ProductProvider>(context);
+logger.i('TagInput: ${widget.tagsList}');
     return isInput
         ? Row(
             mainAxisSize: MainAxisSize.min,
@@ -51,7 +49,12 @@ class _TagInputState extends State<TagInput> {
                 ),
               ),
               IconButton(
-                icon: SvgPicture.asset('assets/icons/tagsList.svg', width: 24, colorFilter: const ColorFilter.mode( MyColors.primary, BlendMode.srcIn),),
+                icon: SvgPicture.asset(
+                  'assets/icons/tagsList.svg',
+                  width: 24,
+                  colorFilter:
+                      const ColorFilter.mode(MyColors.primary, BlendMode.srcIn),
+                ),
                 onPressed: () => setState(() {
                   isInput = false;
                   isAutofocus = false;
@@ -62,7 +65,7 @@ class _TagInputState extends State<TagInput> {
           )
         : Wrap(
             children: [
-              SectionTitle(title: 'Выбрать Тэг'),
+             const SectionTitle(title: 'Выбрать Тэг'),
               ScrollableRow(
                 widthRow: 1000,
                 widgets: [
@@ -75,7 +78,7 @@ class _TagInputState extends State<TagInput> {
                     },
                     tag: ProductTag(tag: 'Новый тэг', isSelected: false),
                   ),
-                  ...tagsList
+                  ...widget.tagsList
                       .asMap()
                       .entries
                       .map(

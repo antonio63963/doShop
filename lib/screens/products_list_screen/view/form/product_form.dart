@@ -1,14 +1,13 @@
-import 'package:doshop_app/screens/products_list_screen/view/form/info_input.dart';
-import 'package:doshop_app/screens/products_list_screen/view/form/tag_input.dart';
-import 'package:doshop_app/widgets/ui/tag_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'package:doshop_app/utils/validators.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/product.service.dart';
 
+import 'package:doshop_app/screens/products_list_screen/view/form/tag_input.dart';
 import 'package:doshop_app/screens/products_list_screen/view/form/select_icon_row.dart';
 import 'package:doshop_app/screens/products_list_screen/view/form/select_unit_row.dart';
 
@@ -17,12 +16,14 @@ import 'package:doshop_app/widgets/exports.dart';
 class ProductForm extends StatefulWidget {
   final String? catImg;
   final int catId;
-  final Color colorBg;
+  final int colorBg;
+  final List<ProductTag> tagsList;
 
   const ProductForm({
     this.catImg,
     required this.catId,
     required this.colorBg,
+    required this.tagsList,
     super.key,
   });
 
@@ -31,6 +32,7 @@ class ProductForm extends StatefulWidget {
 }
 
 class _ProductFormState extends State<ProductForm> {
+  ProductProvider? productProvider;
   TextEditingController titleController = TextEditingController();
   TextEditingController subtitleController = TextEditingController();
   TextEditingController tagController = TextEditingController();
@@ -38,9 +40,11 @@ class _ProductFormState extends State<ProductForm> {
   String selectedUnit = Units.kg;
   String selectedIcon = DefaultValues.icon;
 
+  bool isLoading = false;
+
   List<ProductTag> iconsList = [];
   List<ProductTag> unitsList = [];
-  List<ProductTag> tagsList = [];
+  // List<ProductTag> tagsList = [];
 
   void markIconAsSelected(int idx) {
     setState(() {
@@ -58,7 +62,28 @@ class _ProductFormState extends State<ProductForm> {
         e.isSelected = false;
       }
       unitsList[idx].isSelected = true;
+      unitsList = [
+        unitsList[idx],
+        ...unitsList.where((e) => e.tag != unitsList[idx].tag)
+      ];
       selectedUnit = unitsList[idx].tag;
+    });
+  }
+
+  dynamic submitForm(BuildContext context) {
+    setState(() {
+      isLoading = true;
+    });
+    final prod = Product(
+        catId: widget.catId,
+        title: titleController.text,
+        subtitle: subtitleController.text,
+        units: selectedUnit,
+        icon: selectedIcon,
+        tag: tagController.text,
+        colorBg: widget.colorBg);
+    productProvider?.createProduct(context, prod).then((value) {
+      Navigator.pop(context);
     });
   }
 
@@ -67,12 +92,14 @@ class _ProductFormState extends State<ProductForm> {
     super.didChangeDependencies();
     iconsList = ProductService.getIconsByCat(widget.catId);
     unitsList = ProductService.unitsList;
-    tagsList = Provider.of<ProductProvider>(context).tags;
+    productProvider = Provider.of<ProductProvider>(context);
   }
 
   @override
   Widget build(BuildContext context) {
+    logger.i('Tags:::: ${widget.tagsList}');
     return ModalBottomFormLayout(
+      isLoading: isLoading,
       catImg: widget.catImg ?? DefaultValues.img,
       title: 'Добавить продукт',
       widgets: [
@@ -80,6 +107,7 @@ class _ProductFormState extends State<ProductForm> {
           label: 'Название товара*',
           inputController: titleController,
           paddingVertical: 10,
+          validator: Validator.title,
         ),
         Input(
           label: 'Краткое описание',
@@ -87,7 +115,10 @@ class _ProductFormState extends State<ProductForm> {
           paddingVertical: 10,
         ),
         // InfoInput(infoController: infoController),
-        const TagInput(),
+        TagInput(
+          tagsList: widget.tagsList,
+          tagController: tagController,
+        ),
         SelectUnitRow(
           unitsList: unitsList,
           markUnitAsSelected: markUnitAsSelected,
@@ -95,10 +126,10 @@ class _ProductFormState extends State<ProductForm> {
         SelectIconRow(
           iconsList: iconsList,
           markIconAsSelected: markIconAsSelected,
-          colorBg: widget.colorBg,
+          colorBg: Color(widget.colorBg),
         ),
       ],
-      onSubmit: () {},
+      onSubmit: () => submitForm(context),
     );
   }
 }

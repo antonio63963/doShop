@@ -79,6 +79,16 @@ class Product {
         colorBg: colorBg ?? this.colorBg,
       );
 
+  Map<String, Object?> toJSON() => {
+        ProductFields.title: title,
+        ProductFields.catId: catId,
+        ProductFields.icon: icon,
+        ProductFields.photos: photos,
+        ProductFields.subtitle: subtitle,
+        ProductFields.tag: tag,
+        ProductFields.units: units,
+      };
+
   static Product fromJSON(Map<String, Object?> json) {
     return Product(
       id: json[ProductFields.id] as int,
@@ -109,8 +119,9 @@ class ProductTag {
   String toString() {
     super.toString();
     return '''
-      tag: $tag,
+     { tag: $tag,
       isSelected: $isSelected
+      }
     ''';
   }
 }

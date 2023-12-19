@@ -2,6 +2,7 @@ import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 
 class Input extends StatefulWidget {
+  final String? Function(String?)? validator;
   final String? label;
   final TextEditingController inputController;
   final Function(String)? onChange;
@@ -11,6 +12,7 @@ class Input extends StatefulWidget {
   final int maxLines;
 
   const Input({
+    this.validator,
     this.label,
     required this.inputController,
     this.onChange,
@@ -18,6 +20,7 @@ class Input extends StatefulWidget {
     this.paddingHorizontal = 16,
     this.paddingVertical = 16,
     this.maxLines = 1,
+
     super.key,
   });
 
@@ -36,12 +39,13 @@ class _InputState extends State<Input> {
         horizontal: widget.paddingHorizontal,
         vertical: widget.paddingVertical,
       ),
-      child: TextField(
+      child: TextFormField(
+        validator: widget.validator,
         maxLines: widget.maxLines,
         autofocus: widget.autofocus,
         controller: widget.inputController,
         onChanged: widget.onChange,
-        textAlign: TextAlign.center,
+        textAlignVertical: TextAlignVertical.center,
         style: const TextStyle(color: MyColors.primary, fontSize: 16),
         decoration: InputDecoration(
           labelStyle: theme.textTheme.labelMedium,

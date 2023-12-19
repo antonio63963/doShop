@@ -98,6 +98,14 @@ class LocalDB implements AbstractDB {
     return a;
   }
 
+    @override
+  Future<Product?> createProduct(Product product) async {
+    final db = await instance.database;
+    final productId = await db?.insert(tableProducts, product.toJSON());
+    logger.i('Created Product ID: $productId, ${product.toJSON()}');
+    return product.copy(id: productId);
+  }
+
 
 
   savePhoto() {}

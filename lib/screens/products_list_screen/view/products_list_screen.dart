@@ -35,7 +35,8 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
       ProductForm(
         catId: _screenArguments.id,
         catImg: _screenArguments.catImg,
-        colorBg: Color(_screenArguments.colorBg),
+        colorBg: _screenArguments.colorBg,
+        tagsList: productProvider.copyTagsList(),
       ),
     );
   }
@@ -84,6 +85,9 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
               : const EmptyScreen(
                   message: 'Пока что нет товаров',
                 ),
+          const SizedBox(
+            height: 32,
+          )
         ],
       ),
       floatingActionButton: !productProvider.isAnySelected

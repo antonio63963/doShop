@@ -6,6 +6,7 @@ import 'modal_header.dart';
 
 // ignore: must_be_immutable
 class ModalBottomFormLayout extends StatelessWidget {
+  bool isLoading;
   final String catImg;
   final String title;
   final List<Widget> widgets;
@@ -18,6 +19,7 @@ class ModalBottomFormLayout extends StatelessWidget {
 
   ModalBottomFormLayout({
     super.key,
+    this.isLoading = false,
     required this.catImg,
     required this.title,
     required this.widgets,
@@ -55,6 +57,10 @@ class ModalBottomFormLayout extends StatelessWidget {
                       Navigator.pop(context);
                     },
                   ),
+                  isLoading
+                      ? const LinearProgressIndicator()
+                      : const SizedBox(),
+                  const SizedBox(height: 16),
                   ...widgets,
                   Padding(
                     padding: EdgeInsets.only(
