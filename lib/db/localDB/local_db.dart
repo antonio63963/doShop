@@ -87,7 +87,6 @@ class LocalDB implements AbstractDB {
   //Products
   @override
   Future<List<Product>?> getProuductsByCategory(int catId) async {
-    print('IDDDDD::::: $catId');
     final db = await instance.database;
     final response = await db?.rawQuery(SqlQueries.productsByCategoryId(catId));
     // final response = await db?.rawQuery('SELECT * FROM products WHERE products.catId = 11');
@@ -104,6 +103,19 @@ class LocalDB implements AbstractDB {
     final productId = await db?.insert(tableProducts, product.toJSON());
     logger.i('Created Product ID: $productId, ${product.toJSON()}');
     return product.copy(id: productId);
+  }
+
+  @override
+  Future<Product?> getProductById(int id) async {
+    final db = await instance.database;
+    final map = await db?.rawQuery(
+      SqlQueries.productById(id),
+    );
+    logger.d(' input ID: $id, getProuduct map: $map');
+    if (map != null) {
+      return Product.fromJSON(map[0]);
+    }
+    return null;
   }
 
 

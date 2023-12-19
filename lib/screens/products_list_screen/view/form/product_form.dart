@@ -13,6 +13,8 @@ import 'package:doshop_app/screens/products_list_screen/view/form/select_unit_ro
 
 import 'package:doshop_app/widgets/exports.dart';
 
+import 'info_input.dart';
+
 class ProductForm extends StatefulWidget {
   final String? catImg;
   final int catId;
@@ -75,13 +77,15 @@ class _ProductFormState extends State<ProductForm> {
       isLoading = true;
     });
     final prod = Product(
-        catId: widget.catId,
-        title: titleController.text,
-        subtitle: subtitleController.text,
-        units: selectedUnit,
-        icon: selectedIcon,
-        tag: tagController.text,
-        colorBg: widget.colorBg);
+      catId: widget.catId,
+      title: titleController.text,
+      subtitle: subtitleController.text,
+      units: selectedUnit,
+      icon: selectedIcon,
+      tag: tagController.text,
+      colorBg: widget.colorBg,
+      info: infoController.text,
+    );
     productProvider?.createProduct(context, prod).then((value) {
       Navigator.pop(context);
     });
@@ -114,7 +118,7 @@ class _ProductFormState extends State<ProductForm> {
           inputController: subtitleController,
           paddingVertical: 10,
         ),
-        // InfoInput(infoController: infoController),
+        InfoInput(infoController: infoController),
         TagInput(
           tagsList: widget.tagsList,
           tagController: tagController,

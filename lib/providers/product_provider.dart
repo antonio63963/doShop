@@ -64,7 +64,7 @@ class ProductProvider extends ErrorHandler {
   //     startTimer();
   //   }
   // }
-  
+
   List<Product> get products {
     final filterResult = filterByTag(_selectedTagIdx, [..._products]);
     return filterByInput(searchData, filterResult);
@@ -88,12 +88,12 @@ class ProductProvider extends ErrorHandler {
     notifyListeners();
   }
 
-    Future<Product?> createProduct(BuildContext context, Product product) async {
+  Future<Product?> createProduct(BuildContext context, Product product) async {
     GetIt.I<AbstractDB>().createProduct(product).then((response) {
-      if(response != null) {
+      if (response != null) {
         logger.d('CreatedProduct: ${response.toString()}');
         _products.add(response);
-        if(response.tag != null) {
+        if (response.tag != null) {
           setTagToArray(response.tag);
         }
         notifyListeners();
@@ -118,6 +118,16 @@ class ProductProvider extends ErrorHandler {
       setErrorAlert(
           context: context, message: 'Не удалось получить Список продуктов!');
     });
+  }
+
+  Future<Product?> getProductById(BuildContext context, int id) async {
+    try {
+      return await GetIt.I<AbstractDB>().getProductById(id);
+    } catch (err) {
+      logger.e('Products by id: $err');
+      setErrorAlert(context: context, message: 'Не удалось получить продукт!');
+    }
+    return null;
   }
 
   //select

@@ -44,7 +44,7 @@ class SqlInitialData {
     (
       ${prod.id}, ${prod.catId}, "${prod.title}", "${prod.subtitle}",
       "${prod.icon}", ${prod.photos}, "${prod.units}", "${prod.tag}", 
-      "${prod.description}", ${prod.isShown ? 1 : 0}
+      "${prod.info}", ${prod.isShown ? 1 : 0}
     )
   ''');
 

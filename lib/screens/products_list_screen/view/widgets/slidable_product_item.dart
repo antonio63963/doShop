@@ -1,3 +1,4 @@
+import 'package:doshop_app/screens/product_screen.dart/exports.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -30,7 +31,16 @@ class SlidableProductItem extends StatelessWidget {
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
-            onPressed: (context) {},
+            onPressed: (context) {
+              Navigator.of(context).pushNamed(ProductScreen.routeName,
+                  arguments: ProductScreenArguments(
+                    id: prod.id!,
+                    title: prod.title,
+                    subtitle: prod.subtitle,
+                    catImg: prod.catImg!,
+                    colorBg: prod.colorBg!,
+                  ));
+            },
             icon: Icons.open_in_new,
           )
         ],

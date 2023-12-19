@@ -50,7 +50,7 @@ class SqlTables {
       ${ProductFields.photos} TEXT,
       ${ProductFields.units} TEXT,
       ${ProductFields.tag} TEXT,
-      ${ProductFields.description} TEXT,
+      ${ProductFields.info} TEXT,
       ${ProductFields.isShown} INTEGER DEFAULT 1 NOT NULL
     );
   ''';

@@ -27,10 +27,28 @@ class _InfoInputState extends State<InfoInput> {
               SizedBox(width: AppPadding.bodyHorizontal),
             ],
           )
-        : Input(
-            inputController: widget.infoController,
-            maxLines: 3,
-            label: 'Дополнительная информация',
+        : Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Expanded(
+                child: Input(
+                  inputController: widget.infoController,
+                  maxLines: 3,
+                  label: 'Дополнительная информация',
+                ),
+              ),
+              IconButton(
+                onPressed: () => setState(() {
+                  isShowInput = false;
+                }),
+                icon: const Icon(
+                  Icons.close_fullscreen_outlined,
+                  size: 24,
+                  color: MyColors.primary,
+                ),
+              ),
+              SizedBox(width: AppPadding.bodyHorizontal),
+            ],
           );
   }
 }

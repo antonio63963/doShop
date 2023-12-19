@@ -5,4 +5,5 @@ abstract class AbstractDB {
   Future<List<CategoryProd>?> getSubcategories(int catId);
   Future<List<Product>?> getProuductsByCategory(int catId);
   Future<Product?> createProduct(Product product);
+  Future<Product?> getProductById(int id);
 }

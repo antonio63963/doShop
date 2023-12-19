@@ -2,7 +2,7 @@ const String tableProducts = 'products';
 
 class ProductFields {
   static String values =
-      'id, catId, title, subtitle, icon, photos, units, tag, description, isShown';
+      'id, catId, title, subtitle, icon, photos, units, tag, info, isShown';
   static const String id = 'id';
   static const String catId = 'catId';
   static const String title = 'title';
@@ -11,7 +11,7 @@ class ProductFields {
   static const String photos = 'photos';
   static const String units = 'units';
   static const String tag = 'tag';
-  static const String description = 'description';
+  static const String info = 'info';
   static const String isShown = 'isShown';
 }
 
@@ -25,7 +25,7 @@ class Product {
   List<int>? photos;
   String units;
   String? tag;
-  String? description;
+  String? info;
   bool isShown;
   int? colorBg;
   // for select
@@ -42,7 +42,7 @@ class Product {
     this.photos,
     required this.units,
     this.tag,
-    this.description,
+    this.info,
     this.isShown = true,
     this.colorBg,
     //for select
@@ -60,7 +60,7 @@ class Product {
     List<int>? photos,
     String? units,
     String? tag,
-    String? description,
+    String? info,
     bool? isShown,
     int? colorBg,
   }) =>
@@ -74,7 +74,7 @@ class Product {
         photos: photos ?? this.photos,
         units: units ?? this.units,
         tag: tag ?? this.tag,
-        description: description ?? this.description,
+        info: info ?? this.info,
         isShown: isShown ?? this.isShown,
         colorBg: colorBg ?? this.colorBg,
       );

@@ -29,21 +29,9 @@ class SelectIconRow extends StatelessWidget {
           widgets: iconsList.asMap().entries.map((icon) {
             return GestureDetector(
               onTap: () => markIconAsSelected(icon.key),
-              child: Container(
-                alignment: Alignment.center,
-                padding: const EdgeInsets.all(4),
-                decoration: BoxDecoration(
-                  color: icon.value.isSelected ? MyColors.primary : colorBg,
-                  borderRadius: const BorderRadius.all(Radius.circular(5)),
-                ),
-                child: SizedBox(
-                  width: 76,
-                  height: 76,
-                  child: Image.asset(
-                    icon.value.tag,
-                    fit: BoxFit.contain,
-                  ),
-                ),
+              child: SingleProductIcon(
+                colorBg: icon.value.isSelected ? MyColors.primary : colorBg,
+                img: icon.value.tag,
               ),
             );
           }).toList(),

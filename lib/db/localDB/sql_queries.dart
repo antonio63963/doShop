@@ -49,4 +49,12 @@ class SqlQueries {
     JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $tableProducts.${ProductFields.catId}
     WHERE $tableProducts.${ProductFields.title} LIKE %$searchData%;
   ''';
+  static String productById(int id) => '''
+    SELECT $tableProducts.*,
+    $tableCategories.${CategoryProdFields.img},
+    $tableCategories.${CategoryProdFields.colorBg}
+    FROM $tableProducts
+    JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $tableProducts.${ProductFields.catId}
+    WHERE $tableProducts.${ProductFields.id} = $id;
+  ''';
 }

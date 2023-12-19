@@ -72,7 +72,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
                               ))
                       : Navigator.of(context).pushNamed(
                           ProductsListScreen.routeName,
-                          arguments: ProductsScreenArguments(
+                          arguments: ProductsListScreenArguments(
                             id: cat.id!,
                             title: cat.title,
                             colorBg: cat.colorBg ?? MyColors.defaultBG,
