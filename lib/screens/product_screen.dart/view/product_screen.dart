@@ -1,3 +1,5 @@
+import 'package:doshop_app/screens/product_screen.dart/view/widgets/info_row.dart';
+import 'package:doshop_app/screens/product_screen.dart/view/widgets/unit_and_tag.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -6,6 +8,8 @@ import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/utils/constants.dart';
 
 import 'package:doshop_app/widgets/exports.dart';
+
+import 'widgets/additional_info.dart';
 
 class ProductScreen extends StatefulWidget {
   static String routeName = '/productScreen';
@@ -52,115 +56,53 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_screenArguments?.title ?? 'Название не найдено'),
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: Icon(
-              Icons.more_vert,
-              size: 24,
-              color: MyColors.primary,
-            ),
-          ),
-        ],
+      appBar: AppBarMain(
+        appBar: AppBar(),
+        title: _screenArguments?.title ?? 'Не определен',
+        subtitle: _screenArguments?.subtitle ?? '',
+        onMenu: () {},
       ),
       body: !_isLoaded
           ? const Loading()
-          : Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: AppPadding.bodyHorizontal),
-              child: PageContentWrapper(
-                onRefresh: refresh,
-                widgets: [
-                  const Card(
-                    child: SizedBox(
-                      width: 200,
-                      height: 200,
-                      child: Icon(
-                        Icons.photo,
-                        size: 100,
-                        color: MyColors.primary,
-                      ),
+          : PageContentWrapper(
+              paddingHorizontal: AppPadding.bodyHorizontal,
+              onRefresh: refresh,
+              widgets: [
+                const Card(
+                  child: SizedBox(
+                    width: 200,
+                    height: 200,
+                    child: Icon(
+                      Icons.photo,
+                      size: 100,
+                      color: MyColors.primary,
                     ),
                   ),
-                  SizedBox(height: 32),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SingleProductIcon(
-                        colorBg: Color(
-                            _screenArguments?.colorBg ?? MyColors.defaultBG),
-                        img: _product?.icon ?? DefaultValues.icon,
-                      ),
-                      SizedBox(width: AppPadding.bodyHorizontal),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const SectionTitle(
-                            title: 'Короткое описание:',
-                            paddingHorizontal: 0,
-                            paddingBottom: 12,
-                          ),
-                          Text(
-                            _screenArguments?.subtitle ?? 'Нет',
-                            style: theme.textTheme.bodyMedium
-                                ?.copyWith(color: MyColors.primary),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 32),
-                  Wrap(
-                    spacing: 12,
-                    children: [
-                      if (_product != null && _product!.tag != null)
-                        TagItem(
-                          tag: ProductTag(
-                            tag: _product!.tag!,
-                            isSelected: true,
-                          ),
-                          onClick: () {},
-                        ),
-                      TagItem(
-                        tag: ProductTag(
-                          tag: _product!.units,
-                          isSelected: true,
-                        ),
-                        onClick: () {},
-                      ),
-                    ],
-                  ),
-                  const SectionTitle(
-                    title: 'Дополнитеоьное инфо:',
-                    paddingHorizontal: 0,
-                    paddingBottom: 12,
-                    paddingTop: 30,
-                  ),
-                  _product?.info != null
-                      ? Container(
-                          padding: const EdgeInsets.all(16),
-                          decoration: const BoxDecoration(
-                            color: Color.fromARGB(255, 226, 219, 233),
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(5),
-                            ),
-                          ),
-                          child: Text(_product!.info!),
-                        )
-                      : Text(
-                          'Нет Информации',
-                          style: theme.textTheme.bodyMedium?.copyWith(
-                            color: MyColors.primary,
-                          ),
-                        ),
-                ],
-              ),
+                ),
+                InfoRow(
+                  labelText: 'Категория:',
+                  colorBg:
+                      Color(_screenArguments?.colorBg ?? MyColors.defaultBG),
+                  imgAsset: _product?.catImg ?? DefaultValues.icon,
+                  text:
+                      '${_product?.categoryTitle} ${_product?.categorySubtitle}',
+                  paddingBottom: 32,
+                  paddingTop: 32,
+                ),
+                InfoRow(
+                  labelText: 'Короткое описание:',
+                  colorBg:
+                      Color(_screenArguments?.colorBg ?? MyColors.defaultBG),
+                  imgAsset: _product?.icon ?? DefaultValues.icon,
+                  text: _screenArguments?.subtitle ?? 'Нет',
+                  paddingBottom: 32,
+                ),
+                UnitAndTag(
+                  product: _product,
+                ),
+                AdditionalInfo(info: _product?.info),
+              ],
             ),
     );
   }

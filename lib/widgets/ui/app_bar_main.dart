@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 
 import 'package:doshop_app/utils/constants.dart';
 
-class ProductsListAppBar extends StatelessWidget
+class AppBarMain extends StatelessWidget
     implements PreferredSizeWidget {
   final String title;
   final String subtitle;
   final AppBar appBar;
+  final Function() onMenu;
 
-  const ProductsListAppBar({
+  const AppBarMain({
     required this.title,
     required this.subtitle,
     required this.appBar,
+    required this.onMenu,
     super.key,
   });
 
@@ -29,7 +31,7 @@ class ProductsListAppBar extends StatelessWidget
           ),
         ),
         IconButton(
-          onPressed: () {},
+          onPressed: onMenu,
           icon: const Icon(
             Icons.more_vert,
             color: MyColors.primary,

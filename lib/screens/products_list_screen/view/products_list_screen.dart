@@ -6,7 +6,6 @@ import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/models/exports.dart';
 
 import 'package:doshop_app/screens/products_list_screen/view/form/product_form.dart';
-import 'package:doshop_app/screens/products_list_screen/view/widgets/products_list_appbar.dart';
 import 'package:doshop_app/screens/products_list_screen/view/widgets/tags_section.dart';
 import 'package:doshop_app/widgets/exports.dart';
 import 'widgets/products_list.dart';
@@ -67,10 +66,11 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
     _productsList = productProvider.products;
 
     return Scaffold(
-      appBar: ProductsListAppBar(
+      appBar: AppBarMain(
         appBar: AppBar(),
         title: _screenArguments.title,
         subtitle: _screenArguments.subtitle ?? '',
+        onMenu: () {},
       ),
       body: PageContentWrapper(
         onRefresh: () =>
