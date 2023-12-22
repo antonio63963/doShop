@@ -33,13 +33,11 @@ class ProductScreenArguments {
   final String title;
   final String? subtitle;
   final int colorBg;
-  final String catImg;
 
   ProductScreenArguments({
     required this.id,
     required this.title,
     this.subtitle,
     required this.colorBg,
-    required this.catImg,
   });
 }

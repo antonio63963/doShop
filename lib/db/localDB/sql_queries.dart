@@ -51,7 +51,7 @@ class SqlQueries {
   ''';
   static String productById(int id) => '''
     SELECT $tableProducts.*,
-    $tableCategories.${CategoryProdFields.img},
+    $tableCategories.${CategoryProdFields.img} as catImg,
     $tableCategories.${CategoryProdFields.colorBg},
     $tableCategories.${CategoryProdFields.title} as categoryTitle,
     $tableCategories.${CategoryProdFields.subtitle} as categorySubtitle

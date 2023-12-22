@@ -49,9 +49,9 @@ class LocalDB implements AbstractDB {
     logger.d('Added Categ: $response');
     // final subs = await db.rawQuery(SqlInitialData.initSubcategories());
     // logger.d('Added SUB: $subs');
-    try{
+    try {
       final prods = await db.rawQuery(SqlInitialData.initProducts());
-    } catch(err) {
+    } catch (err) {
       logger.e('ON ADD PRODS: $err');
     }
 
@@ -97,7 +97,7 @@ class LocalDB implements AbstractDB {
     return a;
   }
 
-    @override
+  @override
   Future<Product?> createProduct(Product product) async {
     final db = await instance.database;
     final productId = await db?.insert(tableProducts, product.toJSON());
@@ -118,7 +118,18 @@ class LocalDB implements AbstractDB {
     return null;
   }
 
-
+  @override
+  Future<int?> updateProduct(Product prod) async {
+    if(prod.id == null) throw UnimplementedError('No id to update product!!!');
+    logger.i("Product for update: ${prod.toString()}");
+    final db = await instance.database;
+    return await db?.update(
+      tableProducts,
+      prod.toJSON(),
+      where: '${ProductFields.id} = ?',
+      whereArgs: [prod.id],
+    );
+  }
 
   savePhoto() {}
 
