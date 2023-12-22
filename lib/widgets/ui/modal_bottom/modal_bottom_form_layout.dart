@@ -7,7 +7,6 @@ import 'modal_header.dart';
 // ignore: must_be_immutable
 class ModalBottomFormLayout extends StatelessWidget {
   bool isLoading;
-  final String catImg;
   final String title;
   final List<Widget> widgets;
   final Function() onSubmit;
@@ -20,7 +19,6 @@ class ModalBottomFormLayout extends StatelessWidget {
   ModalBottomFormLayout({
     super.key,
     this.isLoading = false,
-    required this.catImg,
     required this.title,
     required this.widgets,
     required this.onSubmit,

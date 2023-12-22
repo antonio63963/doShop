@@ -1,3 +1,5 @@
+import 'package:doshop_app/models/models/category.dart';
+
 const String tableProducts = 'products';
 
 class ProductFields {
@@ -115,9 +117,69 @@ class Product {
               : null,
       catImg: json['img'] != null ? json['img'] as String : null,
       colorBg: json['colorBg'] != null ? json['colorBg'] as int : null,
-      categorySubtitle: json['categorySubtitle'] != null ? json['categorySubtitle'] as String : null,
-      categoryTitle: json['categoryTitle'] != null ? json['categoryTitle'] as String : null,
+      categorySubtitle: json['categorySubtitle'] != null
+          ? json['categorySubtitle'] as String
+          : null,
+      categoryTitle: json['categoryTitle'] != null
+          ? json['categoryTitle'] as String
+          : null,
     );
+  }
+
+  // Product update(Product spreadProduct) {
+  //   return Product(
+  //     id: spreadProduct.id ?? id,
+  //     catId: spreadProduct.catId,
+  //     title: title,
+  //     subtitle: spreadProduct.subtitle ?? subtitle,
+  //     icon: spreadProduct.icon ?? icon,
+  //     catImg: spreadProduct.catImg ?? catImg,
+  //     photos: spreadProduct.photos ?? photos,
+  //     units: spreadProduct.units,
+  //     tag: spreadProduct.tag ?? tag,
+  //     info: spreadProduct.info ?? info,
+  //     isShown: spreadProduct.isShown,
+  //     colorBg: spreadProduct.colorBg ?? colorBg,
+  //     amount: spreadProduct.amount,
+  //     isFire: spreadProduct.isFire,
+  //     categoryTitle: spreadProduct.categoryTitle ?? categoryTitle,
+  //     categorySubtitle: spreadProduct.categorySubtitle ?? categorySubtitle,
+  //   );
+  // }
+
+  bool isEqual(Product prod2) {
+    print(''' 
+        $title == ${prod2.title} && $info == ${prod2.info} && $tag == ${prod2.tag} && $units == ${prod2.units} && $icon == ${prod2.icon}
+      ''');
+    if (title == prod2.title &&
+        subtitle == prod2.subtitle &&
+        info == prod2.info &&
+        tag == prod2.tag &&
+        units == prod2.units &&
+        icon == prod2.icon) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @override
+  String toString() {
+    super.toString();
+    return ''' 
+      id: $id,
+      title: $title,
+      subtitle: $subtitle,
+      units: $units,
+      tag: $tag,
+      icon: $icon,
+      catId: $catId,
+      info: $info,
+      colorBg: $colorBg,
+      categoryTitle: $categoryTitle,
+      categorySubtitle: $categorySubtitle,
+      catImg: $catImg
+    ''';
   }
 }
 

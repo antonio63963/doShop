@@ -1,9 +1,7 @@
 import 'package:doshop_app/models/exports.dart';
-import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:provider/provider.dart';
 
 import 'package:doshop_app/widgets/exports.dart';
 
@@ -22,28 +20,33 @@ class TagInput extends StatefulWidget {
 }
 
 class _TagInputState extends State<TagInput> {
-  final TextEditingController tagController = TextEditingController();
   List<ProductTag> tagsList = [];
   bool isInput = false;
   bool isAutofocus = false;
 
   void onTagSelect(String tagValue) {
+    widget.tagController.text = tagValue;
+    isInput = true;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    logger.i('INIT TAG: ${widget.tagController.text}');
     setState(() {
-      tagController.text = tagValue;
-      isInput = true;
+      isInput = widget.tagController.text.isNotEmpty;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-logger.i('TagInput: ${widget.tagsList}');
     return isInput
         ? Row(
             mainAxisSize: MainAxisSize.min,
             children: [
               Expanded(
                 child: Input(
-                  inputController: tagController,
+                  inputController: widget.tagController,
                   label: 'Тэг',
                   autofocus: isAutofocus,
                 ),
@@ -65,7 +68,7 @@ logger.i('TagInput: ${widget.tagsList}');
           )
         : Wrap(
             children: [
-             const SectionTitle(title: 'Выбрать Тэг'),
+              const SectionTitle(title: 'Выбрать Тэг'),
               ScrollableRow(
                 widthRow: 1000,
                 widgets: [

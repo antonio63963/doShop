@@ -11,6 +11,7 @@ import '../utils/constants.dart';
 
 class ProductProvider extends ErrorHandler {
   List<Product> _products = [];
+  Product? productDetails;
   List<ProductTag> tags = [];
   bool isAnySelected = false;
   int? _selectedTagIdx;
@@ -102,6 +103,7 @@ class ProductProvider extends ErrorHandler {
     }).catchError((err) {
       logger.e('Create product, $err');
       setErrorAlert(context: context, message: 'Не удалось создать продукт!');
+      return null;
     });
     return null;
   }
@@ -120,12 +122,39 @@ class ProductProvider extends ErrorHandler {
     });
   }
 
-  Future<Product?> getProductById(BuildContext context, int id) async {
+  Future<bool> getProductById(BuildContext context, int id) async {
     try {
-      return await GetIt.I<AbstractDB>().getProductById(id);
+      final product = await GetIt.I<AbstractDB>().getProductById(id);
+      if(product != null) {
+        productDetails = product;
+        notifyListeners();
+        return true;
+      }
     } catch (err) {
       logger.e('Products by id: $err');
       setErrorAlert(context: context, message: 'Не удалось получить продукт!');
+    }
+    return false;
+  }
+
+  Future<Product?> updateProduct(BuildContext context, Product prod) async {
+    try {
+      final updatedResponse = await GetIt.I<AbstractDB>().updateProduct(prod);
+      logger.i('UPDATED: $updatedResponse');
+      if (updatedResponse != 0) {
+        final updatedIdx =
+            _products.indexWhere((element) => element.id == prod.id);
+        if (updatedIdx != -1) {
+          _products[updatedIdx] = prod;
+          productDetails = prod;
+          notifyListeners();
+          return prod;
+        }
+      }
+    } catch (err) {
+      logger.e('Update Product: $err');
+      setErrorAlert(context: context, message: 'Не удалось обновить продукт!');
+      return null;
     }
     return null;
   }

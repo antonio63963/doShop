@@ -19,13 +19,14 @@ class UnitAndTag extends StatelessWidget {
             ),
             onClick: () {},
           ),
-        TagItem(
-          tag: ProductTag(
-            tag: product!.units,
-            isSelected: true,
+        if (product != null)
+          TagItem(
+            tag: ProductTag(
+              tag: product!.units,
+              isSelected: true,
+            ),
+            onClick: () {},
           ),
-          onClick: () {},
-        ),
       ],
     );
   }

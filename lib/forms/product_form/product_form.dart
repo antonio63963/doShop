@@ -1,3 +1,4 @@
+import 'package:doshop_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -7,21 +8,22 @@ import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/product.service.dart';
 
-import 'package:doshop_app/screens/products_list_screen/view/form/tag_input.dart';
-import 'package:doshop_app/screens/products_list_screen/view/form/select_icon_row.dart';
-import 'package:doshop_app/screens/products_list_screen/view/form/select_unit_row.dart';
-
 import 'package:doshop_app/widgets/exports.dart';
 
-import 'info_input.dart';
+import 'widgets/info_input.dart';
+import 'widgets/select_icon_row.dart';
+import 'widgets/select_unit_row.dart';
+import 'widgets/tag_input.dart';
 
 class ProductForm extends StatefulWidget {
+  final Product? product;
   final String? catImg;
   final int catId;
   final int colorBg;
   final List<ProductTag> tagsList;
 
   const ProductForm({
+    this.product,
     this.catImg,
     required this.catId,
     required this.colorBg,
@@ -46,7 +48,19 @@ class _ProductFormState extends State<ProductForm> {
 
   List<ProductTag> iconsList = [];
   List<ProductTag> unitsList = [];
-  // List<ProductTag> tagsList = [];
+
+  TextEditingController getInitControllerValue(String field) {
+    if (widget.product != null) {
+      if (widget.product?.toJSON()[field] != null) {
+    logger.i('CHECK CONTROLLER: FieldName: $field, ${widget.product?.toJSON()[field]}');
+        return TextEditingController(
+            text: widget.product?.toJSON()[field] as String);
+      }
+      return TextEditingController();
+    } else {
+      return TextEditingController();
+    }
+  }
 
   void markIconAsSelected(int idx) {
     setState(() {
@@ -55,6 +69,10 @@ class _ProductFormState extends State<ProductForm> {
       }
       iconsList[idx].isSelected = true;
       selectedIcon = iconsList[idx].tag;
+      iconsList = [
+        iconsList[idx],
+        ...iconsList.where((e) => e.tag != iconsList[idx].tag)
+      ];
     });
   }
 
@@ -64,12 +82,31 @@ class _ProductFormState extends State<ProductForm> {
         e.isSelected = false;
       }
       unitsList[idx].isSelected = true;
+      selectedUnit = unitsList[idx].tag;
       unitsList = [
         unitsList[idx],
         ...unitsList.where((e) => e.tag != unitsList[idx].tag)
       ];
-      selectedUnit = unitsList[idx].tag;
     });
+  }
+
+  void onAddNewProduct(Product prod) {
+    productProvider?.createProduct(context, prod).then((value) {
+      Navigator.pop(context);
+    });
+  }
+
+  void onUpdateProduct(Product prod) {
+    if (widget.product!.isEqual(prod)) {
+      Helper.showSnack(context: context, text: 'Не получены новые данные.');
+      return;
+    } else {
+      Provider.of<ProductProvider>(context, listen: false)
+          .updateProduct(context, prod)
+          .then((value) {
+        Navigator.pop(context);
+      });
+    }
   }
 
   dynamic submitForm(BuildContext context) {
@@ -77,34 +114,64 @@ class _ProductFormState extends State<ProductForm> {
       isLoading = true;
     });
     final prod = Product(
+      id: widget.product?.id,
       catId: widget.catId,
       title: titleController.text,
-      subtitle: subtitleController.text,
+      subtitle:
+          subtitleController.text.isNotEmpty ? subtitleController.text : null,
       units: selectedUnit,
       icon: selectedIcon,
       tag: tagController.text,
       colorBg: widget.colorBg,
-      info: infoController.text,
+      info: infoController.text.isEmpty ? null : infoController.text,
+      categoryTitle: widget.product?.categoryTitle,
+      categorySubtitle: widget.product?.categorySubtitle,
     );
-    productProvider?.createProduct(context, prod).then((value) {
-      Navigator.pop(context);
-    });
+    logger.w('FOR UPDATE: $prod');
+    widget.product != null ? onUpdateProduct(prod) : onAddNewProduct(prod);
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     iconsList = ProductService.getIconsByCat(widget.catId);
-    unitsList = ProductService.unitsList;
+    unitsList = ProductService.unitsList.map((e) {
+      e.isSelected = false;
+      return e;
+    }).toList();
     productProvider = Provider.of<ProductProvider>(context);
+
+    titleController = getInitControllerValue('title');
+    subtitleController = getInitControllerValue('subtitle');
+    tagController = getInitControllerValue('tag');
+    logger.i('TagController: ${tagController.text}');
+    infoController = getInitControllerValue('info');
+    if (widget.product != null) {
+      selectedUnit =
+          widget.product?.units != null ? widget.product!.units : Units.kg;
+
+      final unitIndex =
+          unitsList.indexWhere((u) => u.tag == widget.product?.units);
+      if (unitIndex != -1) {
+        markUnitAsSelected(unitIndex);
+      } else {
+        markUnitAsSelected(0);
+      }
+
+      final iconIndex =
+          iconsList.indexWhere((i) => i.tag == widget.product?.icon);
+      if (iconIndex != -1) {
+        markIconAsSelected(iconIndex);
+      }
+    } else {
+      markUnitAsSelected(0);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    logger.i('Tags:::: ${widget.tagsList}');
     return ModalBottomFormLayout(
       isLoading: isLoading,
-      catImg: widget.catImg ?? DefaultValues.img,
       title: 'Добавить продукт',
       widgets: [
         Input(

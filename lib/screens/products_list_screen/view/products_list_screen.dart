@@ -1,3 +1,4 @@
+import 'package:doshop_app/forms/product_form/product_form.dart';
 import 'package:doshop_app/utils/show_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -5,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/models/exports.dart';
 
-import 'package:doshop_app/screens/products_list_screen/view/form/product_form.dart';
 import 'package:doshop_app/screens/products_list_screen/view/widgets/tags_section.dart';
 import 'package:doshop_app/widgets/exports.dart';
 import 'widgets/products_list.dart';
