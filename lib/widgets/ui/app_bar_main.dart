@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:doshop_app/utils/constants.dart';
 
-class AppBarMain extends StatelessWidget
-    implements PreferredSizeWidget {
+class AppBarMain extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final String subtitle;
   final AppBar appBar;
@@ -30,13 +29,15 @@ class AppBarMain extends StatelessWidget
             color: MyColors.primary,
           ),
         ),
-        IconButton(
-          onPressed: onMenu,
-          icon: const Icon(
-            Icons.more_vert,
-            color: MyColors.primary,
-          ),
-        ),
+
+        
+        // IconButton(
+        //   onPressed: onMenu,
+        //   icon: const Icon(
+        //     Icons.more_vert,
+        //     color: MyColors.primary,
+        //   ),
+        // ),
       ],
     );
   }

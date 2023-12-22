@@ -32,12 +32,12 @@ class SlidableProductItem extends StatelessWidget {
         children: [
           SlidableAction(
             onPressed: (context) {
+              logger.i('Prod Arguments: ${prod.toString()}');
               Navigator.of(context).pushNamed(ProductScreen.routeName,
                   arguments: ProductScreenArguments(
                     id: prod.id!,
                     title: prod.title,
                     subtitle: prod.subtitle,
-                    catImg: prod.catImg!,
                     colorBg: prod.colorBg!,
                   ));
             },

@@ -12,3 +12,4 @@ export 'ui/section_title.dart';
 export 'ui/tag_item.dart';
 export 'ui/single_product_icon.dart';
 export 'ui/app_bar_main.dart';
+export 'ui/menu_item.dart';
