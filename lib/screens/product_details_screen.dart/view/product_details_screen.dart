@@ -1,9 +1,6 @@
-import 'package:doshop_app/forms/product_form/product_form.dart';
-import 'package:doshop_app/screens/product_screen.dart/view/widgets/info_row.dart';
-import 'package:doshop_app/screens/product_screen.dart/view/widgets/menu_product.dart';
-import 'package:doshop_app/screens/product_screen.dart/view/widgets/unit_and_tag.dart';
-import 'package:doshop_app/utils/helper.dart';
-import 'package:doshop_app/utils/show_modal.dart';
+import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/info_row.dart';
+import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/menu_product.dart';
+import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/unit_and_tag.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -15,19 +12,19 @@ import 'package:doshop_app/widgets/exports.dart';
 
 import 'widgets/additional_info.dart';
 
-class ProductScreen extends StatefulWidget {
-  static String routeName = '/productScreen';
-  const ProductScreen({super.key});
+class ProductDetailsScreen extends StatefulWidget {
+  static String routeName = '/ProductDetailsScreen';
+  const ProductDetailsScreen({super.key});
 
   @override
-  State<ProductScreen> createState() => _ProductScreenState();
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
 }
 
-class _ProductScreenState extends State<ProductScreen> {
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   bool _isLoaded = false;
   bool _isInit = false;
 
-  ProductScreenArguments? _screenArguments;
+  ProductDetailsScreenArguments? _screenArguments;
   ProductProvider? _productProvider;
 
   Future<void> refresh() async {
@@ -40,7 +37,7 @@ class _ProductScreenState extends State<ProductScreen> {
     super.didChangeDependencies();
     if (!_isInit) {
       _screenArguments =
-          ModalRoute.of(context)?.settings.arguments as ProductScreenArguments;
+          ModalRoute.of(context)?.settings.arguments as ProductDetailsScreenArguments;
       _productProvider = Provider.of<ProductProvider>(context);
       _productProvider?.getProductById(context, _screenArguments!.id).then(
             (value) => setState(

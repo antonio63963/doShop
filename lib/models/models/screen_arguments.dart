@@ -28,13 +28,12 @@ class ProductsListScreenArguments {
     required this.isSubcats,
   });
 }
-class ProductScreenArguments {
+class ProductDetailsScreenArguments {
   final int id;
   final String title;
   final String? subtitle;
   final int colorBg;
-
-  ProductScreenArguments({
+ProductDetailsScreenArguments({
     required this.id,
     required this.title,
     this.subtitle,

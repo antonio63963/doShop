@@ -1,4 +1,4 @@
-import 'package:doshop_app/screens/product_screen.dart/exports.dart';
+import 'package:doshop_app/screens/product_details_screen.dart/exports.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -33,8 +33,8 @@ class SlidableProductItem extends StatelessWidget {
           SlidableAction(
             onPressed: (context) {
               logger.i('Prod Arguments: ${prod.toString()}');
-              Navigator.of(context).pushNamed(ProductScreen.routeName,
-                  arguments: ProductScreenArguments(
+              Navigator.of(context).pushNamed(ProductDetailsScreen.routeName,
+                  arguments: ProductDetailsScreenArguments(
                     id: prod.id!,
                     title: prod.title,
                     subtitle: prod.subtitle,
