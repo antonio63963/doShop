@@ -125,7 +125,7 @@ class ProductProvider extends ErrorHandler {
   Future<bool> getProductById(BuildContext context, int id) async {
     try {
       final product = await GetIt.I<AbstractDB>().getProductById(id);
-      if(product != null) {
+      if (product != null) {
         productDetails = product;
         notifyListeners();
         return true;
@@ -157,6 +157,27 @@ class ProductProvider extends ErrorHandler {
       return null;
     }
     return null;
+  }
+
+  Future<int?> deleteProduct(BuildContext context, int prodId) async {
+    if (productDetails == null && productDetails?.id == null) {
+      throw UnsupportedError('There is no id');
+    }
+    try {
+      final deleted =
+          await GetIt.I<AbstractDB>().deleteProduct(prodId);
+      if (deleted != null) {
+        _products =
+            _products.where((p) => p.id != prodId).toList();
+        notifyListeners();
+        return deleted;
+      }
+    } catch (err) {
+      logger.e('Delete Product: $err');
+      setErrorAlert(context: context, message: 'Не удалось удалить продукт!');
+      return 0;
+    }
+    return 0;
   }
 
   //select

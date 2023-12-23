@@ -131,6 +131,18 @@ class LocalDB implements AbstractDB {
     );
   }
 
+  @override
+  Future<int?> deleteProduct(int prodId) async {
+    final db = await instance.database;
+    final resp = await db?.delete(
+      tableProducts,
+      where: '${ProductFields.id} = ?',
+      whereArgs: [prodId],
+    );
+    logger.i('Delete event response: $resp');
+    return resp;
+  }
+
   savePhoto() {}
 
   //utils functions

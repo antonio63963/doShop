@@ -7,4 +7,5 @@ abstract class AbstractDB {
   Future<Product?> createProduct(Product product);
   Future<Product?> getProductById(int id);
   Future<int?> updateProduct(Product prod);
+  Future<int?> deleteProduct(int eventId);
 }
