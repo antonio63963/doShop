@@ -1,6 +1,6 @@
 import 'package:doshop_app/forms/product_form/product_form.dart';
 import 'package:doshop_app/screens/product_screen.dart/view/widgets/info_row.dart';
-import 'package:doshop_app/screens/product_screen.dart/view/widgets/menuProduct.dart';
+import 'package:doshop_app/screens/product_screen.dart/view/widgets/menu_product.dart';
 import 'package:doshop_app/screens/product_screen.dart/view/widgets/unit_and_tag.dart';
 import 'package:doshop_app/utils/helper.dart';
 import 'package:doshop_app/utils/show_modal.dart';

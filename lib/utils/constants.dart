@@ -41,8 +41,6 @@ class MyColors {
   static const Color danger = Color.fromRGBO(252, 43, 43, 1);
 }
 
-enum MenuOptionsValues { photo, edit, hide, delete }
-
 class AppPadding {
   static double bodyHorizontal = 16;
 }

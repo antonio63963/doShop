@@ -2,6 +2,8 @@ import 'package:doshop_app/models/models/category.dart';
 
 const String tableProducts = 'products';
 
+enum MenuOptionsValues { photo, edit, delete }
+
 class ProductFields {
   static String values =
       'id, catId, title, subtitle, icon, photos, units, tag, info, isShown';

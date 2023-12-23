@@ -1,8 +1,6 @@
 import 'package:doshop_app/forms/product_form/product_form.dart';
 import 'package:doshop_app/models/exports.dart';
-import 'package:doshop_app/models/models/alerts.dart';
 import 'package:doshop_app/providers/product_provider.dart';
-import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/utils/helper.dart';
 import 'package:doshop_app/utils/show_modal.dart';
 import 'package:doshop_app/widgets/ui/menu_item.dart';
@@ -58,8 +56,6 @@ class _MenuProductState extends State<MenuProduct> {
                     .productDetails,
               ));
 
-        case MenuOptionsValues.hide:
-        // TODO: Handle this case.
         case MenuOptionsValues.delete:
           Helper.showInfoAlert(
             widget.context,
@@ -94,13 +90,6 @@ class _MenuProductState extends State<MenuProduct> {
           child: MenuItem(
             title: 'Редактировать',
             icon: Icons.edit_outlined,
-          ),
-        ),
-        const PopupMenuItem<MenuOptionsValues>(
-          value: MenuOptionsValues.hide,
-          child: MenuItem(
-            title: 'Скрыть товар',
-            svgPath: 'assets/icons/hide.svg',
           ),
         ),
         const PopupMenuItem<MenuOptionsValues>(
