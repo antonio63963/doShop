@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:math';
 
+import 'package:doshop_app/widgets/ui/primary_button.dart';
 import 'package:flutter/material.dart';
 // import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
@@ -24,27 +25,40 @@ class Helper {
     showDialog(
       context: context,
       builder: (_) => AlertDialog(
-        // backgroundColor: MyColors.backgroundLight,
-        title: Text(alert.title, style: theme.textTheme.bodyLarge),
+        backgroundColor: MyColors.white,
+        shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(5.0),
+        ),
+      ),
+        title: Text(
+          alert.title,
+          style: theme.textTheme.bodyMedium?.copyWith(
+            color: MyColors.primary,
+            fontSize: 20,
+          ),
+        ),
         content: Text(
           alert.message,
-          style: theme.textTheme.bodyMedium,
+          style: theme.textTheme.bodyMedium?.copyWith(color: MyColors.primary),
         ),
         actions: <Widget>[
-          OutlinedButton(
+          PrimaryButton(
+            text: 'Отменить',
             onPressed: () {
               if (alert.onClose != null) alert.onClose!();
               Navigator.of(context).pop();
             },
-            child: const Text('Отменить'),
+            bgColor: MyColors.danger,
+            textColor: MyColors.white,
           ),
-          // SecondaryButton(
-          //   text: 'Ok',
-          //   onPressed: () {
-          //     if (alert.onSubmit != null) alert.onSubmit!();
-          //     Navigator.of(context).pop();
-          //   },
-          // )
+          SecondaryButton(
+            text: 'Ok',
+            onPressed: () {
+              if (alert.onSubmit != null) alert.onSubmit!();
+              Navigator.of(context).pop();
+            },
+          )
         ],
       ),
     );
