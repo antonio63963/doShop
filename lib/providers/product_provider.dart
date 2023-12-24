@@ -164,11 +164,9 @@ class ProductProvider extends ErrorHandler {
       throw UnsupportedError('There is no id');
     }
     try {
-      final deleted =
-          await GetIt.I<AbstractDB>().deleteProduct(prodId);
+      final deleted = await GetIt.I<AbstractDB>().deleteProduct(prodId);
       if (deleted != null) {
-        _products =
-            _products.where((p) => p.id != prodId).toList();
+        _products = _products.where((p) => p.id != prodId).toList();
         notifyListeners();
         return deleted;
       }
@@ -183,16 +181,15 @@ class ProductProvider extends ErrorHandler {
   Future<void> savePhoto(BuildContext context, Photo photoData) async {
     logger.d('Save Photo provider: $photoData');
     await GetIt.I<AbstractDB>().savePhoto(photoData).then((ph) {
-      if(ph != null) {
+      if (ph != null) {
         productDetails!.photos?.add(ph);
         notifyListeners();
       }
     }).catchError((err) {
       logger.e('Photo Save: $err');
-      setErrorAlert(
-          context: context, message: 'Не удалось сохранить фото!');
+      setErrorAlert(context: context, message: 'Не удалось сохранить фото!');
     });
-  } 
+  }
 
   //select
   void increaseAmount(int? prodId) {
@@ -205,6 +202,18 @@ class ProductProvider extends ErrorHandler {
           : _products[existProdIndex].amount++;
       isAnySelected = true;
       notifyListeners();
+    } else {
+      return;
+    }
+  }
+
+  void cleanAmount(int? prodId) {
+    if (prodId == null) return;
+    final existProdIndex =
+        _products.indexWhere((existProd) => prodId == existProd.id);
+    if (existProdIndex != -1) {
+      _products[existProdIndex].amount = 0;
+      _checkIfExistsSelected();
     } else {
       return;
     }
@@ -223,7 +232,6 @@ class ProductProvider extends ErrorHandler {
       }
       _checkIfExistsSelected(); // to set Icon on FAB
       logger.i('EEEEEE(()()()) $isAnySelected');
-      notifyListeners();
     } else {
       return;
     }

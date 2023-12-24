@@ -1,18 +1,20 @@
-import 'package:doshop_app/screens/product_details_screen.dart/exports.dart';
-import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
-import 'package:doshop_app/models/exports.dart';
-import 'package:doshop_app/screens/products_list_screen/view/widgets/product_item.dart';
 import 'package:flutter_svg/svg.dart';
+
+import 'package:doshop_app/utils/constants.dart';
+import 'package:doshop_app/models/exports.dart';
+
+import 'package:doshop_app/screens/products_list_screen/view/widgets/product_item.dart';
 
 class SlidableProductItem extends StatelessWidget {
   final Product prod;
   final int idx;
-  final Function(int?) onClick;
-  final Function(int?) onClickTrailing;
-  final Function(int?) onToggleFire;
+  final Function() onClick;
+  final Function() onClickTrailing;
+  final Function() onToggleFire;
+  final Function() onClean;
+  final void Function(BuildContext) onOpenDetails;
 
   const SlidableProductItem({
     required this.prod,
@@ -20,6 +22,8 @@ class SlidableProductItem extends StatelessWidget {
     required this.onClick,
     required this.onClickTrailing,
     required this.onToggleFire,
+    required this.onClean,
+    required this.onOpenDetails,
     super.key,
   });
 
@@ -31,23 +35,18 @@ class SlidableProductItem extends StatelessWidget {
         motion: const ScrollMotion(),
         children: [
           SlidableAction(
-            onPressed: (context) {
-              logger.i('Prod Arguments: ${prod.toString()}');
-              Navigator.of(context).pushNamed(ProductDetailsScreen.routeName,
-                  arguments: ProductDetailsScreenArguments(
-                    id: prod.id!,
-                    title: prod.title,
-                    subtitle: prod.subtitle,
-                    colorBg: prod.colorBg!,
-                  ));
-            },
+            onPressed: onOpenDetails,
             icon: Icons.open_in_new,
-          )
+          ),
+          SlidableAction(
+            onPressed: (context) => onClean(),
+            icon: Icons.cleaning_services_outlined,
+          ),
         ],
       ),
       endActionPane: ActionPane(motion: const ScrollMotion(), children: [
         CustomSlidableAction(
-          onPressed: (context) => onToggleFire(prod.id),
+          onPressed: (context) => onToggleFire(),
           child: SvgPicture.asset(
             !prod.isFire
                 ? 'assets/icons/fire_fill.svg'
@@ -61,9 +60,12 @@ class SlidableProductItem extends StatelessWidget {
         ),
       ]),
       child: ProductItem(
-        onTap: onClick,
-        onTrailing: onClickTrailing,
+        onIncrease: onClick,
+        onDecrease: onClickTrailing,
+        onClean: onClean,
         prod: prod,
+        onOpenDetails: onOpenDetails,
+        onFire: onToggleFire,
       ),
     );
   }
