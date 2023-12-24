@@ -45,29 +45,10 @@ class LocalDB implements AbstractDB {
   Future<void> _createDB(Database db, int version) async {
     await db.execute('PRAGMA foreign_keys=on;');
     await db.execute(SqlTables.createCategories);
-    // await db.execute(SqlTables.createSubcategories);
     await db.execute(SqlTables.createProducts);
     await db.execute(SqlTables.createPhotos);
-
-    final response = await db.rawQuery(SqlInitialData.initCategories());
-    logger.d('Added Categ: $response');
-    // final subs = await db.rawQuery(SqlInitialData.initSubcategories());
-    // logger.d('Added SUB: $subs');
-    try {
-      final prods = await db.rawQuery(SqlInitialData.initProducts());
-    logger.i('Products: $prods');
-      
-    } catch (err) {
-      logger.e('ON ADD PRODS: $err');
-    }
-
-    // await db.execute(SqlTables.createCars);
-    // await db.execute(SqlTables.createCalendarEvents);
-    // await db.execute(SqlTables.createClientsCars);
-    // await db.execute(SqlTables.createDebetEvents);
-    // await db.execute(SqlTables.createIndexVin);
-    // await db.execute(SqlTables.createIndexBrand);
-    // await db.execute(SqlTables.createIndexEventId);
+    await db.rawQuery(SqlInitialData.initCategories());
+    await db.rawQuery(SqlInitialData.initProducts());
   }
 
   //Categories

@@ -118,7 +118,7 @@ class Product {
           json[ProductFields.icon] != null && json[ProductFields.icon] != "null"
               ? json[ProductFields.icon] as String
               : null,
-      catImg: json['img'] != null ? json['img'] as String : null,
+      catImg: json['catImg'] != null ? json['catImg'] as String : null,
       colorBg: json['colorBg'] != null ? json['colorBg'] as int : null,
       categorySubtitle: json['categorySubtitle'] != null
           ? json['categorySubtitle'] as String
@@ -131,27 +131,6 @@ class Product {
           : json[ProductFields.photos] as List<Photo>,
     );
   }
-
-  // Product update(Product spreadProduct) {
-  //   return Product(
-  //     id: spreadProduct.id ?? id,
-  //     catId: spreadProduct.catId,
-  //     title: title,
-  //     subtitle: spreadProduct.subtitle ?? subtitle,
-  //     icon: spreadProduct.icon ?? icon,
-  //     catImg: spreadProduct.catImg ?? catImg,
-  //     photos: spreadProduct.photos ?? photos,
-  //     units: spreadProduct.units,
-  //     tag: spreadProduct.tag ?? tag,
-  //     info: spreadProduct.info ?? info,
-  //     isShown: spreadProduct.isShown,
-  //     colorBg: spreadProduct.colorBg ?? colorBg,
-  //     amount: spreadProduct.amount,
-  //     isFire: spreadProduct.isFire,
-  //     categoryTitle: spreadProduct.categoryTitle ?? categoryTitle,
-  //     categorySubtitle: spreadProduct.categorySubtitle ?? categorySubtitle,
-  //   );
-  // }
 
   bool isEqual(Product prod2) {
     print(''' 
