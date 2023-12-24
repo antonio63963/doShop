@@ -18,27 +18,6 @@ class SqlTables {
       ${CategoryProdFields.isSubcat} INTEGER
     );
   ''';
-  // static String createCategories = '''
-  //   CREATE TABLE IF NOT EXISTS $tableCategories(
-  //     ${CategoryProdFields.id} $idType,
-  //     ${CategoryProdFields.title} $textType,
-  //     ${CategoryProdFields.img} TEXT,
-  //     ${CategoryProdFields.isShown} INTEGER DEFAULT 1 NOT NULL,
-  //     ${CategoryProdFields.subcategories} INTEGER DEFAULT 0 NOT NULL,
-  //     ${CategoryProdFields.colorBg} INTEGER
-  //   );
-  // ''';
-
-  // static String createSubcategories = '''
-  //   CREATE TABLE IF NOT EXISTS $tableSubcategories(
-  //     ${SubcategoryFields.id} $idType,
-  //     ${SubcategoryFields.title} $textType,
-  //     ${SubcategoryFields.subtitle} TEXT,
-  //     ${SubcategoryFields.img} TEXT,
-  //     ${SubcategoryFields.isShown} INTEGER DEFAULT 1 NOT NULL,
-  //     ${SubcategoryFields.parentId} INTEGER
-  //   );
-  // ''';
 
   static String createProducts = '''
     CREATE TABLE IF NOT EXISTS $tableProducts(
@@ -58,8 +37,8 @@ class SqlTables {
     CREATE TABLE IF NOT EXISTS $tablePhotos(
       ${PhotoFields.id} $idType,
       ${PhotoFields.photo} TEXT,
-      ${PhotoFields.productId} INT,
-      ${PhotoFields.categoryId} INT
+      ${PhotoFields.productId} INTEGER NOT NULL,
+      ${PhotoFields.categoryId} INTEGER NOT NULL
     );
   ''';
 }

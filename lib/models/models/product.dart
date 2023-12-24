@@ -126,9 +126,16 @@ class Product {
       categoryTitle: json['categoryTitle'] != null
           ? json['categoryTitle'] as String
           : null,
-      photos: json[ProductFields.photos] == null
+      photos: json[ProductFields.photos] == null && json['photoId'] == null
           ? []
-          : json[ProductFields.photos] as List<Photo>,
+          : [
+              Photo(
+                id: json[PhotoFields.id] as int,
+                photo: json[PhotoFields.photo] as String,
+                productId: json[ProductFields.id] as int,
+                categoryId: json[ProductFields.catId] as int,
+              ),
+            ],
     );
   }
 

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:doshop_app/db/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
@@ -32,7 +33,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   ProductProvider? _productProvider;
 
   void pickCamera(ImageSource imgSrc) async {
-    ImagePicker().pickImage(source: imgSrc).then((image) {
+    ImagePicker()
+        .pickImage(
+            source: imgSrc, maxHeight: 480, maxWidth: 640, imageQuality: 25)
+        .then((image) {
       if (image != null &&
           _productProvider != null &&
           _productProvider?.productDetails != null) {
@@ -47,7 +51,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       BuildContext context, XFile image, Product product) async {
     if (product.id == null) return;
     String imgString =
-        PhotoService.base64String(File(image!.path).readAsBytesSync());
+        PhotoService.base64String(File(image.path).readAsBytesSync());
     _productProvider?.savePhoto(
       context,
       Photo(
@@ -91,6 +95,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           '${_screenArguments?.title ?? 'Не определен'} ${_screenArguments?.subtitle ?? ''}',
         ),
         actions: [
+          IconButton(onPressed: () => LocalDB.instance.getAllTablesNames(), icon: Icon(Icons.data_array)),
           IconButton(
             onPressed: () => Navigator.of(context)
                 .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false),
@@ -114,16 +119,19 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               paddingHorizontal: AppPadding.bodyHorizontal,
               onRefresh: refresh,
               widgets: [
-                product != null && product.photos!.isEmpty
-                    ? TakePhoto(onClick: () => pickCamera(ImageSource.camera))
-                    : CarouselImages(product: product!),
+                if (product != null && product.photos!.isEmpty)
+                  TakePhoto(onClick: () => pickCamera(ImageSource.camera)),
+                if (product != null &&
+                    product.photos != null &&
+                    product.photos!.isNotEmpty)
+                  CarouselImages(product: product),
                 InfoRow(
                   labelText: 'Категория:',
                   colorBg:
                       Color(_screenArguments?.colorBg ?? MyColors.defaultBG),
-                  imgAsset: product.catImg ?? DefaultValues.icon,
+                  imgAsset: product?.catImg ?? DefaultValues.icon,
                   text:
-                      '${product.categoryTitle} ${product.categorySubtitle}',
+                      '${product?.categoryTitle} ${product?.categorySubtitle ?? ''}',
                   paddingBottom: 32,
                   paddingTop: 32,
                 ),
@@ -131,14 +139,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   labelText: 'Короткое описание:',
                   colorBg:
                       Color(_screenArguments?.colorBg ?? MyColors.defaultBG),
-                  imgAsset: product.icon ?? DefaultValues.icon,
+                  imgAsset: product?.icon ?? DefaultValues.icon,
                   text: _screenArguments?.subtitle ?? 'Нет',
                   paddingBottom: 32,
                 ),
                 UnitAndTag(
                   product: product,
                 ),
-                AdditionalInfo(info: product.info),
+                AdditionalInfo(info: product?.info),
               ],
             ),
     );

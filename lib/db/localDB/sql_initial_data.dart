@@ -22,23 +22,6 @@ class SqlInitialData {
       ''';
   }
 
-  // static String initSubcategories() {
-  //   final values = subcategories.map((sub) => '''
-  //   (
-  //     ${sub.id}, "${sub.title}", "${sub.subtitle}",
-  //     "${sub.img}",
-  //     ${sub.isShown != null && sub.isShown! ? 1 : 0}, 
-  //     ${sub.parentId}
-  //   )
-  // ''');
-
-  //   final valuesString = values.join(',');
-  //   return '''
-  //       INSERT INTO $tableSubcategories (${SubcategoryFields.values})
-  //       VALUES $valuesString
-  //     ''';
-  // }
-
   static String initProducts() {
     final values = products.map((prod) => '''
     (

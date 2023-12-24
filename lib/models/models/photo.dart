@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
 const String tablePhotos = 'photos';
 
@@ -34,7 +33,7 @@ class Photo {
 
   Map<String, Object?> toJSON() => {
         PhotoFields.categoryId: categoryId,
-        PhotoFields.photo: jsonEncode(photo),
+        PhotoFields.photo: photo,
         PhotoFields.productId: productId,
       };
 

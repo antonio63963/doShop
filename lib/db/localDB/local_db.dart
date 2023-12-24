@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:typed_data';
-
 import 'package:doshop_app/db/abstractDB.dart';
 import 'package:doshop_app/db/localDB/sql_initial_data.dart';
 import 'package:sqflite/sqflite.dart';
@@ -78,10 +75,7 @@ class LocalDB implements AbstractDB {
     final response = await db?.rawQuery(SqlQueries.productsByCategoryId(catId));
     // final response = await db?.rawQuery('SELECT * FROM products WHERE products.catId = 11');
     logger.i('Products by Category: $response');
-
-    final a = response?.map((sub) => Product.fromJSON(sub)).toList();
-    logger.i('$a');
-    return a;
+    return response?.map((sub) => Product.fromJSON(sub)).toList();
   }
 
   @override

@@ -54,9 +54,12 @@ class SqlQueries {
     $tableCategories.${CategoryProdFields.img} as catImg,
     $tableCategories.${CategoryProdFields.colorBg},
     $tableCategories.${CategoryProdFields.title} as categoryTitle,
-    $tableCategories.${CategoryProdFields.subtitle} as categorySubtitle
+    $tableCategories.${CategoryProdFields.subtitle} as categorySubtitle,
+    $tablePhotos.${PhotoFields.id} as photoId,
+    $tablePhotos.${PhotoFields.photo}
     FROM $tableProducts
     JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $tableProducts.${ProductFields.catId}
+    LEFT JOIN $tablePhotos ON $tablePhotos.${PhotoFields.productId} = $id
     WHERE $tableProducts.${ProductFields.id} = $id;
   ''';
 }

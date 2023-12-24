@@ -131,7 +131,7 @@ class ProductProvider extends ErrorHandler {
         return true;
       }
     } catch (err) {
-      logger.e('Products by id: $err');
+      logger.e('Product by id: $err');
       setErrorAlert(context: context, message: 'Не удалось получить продукт!');
     }
     return false;
@@ -160,7 +160,7 @@ class ProductProvider extends ErrorHandler {
   }
 
   Future<int?> deleteProduct(BuildContext context, int prodId) async {
-    if (productDetails == null && productDetails?.id == null) {
+    if (productDetails?.id == null) {
       throw UnsupportedError('There is no id');
     }
     try {
@@ -181,7 +181,7 @@ class ProductProvider extends ErrorHandler {
   Future<void> savePhoto(BuildContext context, Photo photoData) async {
     logger.d('Save Photo provider: $photoData');
     await GetIt.I<AbstractDB>().savePhoto(photoData).then((ph) {
-      if (ph != null) {
+      if (ph != null && productDetails != null) {
         productDetails!.photos?.add(ph);
         notifyListeners();
       }
