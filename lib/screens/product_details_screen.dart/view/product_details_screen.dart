@@ -1,12 +1,15 @@
 import 'dart:io';
 
-import 'package:doshop_app/utils/photo.service.dart';
+import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/carousel_images.dart';
+import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/take_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:typed_data';
+import 'package:carousel_slider/carousel_slider.dart';
 
+import 'package:doshop_app/utils/photo.service.dart';
 import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/info_row.dart';
 import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/menu_product.dart';
 import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/unit_and_tag.dart';
@@ -34,26 +37,15 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   ProductDetailsScreenArguments? _screenArguments;
   ProductProvider? _productProvider;
 
-  File? imageFile;
-
-  Int8List? _bytes;
-
-  Future<Int8List?> _getBytes(String imageUrl) async {
-    final ByteData data =
-        await NetworkAssetBundle(Uri.parse(imageUrl)).load(imageUrl);
-    // _bytes = data.buffer.asInt8List();
-    logger.i('GET BYTE: $data');
-    return data.buffer.asInt8List();
-  }
+  CarouselController controllerPhotos = CarouselController();
 
   void pickCamera(ImageSource imgSrc) async {
     ImagePicker().pickImage(source: imgSrc).then((image) {
-      if (image == null &&
-          _productProvider == null &&
-          _productProvider?.productDetails == null) return;
-      saveImage(context, image!, _productProvider!.productDetails!);
-
-      // logger.d('COnverted img: $imgString');
+      if (image != null &&
+          _productProvider != null &&
+          _productProvider?.productDetails != null) {
+        saveImage(context, image, _productProvider!.productDetails!);
+      }
     }).catchError((err) {
       logger.e('Pick image Error!!! $err');
     });
@@ -107,6 +99,14 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
           '${_screenArguments?.title ?? 'Не определен'} ${_screenArguments?.subtitle ?? ''}',
         ),
         actions: [
+          IconButton(
+            onPressed: () => Navigator.of(context)
+                .pushNamedAndRemoveUntil('/', (Route<dynamic> route) => false),
+            icon: const Icon(
+              Icons.home,
+              color: MyColors.primary,
+            ),
+          ),
           if (product != null && product.id != null && _screenArguments != null)
             MenuProduct(
               colorBg: _screenArguments!.colorBg,
@@ -121,23 +121,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               paddingHorizontal: AppPadding.bodyHorizontal,
               onRefresh: refresh,
               widgets: [
-                GestureDetector(
-                  onTap: () => pickCamera(ImageSource.camera),
-                  child: Card(
-                    child: SizedBox(
-                      width: 200,
-                      height: 200,
-                      child: product != null && product.photos!.isEmpty
-                          ? Icon(
-                              Icons.photo,
-                              size: 100,
-                              color: MyColors.primary,
-                            )
-                          : ClipRRect(borderRadius: BorderRadius.all(Radius.circular(5)), child: PhotoService.imageFromBase64String(product!.photos![0].photo),)
-                    ),
-                  ),
-                ),
-                // Image.memory(Uint8List.fromList(product.photos[idx]))
+                product != null && product.photos!.isEmpty
+                    ? TakePhoto(onClick: () => pickCamera(ImageSource.camera))
+                    : CarouselImages(product: product!),
                 InfoRow(
                   labelText: 'Категория:',
                   colorBg:
@@ -159,14 +145,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                 UnitAndTag(
                   product: product,
                 ),
-                AdditionalInfo(info: product?.info),
-                imageFile != null
-                    ? Image.file(
-                        imageFile!,
-                        width: 160,
-                        height: 160,
-                      )
-                    : const SizedBox(),
+                AdditionalInfo(info: product.info),
               ],
             ),
     );
