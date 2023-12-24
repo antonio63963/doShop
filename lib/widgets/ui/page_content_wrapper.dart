@@ -1,12 +1,15 @@
+import 'package:doshop_app/widgets/exports.dart';
 import 'package:flutter/material.dart';
 
 class PageContentWrapper extends StatelessWidget {
   final Future<void> Function() onRefresh;
+  final bool isScreenEmpty;
   final List<Widget> widgets;
   final double paddingHorizontal;
   final double paddingVertical;
 
   const PageContentWrapper({
+    this.isScreenEmpty = false,
     required this.onRefresh,
     required this.widgets,
     this.paddingHorizontal = 0,
@@ -16,20 +19,22 @@ class PageContentWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: paddingHorizontal,
-        vertical: paddingVertical,
-      ),
-      child: RefreshIndicator(
-        onRefresh: onRefresh,
-        child: GestureDetector(
-          onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-          child: ListView(
-            children: widgets,
-          ),
-        ),
-      ),
-    );
+    return isScreenEmpty
+        ? const EmptyScreen(message: 'Страница не найдена')
+        : Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: paddingHorizontal,
+              vertical: paddingVertical,
+            ),
+            child: RefreshIndicator(
+              onRefresh: onRefresh,
+              child: GestureDetector(
+                onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+                child: ListView(
+                  children: widgets,
+                ),
+              ),
+            ),
+          );
   }
 }

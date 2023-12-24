@@ -1,25 +1,19 @@
 import 'dart:io';
-
-import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/carousel_images.dart';
-import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/take_photo.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:typed_data';
-import 'package:carousel_slider/carousel_slider.dart';
-
-import 'package:doshop_app/utils/photo.service.dart';
-import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/info_row.dart';
-import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/menu_product.dart';
-import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/unit_and_tag.dart';
 
 import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/utils/constants.dart';
+import 'package:doshop_app/utils/photo.service.dart';
 
+import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/carousel_images.dart';
+import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/take_photo.dart';
+import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/info_row.dart';
+import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/menu_product.dart';
+import 'package:doshop_app/screens/product_details_screen.dart/view/widgets/unit_and_tag.dart';
 import 'package:doshop_app/widgets/exports.dart';
-
 import 'widgets/additional_info.dart';
 
 class ProductDetailsScreen extends StatefulWidget {
@@ -36,8 +30,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
   ProductDetailsScreenArguments? _screenArguments;
   ProductProvider? _productProvider;
-
-  CarouselController controllerPhotos = CarouselController();
 
   void pickCamera(ImageSource imgSrc) async {
     ImagePicker().pickImage(source: imgSrc).then((image) {
@@ -118,6 +110,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
       body: !_isLoaded
           ? const Loading()
           : PageContentWrapper(
+              isScreenEmpty: product == null,
               paddingHorizontal: AppPadding.bodyHorizontal,
               onRefresh: refresh,
               widgets: [
@@ -128,9 +121,9 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   labelText: 'Категория:',
                   colorBg:
                       Color(_screenArguments?.colorBg ?? MyColors.defaultBG),
-                  imgAsset: product?.catImg ?? DefaultValues.icon,
+                  imgAsset: product.catImg ?? DefaultValues.icon,
                   text:
-                      '${product?.categoryTitle} ${product?.categorySubtitle}',
+                      '${product.categoryTitle} ${product.categorySubtitle}',
                   paddingBottom: 32,
                   paddingTop: 32,
                 ),
@@ -138,7 +131,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   labelText: 'Короткое описание:',
                   colorBg:
                       Color(_screenArguments?.colorBg ?? MyColors.defaultBG),
-                  imgAsset: product?.icon ?? DefaultValues.icon,
+                  imgAsset: product.icon ?? DefaultValues.icon,
                   text: _screenArguments?.subtitle ?? 'Нет',
                   paddingBottom: 32,
                 ),
