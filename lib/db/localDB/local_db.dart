@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:doshop_app/db/abstractDB.dart';
 import 'package:doshop_app/db/localDB/sql_initial_data.dart';
 import 'package:sqflite/sqflite.dart';
@@ -44,6 +47,7 @@ class LocalDB implements AbstractDB {
     await db.execute(SqlTables.createCategories);
     // await db.execute(SqlTables.createSubcategories);
     await db.execute(SqlTables.createProducts);
+    await db.execute(SqlTables.createPhotos);
 
     final response = await db.rawQuery(SqlInitialData.initCategories());
     logger.d('Added Categ: $response');
@@ -51,6 +55,8 @@ class LocalDB implements AbstractDB {
     // logger.d('Added SUB: $subs');
     try {
       final prods = await db.rawQuery(SqlInitialData.initProducts());
+    logger.i('Products: $prods');
+      
     } catch (err) {
       logger.e('ON ADD PRODS: $err');
     }
@@ -120,7 +126,7 @@ class LocalDB implements AbstractDB {
 
   @override
   Future<int?> updateProduct(Product prod) async {
-    if(prod.id == null) throw UnimplementedError('No id to update product!!!');
+    if (prod.id == null) throw UnimplementedError('No id to update product!!!');
     logger.i("Product for update: ${prod.toString()}");
     final db = await instance.database;
     return await db?.update(
@@ -143,7 +149,15 @@ class LocalDB implements AbstractDB {
     return resp;
   }
 
-  savePhoto() {}
+  @override
+  Future<Photo?> savePhoto(Photo newImg) async {
+    final db = await instance.database;
+    final photoId = await db?.insert(tablePhotos, newImg.toJSON());
+    if (photoId != null) {
+      return newImg.copy(id: photoId);
+    }
+    return null;
+  }
 
   //utils functions
   Future<void> deleteDB() async {

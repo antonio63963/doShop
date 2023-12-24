@@ -1,4 +1,4 @@
-import 'package:doshop_app/models/models/category.dart';
+import 'package:doshop_app/models/exports.dart';
 
 const String tableProducts = 'products';
 
@@ -6,7 +6,7 @@ enum MenuOptionsValues { photo, edit, delete }
 
 class ProductFields {
   static String values =
-      'id, catId, title, subtitle, icon, photos, units, tag, info, isShown';
+      'id, catId, title, subtitle, icon, units, tag, info, isShown';
   static const String id = 'id';
   static const String catId = 'catId';
   static const String title = 'title';
@@ -26,7 +26,7 @@ class Product {
   String? subtitle;
   String? icon;
   String? catImg;
-  List<int>? photos;
+  List<Photo>? photos;
   String units;
   String? tag;
   String? info;
@@ -57,7 +57,9 @@ class Product {
     this.isFire = false,
     this.categoryTitle,
     this.categorySubtitle,
-  });
+  }) {
+    photos = photos ?? [];
+  }
 
   Product copy({
     int? id,
@@ -66,7 +68,7 @@ class Product {
     String? subtitle,
     String? icon,
     String? catImg,
-    List<int>? photos,
+    List<Photo>? photos,
     String? units,
     String? tag,
     String? info,
@@ -96,7 +98,6 @@ class Product {
         ProductFields.title: title,
         ProductFields.catId: catId,
         ProductFields.icon: icon,
-        ProductFields.photos: photos,
         ProductFields.subtitle: subtitle,
         ProductFields.tag: tag,
         ProductFields.units: units,
@@ -125,6 +126,9 @@ class Product {
       categoryTitle: json['categoryTitle'] != null
           ? json['categoryTitle'] as String
           : null,
+      photos: json[ProductFields.photos] == null
+          ? []
+          : json[ProductFields.photos] as List<Photo>,
     );
   }
 
@@ -180,7 +184,8 @@ class Product {
       colorBg: $colorBg,
       categoryTitle: $categoryTitle,
       categorySubtitle: $categorySubtitle,
-      catImg: $catImg
+      catImg: $catImg,
+      photos: $photos,
     ''';
   }
 }

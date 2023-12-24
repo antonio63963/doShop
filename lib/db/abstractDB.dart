@@ -8,4 +8,5 @@ abstract class AbstractDB {
   Future<Product?> getProductById(int id);
   Future<int?> updateProduct(Product prod);
   Future<int?> deleteProduct(int eventId);
+  Future<Photo?> savePhoto(Photo newImg);
 }

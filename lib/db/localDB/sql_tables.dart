@@ -47,7 +47,6 @@ class SqlTables {
       ${ProductFields.title} $textType,
       ${ProductFields.subtitle} TEXT,
       ${ProductFields.icon} TEXT,
-      ${ProductFields.photos} TEXT,
       ${ProductFields.units} TEXT,
       ${ProductFields.tag} TEXT,
       ${ProductFields.info} TEXT,
@@ -58,8 +57,7 @@ class SqlTables {
   static String createPhotos = '''
     CREATE TABLE IF NOT EXISTS $tablePhotos(
       ${PhotoFields.id} $idType,
-      ${PhotoFields.title} $textType,
-      ${PhotoFields.photo} BLOB,
+      ${PhotoFields.photo} TEXT,
       ${PhotoFields.productId} INT,
       ${PhotoFields.categoryId} INT
     );

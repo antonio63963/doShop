@@ -86,7 +86,7 @@ class ProductProvider extends ErrorHandler {
     isAnySelected = false;
     tags = [];
     _selectedTagIdx = null;
-    notifyListeners();
+    // notifyListeners();
   }
 
   Future<Product?> createProduct(BuildContext context, Product product) async {
@@ -179,6 +179,20 @@ class ProductProvider extends ErrorHandler {
     }
     return 0;
   }
+
+  Future<void> savePhoto(BuildContext context, Photo photoData) async {
+    logger.d('Save Photo provider: $photoData');
+    await GetIt.I<AbstractDB>().savePhoto(photoData).then((ph) {
+      if(ph != null) {
+        productDetails!.photos?.add(ph);
+        notifyListeners();
+      }
+    }).catchError((err) {
+      logger.e('Photo Save: $err');
+      setErrorAlert(
+          context: context, message: 'Не удалось сохранить фото!');
+    });
+  } 
 
   //select
   void increaseAmount(int? prodId) {

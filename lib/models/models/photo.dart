@@ -1,10 +1,10 @@
+import 'dart:convert';
 import 'dart:typed_data';
 
 const String tablePhotos = 'photos';
 
 class PhotoFields {
   static const String id = 'id';
-  static const String title = 'title';
   static const String photo = 'photo';
   static const String productId = 'productId';
   static const String categoryId = 'categoryId';
@@ -12,14 +12,12 @@ class PhotoFields {
 
 class Photo {
   final int? id;
-  final String title;
-  final Uint8List photo;
+  final String photo;
   final int productId;
   final int categoryId;
 
   Photo({
     this.id,
-    required this.title,
     required this.photo,
     required this.productId,
     required this.categoryId,
@@ -28,10 +26,28 @@ class Photo {
   static Photo fromJSON(Map<String, Object?> json) {
     return Photo(
       id: json[PhotoFields.id] as int,
-      title: json[PhotoFields.title] as String,
-      photo: json[PhotoFields.photo] as Uint8List,
+      photo: json[PhotoFields.photo] as String,
       productId: json[PhotoFields.productId] as int,
       categoryId: json[PhotoFields.categoryId] as int,
     );
   }
+
+  Map<String, Object?> toJSON() => {
+        PhotoFields.categoryId: categoryId,
+        PhotoFields.photo: jsonEncode(photo),
+        PhotoFields.productId: productId,
+      };
+
+  Photo copy({
+    int? id,
+    int? categoryId,
+    String? photo,
+    int? productId,
+  }) =>
+      Photo(
+        id: id ?? this.id,
+        photo: photo ?? this.photo,
+        productId: productId ?? this.productId,
+        categoryId: categoryId ?? this.categoryId,
+      );
 }
