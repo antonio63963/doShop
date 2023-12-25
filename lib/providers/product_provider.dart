@@ -51,20 +51,19 @@ class ProductProvider extends ErrorHandler {
     notifyListeners();
   }
 
-  // List<Product> allProductsBySearch(String searchData) {
-  //   Timer? checkTypingTimer;
+  Future<List<Product?>> searchInAllProducts(
+      BuildContext context, String searchData) async {
+  return  GetIt.I<AbstractDB>()
+        .searchInAllProducts(searchData)
+        .then((resp) => resp)
+        .catchError((err) {
+      logger.e('Products by Category: $err');
+      setErrorAlert(
+          context: context, message: 'Не удалось получить Список продуктов!');
+          return [] as Future<List<Product?>>;
+    });
 
-  //   startTimer() {
-  //     checkTypingTimer = Timer(const Duration(microseconds:600), () {
-
-  //     });
-  //   }
-
-  //   resetTimer() {
-  //     checkTypingTimer?.cancel();
-  //     startTimer();
-  //   }
-  // }
+  }
 
   List<Product> get products {
     final filterResult = filterByTag(_selectedTagIdx, [..._products]);
@@ -223,7 +222,10 @@ class ProductProvider extends ErrorHandler {
     if (prodId == null) return;
     final existProdIndex =
         _products.indexWhere((existProd) => prodId == existProd.id);
-    if (existProdIndex != -1) {
+    if (existProdIndex != -1 ) {
+      if (_products[existProdIndex].amount == 0) {
+        return;
+      }
       _products[existProdIndex].units == Units.kg
           ? _products[existProdIndex].amount -= 0.5
           : _products[existProdIndex].amount--;

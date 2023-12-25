@@ -104,7 +104,12 @@ class _ProductItemState extends State<ProductItem> {
                           ),
                         ),
                         GestureDetector(
-                          onTap: () => widget.onDecrease(),
+                          onTap: () {
+                            widget.onDecrease();
+                            if (isOptions) {
+                              closeOptions();
+                            }
+                          },
                           child: Container(
                             height: 40,
                             width: 40,
@@ -133,7 +138,7 @@ class _ProductItemState extends State<ProductItem> {
                       ],
                     )
                   : null,
-              onTap: () => isOptions ? closeOptions() : widget.onIncrease(),
+              onTap: isOptions ? closeOptions : widget.onIncrease,
               onLongPress: () => setState(() {
                 isOptions = true;
               }),
@@ -155,7 +160,7 @@ class _ProductItemState extends State<ProductItem> {
                         children: [
                           IconButton(
                             onPressed: () {
-                             widget.onOpenDetails(context);
+                              widget.onOpenDetails(context);
                               closeOptions();
                             },
                             icon: Icon(Icons.open_in_new),
@@ -163,6 +168,9 @@ class _ProductItemState extends State<ProductItem> {
                           IconButton(
                             onPressed: () {
                               widget.onClean();
+                              if (widget.prod.isFire) {
+                                widget.onFire();
+                              }
                               closeOptions();
                             },
                             icon: Icon(Icons.cleaning_services_outlined),
