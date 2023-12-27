@@ -113,6 +113,19 @@ class LocalDB implements AbstractDB {
   }
 
   @override
+  Future<List<Product>> searchInAllProducts(String searchData) async {
+    if (searchData == '') return [];
+    // logger.i("Product for update: ${prod.toString()}");
+    final db = await instance.database;
+    final response =
+        await db?.rawQuery(SqlQueries.searchInAllPorducts(searchData));
+logger.i('SearchInAllProducts: $response');
+    final res = response?.map((sub) => Product.fromJSON(sub)).toList();
+
+    return res ?? [];
+  }
+
+  @override
   Future<int?> deleteProduct(int prodId) async {
     final db = await instance.database;
     final resp = await db?.delete(

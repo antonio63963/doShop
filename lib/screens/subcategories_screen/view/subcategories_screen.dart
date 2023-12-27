@@ -19,6 +19,7 @@ class SubcategoriesScreen extends StatefulWidget {
 }
 
 class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
+  final TextEditingController searchController = TextEditingController();
   List<CategoryProd> _subcategories = [];
   bool isInit = false;
   bool isLoaded = false;
@@ -100,7 +101,7 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
           ? const Loading()
           : ListView(
               children: [
-                FastEnterForm(),
+                FastEnterForm(searchController: searchController),
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: AppPadding.bodyHorizontal),

@@ -51,16 +51,16 @@ class ProductProvider extends ErrorHandler {
     notifyListeners();
   }
 
-  Future<List<Product?>> searchInAllProducts(
+  Future<List<Product>> searchInAllProducts(
       BuildContext context, String searchData) async {
   return  GetIt.I<AbstractDB>()
         .searchInAllProducts(searchData)
         .then((resp) => resp)
         .catchError((err) {
-      logger.e('Products by Category: $err');
+      logger.e('Products by Search: $err');
       setErrorAlert(
           context: context, message: 'Не удалось получить Список продуктов!');
-          return [] as Future<List<Product?>>;
+          return [] as Future<List<Product>>;
     });
 
   }

@@ -1,6 +1,6 @@
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/screens/product_details_screen.dart/exports.dart';
-import 'package:doshop_app/screens/products_list_screen/view/widgets/icon_fire.dart';
+import 'package:doshop_app/widgets/ui/icon_fire.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

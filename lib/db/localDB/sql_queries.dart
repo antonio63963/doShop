@@ -34,7 +34,7 @@ class SqlQueries {
     WHERE $tableProducts.${ProductFields.catId} = $catId
   ''';
 
-  static String allProductsBySearch(String searchData) => '''
+  static String searchInAllPorducts(String searchData) => '''
     SELECT $tableProducts.${ProductFields.id},
     $tableProducts.${ProductFields.catId},
     $tableProducts.${ProductFields.title},
@@ -47,8 +47,9 @@ class SqlQueries {
     $tableCategories.${CategoryProdFields.colorBg}
     FROM $tableProducts
     JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $tableProducts.${ProductFields.catId}
-    WHERE $tableProducts.${ProductFields.title} LIKE %$searchData%;
+    WHERE $tableProducts.${ProductFields.title} LIKE '%$searchData%';
   ''';
+
   static String productById(int id) => '''
     SELECT $tableProducts.*,
     $tableCategories.${CategoryProdFields.img} as catImg,

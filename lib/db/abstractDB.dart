@@ -5,6 +5,7 @@ abstract class AbstractDB {
   Future<List<CategoryProd>?> getSubcategories(int catId);
   Future<List<Product>?> getProuductsByCategory(int catId);
   Future<Product?> createProduct(Product product);
+  Future<List<Product>> searchInAllProducts(String searchData);
   Future<Product?> getProductById(int id);
   Future<int?> updateProduct(Product prod);
   Future<int?> deleteProduct(int eventId);

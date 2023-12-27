@@ -2,19 +2,18 @@ import 'package:doshop_app/widgets/ui/input.dart';
 import 'package:flutter/material.dart';
 
 class FastEnterForm extends StatelessWidget {
+  final TextEditingController searchController;
   final double? paddingTop;
   final double? paddingBottom;
+  final Function(String)? onChange;
 
-   FastEnterForm({
+  const FastEnterForm({
+    required this.searchController,
     this.paddingBottom = 16,
     this.paddingTop = 16,
-    super.key
+    this.onChange,
+    super.key,
   });
-
-  final TextEditingController enterProductController = TextEditingController();
-  void onChange(String str) {
-    
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,10 +26,10 @@ class FastEnterForm extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Input(
-            inputController: enterProductController,
+            inputController: searchController,
             onChange: onChange,
           ),
-          if (enterProductController.text.isNotEmpty)
+          if (searchController.text.isNotEmpty)
             Padding(
               padding: const EdgeInsets.only(top: 16.0),
               child: Row(
@@ -43,8 +42,7 @@ class FastEnterForm extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       FocusManager.instance.primaryFocus?.unfocus();
-                      enterProductController.text = '';
-                
+                      searchController.text = '';
                     },
                     child: const Text('Отменить'),
                   ),
