@@ -17,10 +17,10 @@ class SecondaryButton extends StatelessWidget {
     return OutlinedButton(
       onPressed: onPressed,
       child: Text(
-        text,
+        text.toUpperCase(),
         style: theme.textTheme.bodySmall?.copyWith(
           color: MyColors.primary,
-          fontWeight: FontWeight.w600,
+          fontWeight: FontWeight.w700,
         ),
       ),
     );

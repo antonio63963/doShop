@@ -46,6 +46,12 @@ class _ProductItemState extends State<ProductItem> {
         child: Column(
           children: [
             ListTile(
+              contentPadding: const EdgeInsets.only(
+                left: 16,
+                top: 8,
+                bottom: 8,
+                right: 8,
+              ),
               tileColor: Color(widget.prod.colorBg ?? MyColors.defaultBG),
               shape: RoundedRectangleBorder(
                 borderRadius: !isOptions
@@ -101,14 +107,9 @@ class _ProductItemState extends State<ProductItem> {
               onTap: isOptions ? closeOptions : widget.onIncrease,
               onLongPress: () => setState(() {
                 isOptions = true;
-              }),
-              contentPadding: const EdgeInsets.only(
-                left: 16,
-                top: 8,
-                bottom: 8,
-                right: 8,
-              ),
+              }),       
             ),
+            
             isOptions
                 ? OptionProductRow(
                     onOpen: () {

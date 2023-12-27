@@ -15,3 +15,4 @@ export 'ui/app_bar_main.dart';
 export 'ui/menu_item.dart';
 export 'ui/icon_fire.dart';
 export 'ui/options_product_row.dart';
+export 'ui/selected_product_modal.dart';

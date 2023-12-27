@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:doshop_app/utils/constants.dart';
 
 class SearchDataList extends StatelessWidget {
-  final Function(int) onItemClick;
+  final Function(Product) onItemClick;
   final List<Product> productsList;
   const SearchDataList({
     super.key,
@@ -24,7 +24,7 @@ class SearchDataList extends StatelessWidget {
         itemBuilder: (_, idx) {
           final prod = productsList[idx];
           return SearchProductItem(
-              onClick: () => onItemClick(prod.id!), prod: prod);
+              onClick: () => onItemClick(prod), prod: prod);
         },
       ),
     );

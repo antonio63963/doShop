@@ -5,8 +5,8 @@ showModal(BuildContext context, Widget content) {
   showModalBottomSheet(
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(10),
-        topRight: Radius.circular(10),
+        topLeft: Radius.circular(5),
+        topRight: Radius.circular(5),
       ),
     ),
     backgroundColor: Colors.transparent,
