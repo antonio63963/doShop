@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:doshop_app/providers/product_provider.dart';
+import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/categories_list_section.dart';
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/search_data_list.dart';
 import 'package:doshop_app/screens/products_list_screen/export.dart';
 import 'package:doshop_app/utils/constants.dart';
@@ -47,8 +48,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   @override
   void didChangeDependencies() {
     if (!isInit) {
-      _productProvider =
-          Provider.of<ProductProvider>(context);
+      _productProvider = Provider.of<ProductProvider>(context);
       Provider.of<CategoriesProvider>(context).getCategoriesList(context);
     }
     isInit = true;
@@ -69,47 +69,10 @@ class _CategoriesPageState extends State<CategoriesPage> {
           paddingTop: 16,
           onChange: getProductsBySearch,
         ),
-        _productsBySearch.isEmpty ?
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: GridView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: 200,
-              crossAxisSpacing: 8,
-              mainAxisSpacing: 8,
-            ),
-            itemCount: categoriesProvider.categories.length,
-            itemBuilder: (ctx, index) {
-              final cat = categoriesProvider.categories[index];
-              return CategoryItem(
-                category: cat,
-                onTap: () {
-                  cat.hasSubcategories
-                      ? Navigator.of(context)
-                          .pushNamed(SubcategoriesScreen.routeName,
-                              arguments: SubcategoriesScreenArguments(
-                                id: cat.id!,
-                                title: cat.title,
-                                colorBg: cat.colorBg ?? MyColors.defaultBG,
-                                catImg: cat.img ?? DefaultValues.img,
-                              ))
-                      : Navigator.of(context).pushNamed(
-                          ProductsListScreen.routeName,
-                          arguments: ProductsListScreenArguments(
-                            id: cat.id!,
-                            title: cat.title,
-                            colorBg: cat.colorBg ?? MyColors.defaultBG,
-                            catImg: cat.img ?? DefaultValues.img,
-                            isSubcats: cat.isSubcat,
-                          ),
-                        );
-                },
-              );
-            },
-          ),
-        ) : SearchDataList(onItemClick: (int) {}, productsList: _productsBySearch),
+        _productsBySearch.isEmpty
+            ? CategoriesListSection(catList: categoriesProvider.categories)
+            : SearchDataList(
+                onItemClick: (int) {}, productsList: _productsBySearch),
       ]),
     );
   }
