@@ -14,3 +14,4 @@ export 'ui/single_product_icon.dart';
 export 'ui/app_bar_main.dart';
 export 'ui/menu_item.dart';
 export 'ui/icon_fire.dart';
+export 'ui/options_product_row.dart';
