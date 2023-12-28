@@ -23,19 +23,19 @@ class MyColors {
   // static const Color green2 = Color.fromRGBO(128, 183, 127, 1);
 
   // Categories
-  static const List<Color> listColors = [
-    Color(0xFF7F83B7),
-    Color(0xFFB06565),
-    Color(0xFF5B89B4),
-    Color(0xFF6D5BB4),
-    Color(0xFF7FB7AD),
-    Color(0xFFB7977F),
-    Color(0xFF80B77F),
-    Color(0xFF7F95B7),
-    Color(0xFFB77F7F),
-    Color(0xFFB77FA1),
-    Color(0xFFA57FB7),
-    Color(0xFF7FA3B7),
+  static const List<int> listColors = [
+    0xFF7F83B7,
+    0xFFB06565,
+    0xFF5B89B4,
+    0xFF6D5BB4,
+    0xFF7FB7AD,
+    0xFFB7977F,
+    0xFF80B77F,
+    0xFF7F95B7,
+    0xFFB77F7F,
+    0xFFB77FA1,
+    0xFFA57FB7,
+    0xFF7FA3B7,
   ];
 
   static const Color danger = Color.fromRGBO(252, 43, 43, 1);
@@ -56,7 +56,7 @@ class Units {
 
 class DefaultValues {
   static String img = 'assets/img/categories/hobby.png';
-  static String icon = 'assets/icons/label.png';
+  static String icon = 'assets/default/label.png';
   static double plusAmount = 0.5;
 }
 
@@ -72,5 +72,8 @@ class IconsAssets {
   ];
   static List<String> milk = [
     'cheese.png', 'milk.png', 'yogurt.png'
+  ];
+  static List<String> shopingLists = [
+    'presents.png', 'week_shopping.png', 'hobby.png',
   ];
 }

@@ -3,18 +3,13 @@ import 'dart:async';
 import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/categories_list_section.dart';
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/search_data_list.dart';
-import 'package:doshop_app/screens/products_list_screen/export.dart';
-import 'package:doshop_app/utils/constants.dart';
+import 'package:doshop_app/utils/show_modal.dart';
+import 'package:doshop_app/widgets/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/categories_provider.dart';
-
-import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/category_item.dart';
-import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/fast_enter_form.dart';
-
-import 'package:doshop_app/screens/subcategories_screen/exports.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
@@ -45,6 +40,19 @@ class _CategoriesPageState extends State<CategoriesPage> {
     });
   }
 
+  void onSearchItem(Product prod) {
+    showModal(
+      context,
+      SelectedProductModal(
+        prod: prod,
+      ),
+    );
+    setState(() {
+      _productsBySearch = [];
+      searchController.text = '';
+    });
+  }
+
   @override
   void didChangeDependencies() {
     if (!isInit) {
@@ -63,16 +71,15 @@ class _CategoriesPageState extends State<CategoriesPage> {
       // child: ElevatedButton(child: Text('test'), onPressed: () => SqlQueries.initCategories(),)
 
       child: ListView(children: [
-        FastEnterForm(
-          searchController: searchController,
-          paddingBottom: 16,
-          paddingTop: 16,
+        Input(
+          inputController: searchController,
           onChange: getProductsBySearch,
+          paddingVertical: 32,
         ),
         _productsBySearch.isEmpty
             ? CategoriesListSection(catList: categoriesProvider.categories)
             : SearchDataList(
-                onItemClick: (int) {}, productsList: _productsBySearch),
+                onItemClick: onSearchItem, productsList: _productsBySearch),
       ]),
     );
   }

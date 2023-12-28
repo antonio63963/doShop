@@ -31,7 +31,6 @@ class CategoriesProvider extends ErrorHandler {
   ) async {
     try {
       final categoriesList = await GetIt.I<AbstractDB>().getCategories();
-      logger.w('wow it comes: $categoriesList');
       if (categoriesList == null) {
         _categories = [];
       } else {

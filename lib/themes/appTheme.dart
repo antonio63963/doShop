@@ -14,7 +14,7 @@ final appTheme = ThemeData(
     backgroundColor: MyColors.accent,
     iconSize: 24,
   ),
-  iconTheme: IconThemeData(color: MyColors.primary),
+  iconTheme: const IconThemeData(color: MyColors.primary),
   textTheme: TextTheme(
       headlineMedium: const TextStyle(
         fontSize: 16,

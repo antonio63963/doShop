@@ -6,12 +6,12 @@ import 'package:doshop_app/utils/validators.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/models/exports.dart';
-import 'package:doshop_app/providers/product.service.dart';
+import 'package:doshop_app/providers/services/product.service.dart';
 
 import 'package:doshop_app/widgets/exports.dart';
 
 import 'widgets/info_input.dart';
-import 'widgets/select_icon_row.dart';
+import '../widgets/select_icon_row.dart';
 import 'widgets/select_unit_row.dart';
 import 'widgets/tag_input.dart';
 
