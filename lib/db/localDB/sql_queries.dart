@@ -63,4 +63,8 @@ class SqlQueries {
     LEFT JOIN $tablePhotos ON $tablePhotos.${PhotoFields.productId} = $id
     WHERE $tableProducts.${ProductFields.id} = $id;
   ''';
+  static String allLists = '''
+    SELECT *
+    FROM $tableShopingLists;
+  ''';
 }

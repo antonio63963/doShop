@@ -44,6 +44,7 @@ class LocalDB implements AbstractDB {
     await db.execute(SqlTables.createCategories);
     await db.execute(SqlTables.createProducts);
     await db.execute(SqlTables.createPhotos);
+    await db.execute(SqlTables.createShopingLists);
     await db.rawQuery(SqlInitialData.initCategories());
     await db.rawQuery(SqlInitialData.initProducts());
   }
@@ -119,7 +120,7 @@ class LocalDB implements AbstractDB {
     final db = await instance.database;
     final response =
         await db?.rawQuery(SqlQueries.searchInAllPorducts(searchData));
-logger.i('SearchInAllProducts: $response');
+    logger.i('SearchInAllProducts: $response');
     final res = response?.map((sub) => Product.fromJSON(sub)).toList();
 
     return res ?? [];
@@ -144,6 +145,27 @@ logger.i('SearchInAllProducts: $response');
     if (photoId != null) {
       return newImg.copy(id: photoId);
     }
+    return null;
+  }
+
+//SHOPING LISTS
+  @override
+  Future<ShopingList?> createList(ShopingList list) async {
+    final db = await instance.database;
+    final listId = await db?.insert(tableShopingLists, list.toJSON());
+    logger.i('Created ShopingList ID: $listId, ${list.toJSON()}');
+    return list.copy(id: listId);
+  }
+
+  @override
+  Future<List<ShopingList>?> getShopingLists() async {
+    final db = await instance.database;
+    final response = await db?.rawQuery(SqlQueries.allLists);
+    logger.i('Get ShopingLists: $response');
+    if (response != null) {
+      return response.map((list) => ShopingList.fromJSON(list)).toList();
+
+    } 
     return null;
   }
 

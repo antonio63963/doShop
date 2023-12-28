@@ -10,4 +10,6 @@ abstract class AbstractDB {
   Future<int?> updateProduct(Product prod);
   Future<int?> deleteProduct(int eventId);
   Future<Photo?> savePhoto(Photo newImg);
+  Future<ShopingList?> createList(ShopingList product);
+  Future<List<ShopingList>?> getShopingLists();
 }

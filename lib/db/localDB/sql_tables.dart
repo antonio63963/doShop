@@ -41,4 +41,13 @@ class SqlTables {
       ${PhotoFields.categoryId} INTEGER NOT NULL
     );
   ''';
+  static String createShopingLists = '''
+    CREATE TABLE IF NOT EXISTS $tableShopingLists(
+      ${ShopingListFields.id} $idType,
+      ${ShopingListFields.title} $textType,
+      ${ShopingListFields.subtitle} TEXT,
+      ${ShopingListFields.isTemplate} INTEGER NOT NULL,
+      ${ShopingListFields.colorBg} INTEGER
+    );
+  ''';
 }
