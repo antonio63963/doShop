@@ -1,9 +1,10 @@
-
 import 'package:doshop_app/db/exports.dart';
-import 'package:doshop_app/screens/home_screen/view/content/Lists_page.dart';
+import 'package:doshop_app/forms/shoping_list_form/shoping_list_form.dart';
+import 'package:doshop_app/screens/home_screen/view/content/shoping_lists.dart/shoping_lists_screen.dart';
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/categories_page.dart';
 import 'package:doshop_app/screens/home_screen/view/content/templates_page.dart';
 import 'package:doshop_app/utils/constants.dart';
+import 'package:doshop_app/utils/show_modal.dart';
 import 'package:doshop_app/widgets/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -30,7 +31,6 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
-
   final List<Widget> _pages = [
     const CategoriesPage(),
     const TemplatesPage(),
@@ -55,9 +55,11 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          leading:  Padding(
+          leading: Padding(
             padding: EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 5),
-            child: ElevatedButton(onPressed: () => LocalDB.instance.deleteDB(), child: Text('Delete')),
+            child: ElevatedButton(
+                onPressed: () => LocalDB.instance.deleteDB(),
+                child: Text('Delete')),
           ),
           title: Text(getTitle()),
         ),
@@ -65,11 +67,16 @@ class _HomeScreenState extends State<HomeScreen> {
           bucket: bucket,
           child: currentScreen,
         ),
-        
+        floatingActionButton: _currentTab == 0
+            ? null
+            : FAB(
+                onClick: () => showModal(context, const ShopingListForm()),
+                icon: Icons.add,
+              ),
         bottomNavigationBar: BottomAppBar(
           color: MyColors.white,
-          // shape: const CircularNotchedRectangle(),
-          // notchMargin: 10,
+          shape: const CircularNotchedRectangle(),
+          notchMargin: 10,
           child: SizedBox(
             height: 60,
             child: Row(
