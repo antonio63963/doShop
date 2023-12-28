@@ -1,6 +1,5 @@
-
 import 'package:doshop_app/providers/product_provider.dart';
-import 'package:doshop_app/screens/home_screen/exports.dart';
+import 'package:doshop_app/providers/shoping_list_provider.dart';
 import 'package:doshop_app/themes/appTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,15 +12,17 @@ class DoshopApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => CategoriesProvider()),
-      ChangeNotifierProvider(create: (context) => ProductProvider()),
-    ], 
-    child: MaterialApp(
-      title: 'DoShop',
-      routes: routes,
-      theme: appTheme,
-    ),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => CategoriesProvider()),
+        ChangeNotifierProvider(create: (context) => ProductProvider()),
+        ChangeNotifierProvider(create: (context) => ShopingListProvider()),
+      ],
+      child: MaterialApp(
+        title: 'DoShop',
+        routes: routes,
+        theme: appTheme,
+      ),
     );
   }
 }

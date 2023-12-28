@@ -1,6 +1,6 @@
 import 'package:doshop_app/utils/constants.dart';
 
-import '../models/models/product.dart';
+import '../../models/models/product.dart';
 
 class ProductService {
   static final List<ProductTag> _unitsList = [
@@ -21,13 +21,13 @@ class ProductService {
   static List<ProductTag> getIconsByCat(int cat) {
     if (cat == 11) {
       return [
-        ProductTag(tag: 'assets/icons/label.png', isSelected: true),
+        ProductTag(tag: DefaultValues.icon, isSelected: true),
         ...IconsAssets.meat
             .map((i) => ProductTag(tag: '$grocery/meat/$i'))
             .toList()
       ];
     } else {
-      return [ProductTag(tag: 'assets/icons/label.png', isSelected: true)];
+      return [ProductTag(tag: DefaultValues.icon, isSelected: true)];
     }
   }
 }
