@@ -32,8 +32,10 @@ class ShopingList {
     return ShopingList(
       id: json[ShopingListFields.id] as int,
       title: json[ShopingListFields.title] as String,
-      subtitle: json[ShopingListFields.subtitle] as String,
-      isTemplate: json[ShopingListFields.isTemplate] as bool,
+      subtitle: json[ShopingListFields.subtitle] != null
+          ? json[ShopingListFields.subtitle] as String
+          : null,
+      isTemplate: intToBool(json[ShopingListFields.isTemplate] as int),
       img: json[ShopingListFields.img] as String,
       colorBg: json[ShopingListFields.colorBg] as int,
     );
@@ -76,6 +78,8 @@ class ShopingList {
       colorBg: $colorBg,
     ''';
   }
+
+  static bool intToBool(int value) => value == 0 ? false : true;
 }
 
 class ColorTile {

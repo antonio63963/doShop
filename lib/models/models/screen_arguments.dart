@@ -11,6 +11,7 @@ class SubcategoriesScreenArguments {
     required this.catImg,
   });
 }
+
 class ProductsListScreenArguments {
   final int id;
   final String title;
@@ -28,13 +29,27 @@ class ProductsListScreenArguments {
     required this.isSubcats,
   });
 }
+
 class ProductDetailsScreenArguments {
   final int id;
   final String title;
   final String? subtitle;
   final int colorBg;
-ProductDetailsScreenArguments({
+  ProductDetailsScreenArguments({
     required this.id,
+    required this.title,
+    this.subtitle,
+    required this.colorBg,
+  });
+}
+
+class ProductInListDetailsScreenArguments {
+  final int? id;
+  final String title;
+  final String? subtitle;
+  final int colorBg;
+  ProductInListDetailsScreenArguments({
+    this.id,
     required this.title,
     this.subtitle,
     required this.colorBg,

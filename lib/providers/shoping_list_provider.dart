@@ -10,10 +10,11 @@ class ShopingListProvider extends ErrorHandler {
   List<ShopingList> get lists => [..._lists];
 
   Future<void> createList(BuildContext context, ShopingList list) async {
-    await GetIt.I<AbstractDB>().createList(list).then((list) {
-      if (list == null) return;
-      _lists.add(list);
+    await GetIt.I<AbstractDB>().createList(list).then((response) {
+      if (response == null) return;
+      _lists.add(response);
       notifyListeners();
+      
     }).catchError((err) {
       logger.e("Create list Error!!! $err");
       setErrorAlert(context: context, message: 'Не удалось создать Список!');
@@ -22,9 +23,10 @@ class ShopingListProvider extends ErrorHandler {
   Future<void> getLists(BuildContext context) async {
     await GetIt.I<AbstractDB>().getShopingLists().then((response) {
       _lists = response ?? [];
+      notifyListeners();
     }).catchError((err) {
-      logger.e("Create list Error!!! $err");
-      setErrorAlert(context: context, message: 'Не удалось создать Список!');
+      logger.e("Get Shopping lists Error!!! $err");
+      setErrorAlert(context: context, message: 'Не удалось получить списки!');
     });
   }
 }
