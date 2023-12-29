@@ -63,8 +63,21 @@ class SqlQueries {
     LEFT JOIN $tablePhotos ON $tablePhotos.${PhotoFields.productId} = $id
     WHERE $tableProducts.${ProductFields.id} = $id;
   ''';
+
   static String allLists = '''
     SELECT *
     FROM $tableShopingLists;
+  ''';
+
+  static String productsInList(int listId) => '''
+    SELECT $tableProductInList.*,
+    $tableCategories.${CategoryProdFields.img} as catImg,
+    $tableCategories.${CategoryProdFields.colorBg},
+    $tableCategories.${CategoryProdFields.title},
+    $tableCategories.${CategoryProdFields.subtitle}
+    FROM $tableProductInList
+    JOIN $tableProducts ON $tableProducts.${ProductFields.id} = $tableProductInList.${ProductInListFields.prodId}
+    LEFT JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $tableProducts.${ProductFields.catId}
+    WHERE $tableProductInList.${ProductInListFields.listId} = $listId;
   ''';
 }

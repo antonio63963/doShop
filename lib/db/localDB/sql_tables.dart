@@ -47,7 +47,18 @@ class SqlTables {
       ${ShopingListFields.title} $textType,
       ${ShopingListFields.subtitle} TEXT,
       ${ShopingListFields.isTemplate} INTEGER NOT NULL,
-      ${ShopingListFields.colorBg} INTEGER
+      ${ShopingListFields.colorBg} INTEGER,
+      ${ShopingListFields.img} TEXT
+    );
+  ''';
+  static String createProductInList = '''
+    CREATE TABLE IF NOT EXISTS $tableProductInList(
+      ${ProductInListFields.id} $idType,
+      ${ProductInListFields.prodId} INTENGER NOT NULL,
+      ${ProductInListFields.listId} INTENGER NOT NULL,
+      ${ProductInListFields.amount} REAL,
+      ${ProductInListFields.isFire} INTEGER NOT NULL,
+      ${ProductInListFields.dateCreated} TEXT
     );
   ''';
 }

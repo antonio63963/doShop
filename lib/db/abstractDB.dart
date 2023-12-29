@@ -12,4 +12,6 @@ abstract class AbstractDB {
   Future<Photo?> savePhoto(Photo newImg);
   Future<ShopingList?> createList(ShopingList product);
   Future<List<ShopingList>?> getShopingLists();
+  Future<ProductInList?> createProductInList(ProductInList prod);
+  Future<List<ProductInList>?> getProductsInList(int listId);
 }
