@@ -45,6 +45,10 @@ class ProductInList {
     double? amount,
     bool? isFire,
     DateTime? dateCreated,
+    String? icon,
+    int? colorBg,
+    String? title,
+    String? subtitle,
   }) {
     return ProductInList(
       id: id ?? this.id,
@@ -53,6 +57,10 @@ class ProductInList {
       amount: amount ?? this.amount,
       isFire: isFire ?? this.isFire,
       dateCreated: dateCreated ?? this.dateCreated,
+      icon: icon ?? this.icon,
+      title: title ?? this.title,
+      colorBg: colorBg ?? this.colorBg,
+      subtitle: subtitle ?? this.subtitle,
     );
   }
 

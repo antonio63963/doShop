@@ -62,8 +62,8 @@ class ShopingList {
         title: title ?? this.title,
         subtitle: subtitle,
         isTemplate: isTemplate,
-        img: img,
-        colorBg: colorBg,
+        img: img ?? this.img,
+        colorBg: colorBg ?? this.colorBg,
       );
 
   @override

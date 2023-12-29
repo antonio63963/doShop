@@ -13,6 +13,7 @@ class ProductInListProvider extends ErrorHandler {
       BuildContext context, ProductInList prod) async {
     GetIt.I<AbstractDB>().createProductInList(prod).then((response) {
       if (response == null) return;
+      logger.i('Created ProdINList, ${response.toString()}');
       _products.add(response);
       notifyListeners();
     }).catchError((err) {

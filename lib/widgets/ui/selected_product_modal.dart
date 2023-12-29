@@ -138,40 +138,28 @@ class _SelectedProductModalState extends State<SelectedProductModal> {
                         paddingHorizontal: 0,
                         paddingBottom: 0,
                       ),
-                      ListView(
-                        shrinkWrap: true,
-                        children: lists.map((l) {
-                          return RadioListTile(
-                            value: l.id,
-                            title: Text(l.title,
-                                style: TextStyle(color: MyColors.primary)),
-                            groupValue: radioListOption,
-                            onChanged: (value) {
-                              setState(() {
-                                radioListOption = value;
-                              });
-                            },
-                            contentPadding: EdgeInsets.symmetric(vertical: 8),
-                          );
+                      ConstrainedBox(
+                        constraints: BoxConstraints(maxHeight: 200),
+                        child: ListView(
+                          shrinkWrap: true,
+                          children: lists.map((l) {
+                            return RadioListTile(
+                              value: l.id,
+                              title: Text(l.title,
+                                  style: TextStyle(color: MyColors.primary, fontSize: 18)),
+                              groupValue: radioListOption,
+                              onChanged: (value) {
+                                setState(() {
+                                  radioListOption = value;
+                                });
+                              },
+                              contentPadding: EdgeInsets.symmetric(vertical: 0),
+                            );
 
-                          // ListTile(
-                          //   leading: CircleAvatar(
-                          //     backgroundColor:
-                          //         Color(l.colorBg ?? MyColors.defaultBG),
-                          //     child: SizedBox(
-                          //       width: 24,
-                          //       child: Image.asset(
-                          //         l.img ?? DefaultValues.icon,
-                          //       ),
-                          //     ),
-                          //   ),
-                          //   title: Text(l.title),
-                          //   subtitle:
-                          //       l.subtitle != null ? Text(l.subtitle!) : null,
-                          //   tileColor: Color(l.colorBg ?? MyColors.defaultBG),
-                          // );
-                        }).toList(),
+                          }).toList(),
+                        ),
                       ),
+                      
                       Wrap(
                         spacing: 16,
                         children: [

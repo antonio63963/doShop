@@ -12,9 +12,10 @@ class ShopingListProvider extends ErrorHandler {
   Future<void> createList(BuildContext context, ShopingList list) async {
     await GetIt.I<AbstractDB>().createList(list).then((response) {
       if (response == null) return;
+      logger.i('Created ShoppingList, ${response.toString()}');
       _lists.add(response);
       notifyListeners();
-      
+
     }).catchError((err) {
       logger.e("Create list Error!!! $err");
       setErrorAlert(context: context, message: 'Не удалось создать Список!');
