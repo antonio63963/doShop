@@ -1,5 +1,6 @@
 import 'package:doshop_app/screens/home_screen/view/content/shoping_lists.dart/widgets/shoping_list_item.dart';
-import 'package:doshop_app/screens/shoping_list_details/shoping_list_details.dart';
+import 'package:doshop_app/screens/shoping_list_details_screen/shoping_list_details.dart';
+import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/widgets/exports.dart';
 import 'package:flutter/material.dart';
 
@@ -24,7 +25,12 @@ class ShopingListsSection extends StatelessWidget {
                 list: l,
                 onTap: () => Navigator.of(context).pushNamed(
                   ShopingListDetails.routeName,
-                  arguments: {"id": l.id},
+                  arguments: ProductInListDetailsScreenArguments(
+                    colorBg: l.colorBg ?? MyColors.defaultBG,
+                    id: l.id!,
+                    title: l.title,
+                    subtitle: l.subtitle,
+                  ),
                 ),
               );
             });

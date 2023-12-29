@@ -2,9 +2,13 @@ import 'package:doshop_app/forms/shoping_list_form/widgets/select_color_row.dart
 import 'package:doshop_app/forms/widgets/select_icon_row.dart';
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/services/shoping_list.service.dart';
+import 'package:doshop_app/providers/shoping_list_provider.dart';
 import 'package:doshop_app/utils/constants.dart';
+import 'package:doshop_app/utils/helper.dart';
+import 'package:doshop_app/utils/validators.dart';
 import 'package:doshop_app/widgets/exports.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ShopingListForm extends StatefulWidget {
   const ShopingListForm({super.key});
@@ -14,6 +18,7 @@ class ShopingListForm extends StatefulWidget {
 }
 
 class _ShopingListFormState extends State<ShopingListForm> {
+  //  ShopingListProvider? _shopingListProvider;
   final TextEditingController titleController = TextEditingController();
   final TextEditingController subtitleController = TextEditingController();
   int _selectedColor = MyColors.defaultBG;
@@ -60,27 +65,41 @@ class _ShopingListFormState extends State<ShopingListForm> {
   @override
   Widget build(BuildContext context) {
     return ModalBottomFormLayout(
-        title: 'Создать Список',
-        widgets: [
-          Input(
-            label: 'Заголовок',
-            inputController: titleController,
-          ),
-          Input(
-            label: 'Подзаголовок',
-            inputController: subtitleController,
-          ),
-          SelectColorRow(
-            colorsList: _colorsList,
-            markColorAsSelected: markColorAsSelected,
-            colorBg: Color(_selectedColor),
-          ),
-          SelectIconRow(
-            iconsList: _iconsList,
-            markIconAsSelected: markIconAsSelected,
-            colorBg: Color(_selectedColor),
-          ),
-        ],
-        onSubmit: () {});
+      title: 'Создать Список',
+      widgets: [
+        Input(
+          label: 'Заголовок',
+          inputController: titleController,
+          validator: Validator.title,
+        ),
+        Input(
+          label: 'Подзаголовок',
+          inputController: subtitleController,
+        ),
+        SelectColorRow(
+          colorsList: _colorsList,
+          markColorAsSelected: markColorAsSelected,
+          colorBg: Color(_selectedColor),
+        ),
+        SelectIconRow(
+          iconsList: _iconsList,
+          markIconAsSelected: markIconAsSelected,
+          colorBg: Color(_selectedColor),
+        ),
+      ],
+      onSubmit: () {
+        final newList = ShopingList(
+          title: titleController.text,
+          subtitle:
+              subtitleController.text.isEmpty ? null : subtitleController.text,
+          colorBg: _selectedColor,
+          img: _selectedIcon,
+        );
+        Provider.of<ShopingListProvider>(context, listen: false).createList(context, newList).then((value) {
+          Navigator.pop(context);
+          Helper.showSnack(context: context, text: 'Список ${newList.title} добавлен');
+        });
+      },
+    );
   }
 }

@@ -28,7 +28,7 @@ class SubcategoryItem extends StatelessWidget {
               width: 134,
               height: 90,
               child: Image.asset(
-                sub.img ?? 'assets/img/categories/hobby.png',
+                sub.img ?? DefaultValues.icon,
                 fit: BoxFit.contain,
               ),
             ),

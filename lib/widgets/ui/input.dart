@@ -40,6 +40,7 @@ class _InputState extends State<Input> {
         vertical: widget.paddingVertical,
       ),
       child: TextFormField(
+        textCapitalization: TextCapitalization.sentences,
         validator: widget.validator,
         maxLines: widget.maxLines,
         autofocus: widget.autofocus,

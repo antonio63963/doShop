@@ -1,10 +1,12 @@
 import 'package:doshop_app/models/exports.dart';
+import 'package:doshop_app/providers/shoping_list_provider.dart';
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/search_product_item.dart';
 import 'package:doshop_app/screens/product_details_screen.dart/exports.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/widgets/exports.dart';
 import 'package:doshop_app/widgets/ui/primary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class SelectedProductModal extends StatefulWidget {
   final Product prod;
@@ -15,7 +17,12 @@ class SelectedProductModal extends StatefulWidget {
 }
 
 class _SelectedProductModalState extends State<SelectedProductModal> {
+  bool _isInit = false;
+  bool _isLoaded = false;
+
   Product? _selectedProduct;
+
+  int? radioListOption;
 
   void onOpen(BuildContext context, prod) => Navigator.of(context).pushNamed(
         ProductDetailsScreen.routeName,
@@ -78,7 +85,20 @@ class _SelectedProductModalState extends State<SelectedProductModal> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (!_isInit) {
+      final shopingListProvider = Provider.of<ShopingListProvider>(context);
+      if (shopingListProvider.lists.isEmpty) {
+        shopingListProvider.getLists(context);
+        _isInit = true;
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final lists = Provider.of<ShopingListProvider>(context).lists;
     return _selectedProduct == null
         ? const Text('Что-то пошло не так продукт не найден!')
         : Container(
@@ -116,10 +136,41 @@ class _SelectedProductModalState extends State<SelectedProductModal> {
                       const SectionTitle(
                         title: 'Выбрать список',
                         paddingHorizontal: 0,
+                        paddingBottom: 0,
                       ),
                       ListView(
                         shrinkWrap: true,
-                        children: [],
+                        children: lists.map((l) {
+                          return RadioListTile(
+                            value: l.id,
+                            title: Text(l.title,
+                                style: TextStyle(color: MyColors.primary)),
+                            groupValue: radioListOption,
+                            onChanged: (value) {
+                              setState(() {
+                                radioListOption = value;
+                              });
+                            },
+                            contentPadding: EdgeInsets.symmetric(vertical: 8),
+                          );
+
+                          // ListTile(
+                          //   leading: CircleAvatar(
+                          //     backgroundColor:
+                          //         Color(l.colorBg ?? MyColors.defaultBG),
+                          //     child: SizedBox(
+                          //       width: 24,
+                          //       child: Image.asset(
+                          //         l.img ?? DefaultValues.icon,
+                          //       ),
+                          //     ),
+                          //   ),
+                          //   title: Text(l.title),
+                          //   subtitle:
+                          //       l.subtitle != null ? Text(l.subtitle!) : null,
+                          //   tileColor: Color(l.colorBg ?? MyColors.defaultBG),
+                          // );
+                        }).toList(),
                       ),
                       Wrap(
                         spacing: 16,

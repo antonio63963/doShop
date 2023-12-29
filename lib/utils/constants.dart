@@ -55,7 +55,7 @@ class Units {
 }
 
 class DefaultValues {
-  static String img = 'assets/img/categories/hobby.png';
+  static String img = DefaultValues.icon;
   static String icon = 'assets/default/label.png';
   static double plusAmount = 0.5;
 }

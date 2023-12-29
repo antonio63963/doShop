@@ -28,7 +28,7 @@ class ShopingListItem extends StatelessWidget {
               width: 134,
               height: 90,
               child: Image.asset(
-                list.img ?? 'assets/img/categories/hobby.png',
+                list.img ?? DefaultValues.img,
                 fit: BoxFit.contain,
               ),
             ),
