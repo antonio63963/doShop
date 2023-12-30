@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: _currentTab == 0
             ? null
             : FAB(
-                onClick: () => showModal(context, const ShopingListForm()),
+                onClick: () => showModal(context, ShopingListForm()),
                 icon: Icons.add,
               ),
         bottomNavigationBar: BottomAppBar(

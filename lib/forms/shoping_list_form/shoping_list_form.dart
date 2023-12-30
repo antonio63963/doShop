@@ -11,14 +11,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ShopingListForm extends StatefulWidget {
-  const ShopingListForm({super.key});
+  ShopingList? list;
+  ShopingListForm({this.list, super.key});
 
   @override
   State<ShopingListForm> createState() => _ShopingListFormState();
 }
 
 class _ShopingListFormState extends State<ShopingListForm> {
-  //  ShopingListProvider? _shopingListProvider;
+  bool isInit = false;
   final TextEditingController titleController = TextEditingController();
   final TextEditingController subtitleController = TextEditingController();
   int _selectedColor = MyColors.defaultBG;
@@ -58,8 +59,20 @@ class _ShopingListFormState extends State<ShopingListForm> {
   @override
   void initState() {
     super.initState();
-    _iconsList = ShopingListService.getIcons();
-    _colorsList = ShopingListService.getColors();
+    if (!isInit) {
+      _iconsList = ShopingListService.getIcons();
+      _colorsList = ShopingListService.getColors();
+      if (widget.list != null) {
+        titleController.text = widget.list!.title;
+        subtitleController.text = widget.list!.subtitle ?? '';
+        _selectedColor = widget.list!.colorBg ?? MyColors.defaultBG;
+        final iconIdx = _iconsList.indexWhere((i) => i.tag == widget.list?.img);
+        markIconAsSelected(iconIdx);
+        final colorIdx =
+            _colorsList.indexWhere((c) => c.color == widget.list?.colorBg);
+        markColorAsSelected(colorIdx);
+      }
+    }
   }
 
   @override
@@ -95,9 +108,12 @@ class _ShopingListFormState extends State<ShopingListForm> {
           colorBg: _selectedColor,
           img: _selectedIcon,
         );
-        Provider.of<ShopingListProvider>(context, listen: false).createList(context, newList).then((value) {
+        Provider.of<ShopingListProvider>(context, listen: false)
+            .createList(context, newList)
+            .then((value) {
           Navigator.pop(context);
-          Helper.showSnack(context: context, text: 'Список ${newList.title} добавлен');
+          Helper.showSnack(
+              context: context, text: 'Список ${newList.title} добавлен');
         });
       },
     );
