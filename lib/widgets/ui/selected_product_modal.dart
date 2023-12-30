@@ -1,3 +1,4 @@
+import 'package:doshop_app/forms/widgets/select_list_section.dart';
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/shoping_list_provider.dart';
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/search_product_item.dart';
@@ -7,6 +8,8 @@ import 'package:doshop_app/widgets/exports.dart';
 import 'package:doshop_app/widgets/ui/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../forms/widgets/buttons_form_row.dart';
 
 class SelectedProductModal extends StatefulWidget {
   final Product prod;
@@ -23,6 +26,12 @@ class _SelectedProductModalState extends State<SelectedProductModal> {
   Product? _selectedProduct;
 
   int? radioListOption;
+
+  void onChangeOption(int? value) {
+    setState(() {
+      radioListOption = value;
+    });
+  }
 
   void onOpen(BuildContext context, prod) => Navigator.of(context).pushNamed(
         ProductDetailsScreen.routeName,
@@ -125,60 +134,14 @@ class _SelectedProductModalState extends State<SelectedProductModal> {
                   onFire: onFire,
                   isFire: _selectedProduct!.isFire,
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: AppPadding.bodyHorizontal,
-                    vertical: 24,
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SectionTitle(
-                        title: 'Выбрать список',
-                        paddingHorizontal: 0,
-                        paddingBottom: 0,
-                      ),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(maxHeight: 200),
-                        child: ListView(
-                          shrinkWrap: true,
-                          children: lists.map((l) {
-                            return RadioListTile(
-                              value: l.id,
-                              title: Text(l.title,
-                                  style: TextStyle(color: MyColors.primary, fontSize: 18)),
-                              groupValue: radioListOption,
-                              onChanged: (value) {
-                                setState(() {
-                                  radioListOption = value;
-                                });
-                              },
-                              contentPadding: EdgeInsets.symmetric(vertical: 0),
-                            );
-
-                          }).toList(),
-                        ),
-                      ),
-                      
-                      Wrap(
-                        spacing: 16,
-                        children: [
-                          SecondaryButton(
-                            text: 'Подтвердить',
-                            onPressed: onClose,
-                          ),
-                          PrimaryButton(
-                            text: 'Отменить',
-                            iconData: Icons.close_outlined,
-                            elevation: 0,
-                            textColor: MyColors.danger,
-                            bgColor: MyColors.white,
-                            onPressed: onClose,
-                          )
-                        ],
-                      )
-                    ],
-                  ),
+                SelectListSection(
+                  radioListOption: radioListOption,
+                  onChangeOption: onChangeOption,
+                  lists: lists,
+                ),
+                ButtonsFormRow(
+                  onClose: onClose,
+                  onSubmit: () {},
                 )
               ],
             ),

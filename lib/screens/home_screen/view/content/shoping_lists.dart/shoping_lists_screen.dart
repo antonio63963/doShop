@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/shoping_list_provider.dart';
 import 'package:doshop_app/utils/constants.dart';
 

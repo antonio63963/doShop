@@ -16,3 +16,4 @@ export 'ui/menu_item.dart';
 export 'ui/icon_fire.dart';
 export 'ui/options_product_row.dart';
 export 'ui/selected_product_modal.dart';
+export 'ui/primary_button.dart';
