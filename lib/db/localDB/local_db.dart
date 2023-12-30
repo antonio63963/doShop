@@ -169,6 +169,30 @@ class LocalDB implements AbstractDB {
     return null;
   }
 
+    @override
+  Future<int?> updateShoppingList(ShopingList list) async {
+    logger.i("Product for update: ${list.toString()}");
+    final db = await instance.database;
+    return await db?.update(
+      tableShopingLists,
+      list.toJSON(),
+      where: '${ShopingListFields.id} = ?',
+      whereArgs: [list.id],
+    );
+  }
+
+  @override
+  Future<int?> deleteShoppingList(int listId) async {
+    final db = await instance.database;
+    final resp = await db?.delete(
+      tableShopingLists,
+      where: '${ShopingListFields.id} = ?',
+      whereArgs: [listId],
+    );
+    logger.i('Delete list response: $resp');
+    return resp;
+  }
+
   //PRODUCTS IN LIST  
   @override
   Future<ProductInList?> createProductInList(ProductInList prod) async {

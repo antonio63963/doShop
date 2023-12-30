@@ -14,4 +14,6 @@ abstract class AbstractDB {
   Future<List<ShopingList>?> getShopingLists();
   Future<ProductInList?> createProductInList(ProductInList prod);
   Future<List<ProductInList>?> getProductsInList(int listId);
+  Future<int?> updateShoppingList(ShopingList list);
+  Future<int?> deleteShoppingList(int listId);
 }
