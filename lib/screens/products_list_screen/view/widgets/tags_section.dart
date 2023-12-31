@@ -31,7 +31,6 @@ class TagsSection extends StatelessWidget {
         ),
       );
     }).toList();
-    print("TAGFGGG: $tags");
     return ScrollableRow(
       widgets: tags,
       paddingBottom: 20,

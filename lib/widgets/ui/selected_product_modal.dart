@@ -26,10 +26,12 @@ class _SelectedProductModalState extends State<SelectedProductModal> {
   Product? _selectedProduct;
 
   int? radioListOption;
+  String? selectedListTitle;
 
-  void onChangeOption(int? value) {
+  void onChangeOption(int? value, String? title) {
     setState(() {
       radioListOption = value;
+      selectedListTitle = title;
     });
   }
 

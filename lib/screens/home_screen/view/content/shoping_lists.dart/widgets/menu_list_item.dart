@@ -9,7 +9,7 @@ import 'package:doshop_app/utils/helper.dart';
 import 'package:doshop_app/utils/show_modal.dart';
 import 'package:doshop_app/widgets/ui/menu_item.dart';
 
-enum MenuOptionsValues {clean, edit, delete}
+enum MenuOptionsValues { clean, edit, delete }
 
 class MenuListItem extends StatefulWidget {
   final ShopingList list;
@@ -30,13 +30,6 @@ class _MenuListItemState extends State<MenuListItem> {
 
   @override
   Widget build(BuildContext context) {
-    void onCloseScreen(ShopingList? list) {
-      Navigator.of(context).pop();
-      Helper.showSnack(
-          context: widget.context,
-          text: 'Список ${list?.title} удален');
-    }
-
     void onSelectOption(MenuOptionsValues item) {
       switch (item) {
         case MenuOptionsValues.clean:
@@ -46,10 +39,11 @@ class _MenuListItemState extends State<MenuListItem> {
           }
         case MenuOptionsValues.edit:
           showModal(
-              widget.context,
-              ShopingListForm(
-                list: widget.list,
-              ));
+            widget.context,
+            ShopingListForm(
+              list: widget.list,
+            ),
+          );
 
         case MenuOptionsValues.delete:
           Helper.showInfoAlert(
@@ -61,7 +55,9 @@ class _MenuListItemState extends State<MenuListItem> {
                   Provider.of<ShopingListProvider>(context, listen: false)
                       .deleteList(context, widget.list.id!)
                       .then(
-                        (value) => onCloseScreen(widget.list),
+                        (value) => Helper.showSnack(
+                            context: widget.context,
+                            text: 'Список ${widget.list.title} удален'),
                       ),
             ),
           );

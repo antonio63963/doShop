@@ -61,8 +61,10 @@ class ShopingListProvider extends ErrorHandler {
       return;
     }
     await GetIt.I<AbstractDB>().deleteShoppingList(listId).then((id) {
-      if (id is int) {
-        _lists.removeWhere((l) => l.id == id);
+      logger.i('DELLLL: $id');
+      if (id == 1) {
+        _lists.removeWhere((l) => l.id == listId);
+        notifyListeners();
       } else {
         throw Error();
       }

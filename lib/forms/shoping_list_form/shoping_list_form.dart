@@ -11,8 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class ShopingListForm extends StatefulWidget {
-  ShopingList? list;
-  ShopingListForm({this.list, super.key});
+  final ShopingList? list;
+  const ShopingListForm({this.list, super.key});
 
   @override
   State<ShopingListForm> createState() => _ShopingListFormState();

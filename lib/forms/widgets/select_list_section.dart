@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class SelectListSection extends StatelessWidget {
   final int? radioListOption;
-  final Function(int?) onChangeOption;
+  final Function(int?, String?) onChangeOption;
   final List<ShopingList> lists;
 
   const SelectListSection({
@@ -42,7 +42,7 @@ class SelectListSection extends StatelessWidget {
                           color: MyColors.primary, fontSize: 18)),
                   groupValue: radioListOption,
                   onChanged: (value) {
-                   onChangeOption(value);
+                   onChangeOption(value, l.title);
                   },
                   contentPadding: const EdgeInsets.symmetric(vertical: 0),
                 );

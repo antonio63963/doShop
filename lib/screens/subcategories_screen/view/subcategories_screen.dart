@@ -5,7 +5,6 @@ import 'package:doshop_app/screens/subcategories_screen/view/subcategory_item.da
 import 'package:doshop_app/widgets/exports.dart';
 import 'package:flutter/material.dart';
 
-import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/fast_enter_form.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:provider/provider.dart';
 
@@ -101,7 +100,7 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
           ? const Loading()
           : ListView(
               children: [
-                FastEnterForm(searchController: searchController),
+                Input(inputController: searchController),
                 Padding(
                   padding: EdgeInsets.symmetric(
                       horizontal: AppPadding.bodyHorizontal),
