@@ -17,6 +17,11 @@ class ProductProvider extends ErrorHandler {
   int? _selectedTagIdx;
   String searchData = '';
 
+    List<Product> get products {
+    final filterResult = filterByTag(_selectedTagIdx, [..._products]);
+    return filterByInput(searchData, filterResult);
+  }
+
   void setTagToArray(String? tag) {
     if (tag == null) return;
     final idx = tags.indexWhere((el) => el.tag == tag);
@@ -65,11 +70,6 @@ class ProductProvider extends ErrorHandler {
 
   }
 
-  List<Product> get products {
-    final filterResult = filterByTag(_selectedTagIdx, [..._products]);
-    return filterByInput(searchData, filterResult);
-  }
-
   List<Product> filterByTag(int? tagIdx, List<Product> productsList) {
     if (tagIdx != null) {
       return productsList
@@ -80,12 +80,22 @@ class ProductProvider extends ErrorHandler {
     return productsList;
   }
 
-  void creanProductsList() {
-    _products = [];
+  void creanProductsListAmount() {
+    for(var i in _products) {
+      i.amount = 0;
+    }
     isAnySelected = false;
+    for(var t in tags) {
+      t.isSelected = false;
+    } 
+    _selectedTagIdx = null;
+    notifyListeners();
+  }
+
+  void onLeave() {
+    _products = [];
     tags = [];
     _selectedTagIdx = null;
-    // notifyListeners();
   }
 
   Future<Product?> createProduct(BuildContext context, Product product) async {
@@ -215,6 +225,13 @@ class ProductProvider extends ErrorHandler {
       _checkIfExistsSelected();
     } else {
       return;
+    }
+  }
+
+  void cleanSelectedProducts() {
+    for(var i in _products) {
+     i.amount = 0;
+     i.isFire = false;
     }
   }
 

@@ -1,4 +1,9 @@
 import 'package:doshop_app/forms/product_form/product_form.dart';
+import 'package:doshop_app/forms/select_list_alert/select_list_alert.dart';
+import 'package:doshop_app/providers/product_in_list_provider.dart';
+import 'package:doshop_app/screens/products_list_screen/view/widgets/actions.dart';
+import 'package:doshop_app/utils/constants.dart';
+import 'package:doshop_app/utils/helper.dart';
 import 'package:doshop_app/utils/show_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,8 +48,8 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   @override
   void didChangeDependencies() {
     if (!isInit) {
-      _screenArguments =
-          ModalRoute.of(context)?.settings.arguments as ProductsListScreenArguments;
+      _screenArguments = ModalRoute.of(context)?.settings.arguments
+          as ProductsListScreenArguments;
       productProvider = Provider.of<ProductProvider>(context);
       Provider.of<ProductProvider>(context)
           .getProductsByCategory(context, _screenArguments.id);
@@ -57,7 +62,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
 
   @override
   void dispose() {
-    productProvider.creanProductsList();
+    productProvider.onLeave();
     super.dispose();
   }
 
@@ -66,11 +71,10 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
     _productsList = productProvider.products;
 
     return Scaffold(
-      appBar: AppBarMain(
-        appBar: AppBar(),
-        title: _screenArguments.title,
-        subtitle: _screenArguments.subtitle ?? '',
-        onMenu: () {},
+      appBar: AppBar(
+        title: Text(
+            '${_screenArguments.title} ${_screenArguments.subtitle ?? ''}'),
+        actions: getActions(context),
       ),
       body: PageContentWrapper(
         onRefresh: () =>
@@ -96,7 +100,14 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
               icon: Icons.add,
             )
           : FAB(
-              onClick: () {},
+              onClick: () {
+                // Provider.of<ProductInListProvider>(context).insertMany(context, _productsList)
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return SelectListAlert();
+                    });
+              },
               svgPath: 'assets/icons/addToList.svg',
             ),
     );
