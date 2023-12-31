@@ -69,7 +69,7 @@ class SqlQueries {
     FROM $tableShopingLists;
   ''';
 
-  static String productsInList(int listId) => '''
+  static String getProductsInList(int listId) => '''
     SELECT $tableProductInList.*,
     $tableCategories.${CategoryProdFields.img} as catImg,
     $tableCategories.${CategoryProdFields.colorBg},
@@ -77,7 +77,12 @@ class SqlQueries {
     $tableCategories.${CategoryProdFields.subtitle}
     FROM $tableProductInList
     JOIN $tableProducts ON $tableProducts.${ProductFields.id} = $tableProductInList.${ProductInListFields.prodId}
-    LEFT JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $tableProducts.${ProductFields.catId}
+    LEFT JOIN $tableCategories ON $tableProducts.${ProductFields.catId} IS NOT NULL AND $tableCategories.${CategoryProdFields.id} = $tableProducts.${ProductFields.catId}
     WHERE $tableProductInList.${ProductInListFields.listId} = $listId;
+  ''';
+
+  static String insertProductInList(ProductInList product) => '''
+    INSERT INTO $tableProductInList (${ProductInListFields.values})
+    VALUES (${product.toJSON()});
   ''';
 }

@@ -165,11 +165,11 @@ class LocalDB implements AbstractDB {
     logger.i('Get ShopingLists: $response');
     if (response != null) {
       return response.map((list) => ShopingList.fromJSON(list)).toList();
-    } 
+    }
     return null;
   }
 
-    @override
+  @override
   Future<int?> updateShoppingList(ShopingList list) async {
     logger.i("Product for update: ${list.toString()}");
     final db = await instance.database;
@@ -193,7 +193,7 @@ class LocalDB implements AbstractDB {
     return resp;
   }
 
-  //PRODUCTS IN LIST  
+  //PRODUCTS IN LIST
   @override
   Future<ProductInList?> createProductInList(ProductInList prod) async {
     final db = await instance.database;
@@ -201,15 +201,76 @@ class LocalDB implements AbstractDB {
     logger.i('Created ProductInList ID: $productInListId, ${prod.toJSON()}');
     return productInListId != null ? prod.copy(id: productInListId) : null;
   }
+
+  @override
+  Future<List<ProductInList>?> insertManyProductsInList(
+      List<ProductInList> prodList) async {
+    final db = await instance.database;
+    final List<int> ids = [];
+    await db?.transaction((txn) async {
+      prodList.map((prod) async {
+        int id = await txn.rawInsert(SqlQueries.insertProductInList(prod));
+        ids.add(id);
+      });
+    });
+
+    return ids.length == prodList.length
+        ? prodList
+            .asMap()
+            .entries
+            .map((p) => p.value.copy(id: ids[p.key]))
+            .toList()
+        : null;
+  }
+
   @override
   Future<List<ProductInList>?> getProductsInList(int listId) async {
     final db = await instance.database;
-     final response = await db?.rawQuery(SqlQueries.productsInList(listId));
+    final response = await db?.rawQuery(SqlQueries.getProductsInList(listId));
     logger.i('Get ShopingLists: $response');
     if (response != null) {
       return response.map((list) => ProductInList.fromJSON(list)).toList();
-    } 
+    }
     return null;
+  }
+
+  @override
+  Future<int?> updateProductInList(ProductInList prodInList) async {
+    logger.i("Product in list amount for update: ${prodInList.toString()}");
+    final db = await instance.database;
+    return await db?.update(
+      tableProductInList,
+      prodInList.toJSON(),
+      where: '${ProductInListFields.id} = ?',
+      whereArgs: [prodInList.id],
+    );
+  }
+
+  @override
+  Future<int?> deleteProductInList(int prodId) async {
+    final db = await instance.database;
+    final resp = await db?.delete(
+      tableProductInList,
+      where: '${ProductInListFields.id} = ?',
+      whereArgs: [prodId],
+    );
+    logger.i('Delete product in list response: $resp');
+    return resp;
+  }
+
+  @override
+  Future<int?> deleteManyProductInList(List<ProductInList> prodList) async {
+    final List<String> prodIdsList =
+        prodList.fold([], (value, element) => [...value, '${element.id}']);
+    final db = await instance.database;
+    final resp = await db?.delete(
+      tableProductInList,
+      where:
+          '${ProductInListFields.id} IN (${List.filled(prodList.length, '?').join(',')})',
+      whereArgs: prodIdsList,
+    );
+    logger.i('Delete Many products in list. response: $resp');
+    return resp;
   }
 
   //utils functions
