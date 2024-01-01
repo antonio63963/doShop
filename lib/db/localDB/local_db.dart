@@ -206,21 +206,18 @@ class LocalDB implements AbstractDB {
   Future<List<ProductInList>?> insertManyProductsInList(
       List<ProductInList> prodList) async {
     final db = await instance.database;
-    final List<int> ids = [];
-    await db?.transaction((txn) async {
-      prodList.map((prod) async {
-        int id = await txn.rawInsert(SqlQueries.insertProductInList(prod));
-        ids.add(id);
-      });
-    });
+    if(db == null) throw UnimplementedError('Db not opened!');
 
-    return ids.length == prodList.length
+    final listIds = await db.rawQuery(SqlQueries.insertOrUpdateProductsInList(prodList));
+logger.i('INSERT MANY PROD IN LIST: $listIds');
+    return listIds.length == prodList.length
         ? prodList
             .asMap()
             .entries
-            .map((p) => p.value.copy(id: ids[p.key]))
+            .map((p) => p.value.copy(id: listIds[p.key]["id"] as int))
             .toList()
         : null;
+
   }
 
   @override
@@ -272,6 +269,14 @@ class LocalDB implements AbstractDB {
     logger.i('Delete Many products in list. response: $resp');
     return resp;
   }
+  Future<List<ProductInList>?> getAllProdsInList() async {
+    final db = await instance.database;
+    final response = await db?.rawQuery(SqlQueries.getAllProductsInList());
+    logger.i('All PRODUCTS in list. response: $response');
+    return null;
+  }
+
+ 
 
   //utils functions
   Future<void> deleteDB() async {

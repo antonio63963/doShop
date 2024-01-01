@@ -1,9 +1,10 @@
-import 'package:doshop_app/models/exports.dart';
-import 'package:doshop_app/models/models/category.dart';
-import 'package:doshop_app/providers/product_in_list_provider.dart';
-import 'package:doshop_app/widgets/exports.dart';
+import 'package:doshop_app/db/localDB/local_db.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:doshop_app/models/exports.dart';
+import 'package:doshop_app/providers/product_in_list_provider.dart';
+import 'package:doshop_app/widgets/exports.dart';
 
 class ShopingListDetails extends StatefulWidget {
   static const String routeName = 'listDetails';
@@ -44,6 +45,9 @@ class _ShopingListDetailsState extends State<ShopingListDetails> {
     return Scaffold(
         appBar: AppBar(
           title: Text(_screenArgs?.title ?? 'Не определен'),
+          actions: [
+            IconButton(onPressed: () {LocalDB.instance.getAllProdsInList();}, icon: Icon(Icons.data_array_outlined))
+          ],
         ),
         body: !isLoaded
             ? const Loading()

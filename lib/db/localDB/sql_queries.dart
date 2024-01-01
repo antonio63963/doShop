@@ -82,7 +82,36 @@ class SqlQueries {
   ''';
 
   static String insertProductInList(ProductInList product) => '''
-    INSERT INTO $tableProductInList (${ProductInListFields.values})
-    VALUES (${product.toJSON()});
+    INSERT OR REPLACE INTO $tableProductInList (${ProductInListFields.values})
+    VALUES (${product.toJSON()})
+    RETURNING id;
   ''';
+  // static String insertOrUpdateProductInList(ProductInList product) => '''
+  //   INSERT INTO $tableProductInList (${ProductInListFields.values})
+  //   VALUES (${product.toJSON()}) ON DUPLICATE KEY UPDATE prodId = VALUES(prodId);
+  // ''';
+
+static String insertOrUpdateProductsInList(List<ProductInList> products) {
+    final values = products.map((prod) => '''
+    (
+      (SELECT id FROM $tableProductInList WHERE prodId = ${prod.prodId}),
+      ${prod.prodId}, ${prod.listId}, "${prod.amount}", "${prod.isFire ? 1 : 0}",
+      "${prod.isDone ? 1 : 0}", "${prod.dateCreated}"
+    )
+  ''');
+
+    final valuesString = values.join(',');
+    return '''
+        INSERT OR REPLACE INTO $tableProductInList (${ProductInListFields.values})
+        VALUES $valuesString
+        RETURNING id;
+      ''';
+  }
+
+  static String getAllProductsInList() => '''
+    SELECT *
+    FROM $tableProductInList;
+  ''';
+
+
 }

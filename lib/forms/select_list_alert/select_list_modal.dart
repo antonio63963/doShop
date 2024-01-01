@@ -11,14 +11,14 @@ import 'package:provider/provider.dart';
 
 import '../widgets/select_list_section.dart';
 
-class SelectListAlert extends StatefulWidget {
-  const SelectListAlert({super.key});
+class SelectListModal extends StatefulWidget {
+  const SelectListModal({super.key});
 
   @override
-  State<SelectListAlert> createState() => _SelectListAlertState();
+  State<SelectListModal> createState() => _SelectListModalState();
 }
 
-class _SelectListAlertState extends State<SelectListAlert> {
+class _SelectListModalState extends State<SelectListModal> {
   bool _isInit = false;
   bool _isLoaded = false;
   List<Product> _selectedProducts = [];
@@ -33,6 +33,13 @@ class _SelectListAlertState extends State<SelectListAlert> {
     });
   }
 
+  List<Product> initSelectedProducts(BuildContext context) {
+    return Provider.of<ProductProvider>(context, listen: false)
+        .products
+        .where((p) => p.amount > 0)
+        .toList();
+  }
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -40,13 +47,12 @@ class _SelectListAlertState extends State<SelectListAlert> {
       final shopingListProvider = Provider.of<ShopingListProvider>(context);
       if (shopingListProvider.lists.isEmpty) {
         shopingListProvider.getLists(context).then((value) {
-          _selectedProducts =
-              Provider.of<ProductProvider>(context, listen: false)
-                  .products
-                  .where((p) => p.amount > 0)
-                  .toList();
+          _selectedProducts = initSelectedProducts(context);
           _isLoaded = true;
         });
+      } else {
+        _selectedProducts = initSelectedProducts(context);
+        _isLoaded = true;
       }
       _isInit = true;
     }
@@ -63,12 +69,15 @@ class _SelectListAlertState extends State<SelectListAlert> {
               dateCreated: DateTime.now(),
             ))
         .toList();
-    Provider.of<ProductInListProvider>(context)
+    Provider.of<ProductInListProvider>(context, listen: false)
         .insertMany(context, productsToInsert)
         .then((value) {
-          Navigator.pop(context);
-          Helper.showSnack(context: context,text: 'Добавлено ${_selectedProducts.length} товаров в "${selectedListTitle}');
-        });
+      Navigator.pop(context);
+      Helper.showSnack(
+          context: context,
+          text:
+              'Добавлено ${_selectedProducts.length} товаров в "${selectedListTitle}');
+    });
   }
 
   @override

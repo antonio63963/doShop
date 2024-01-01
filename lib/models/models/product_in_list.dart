@@ -2,7 +2,7 @@ const String tableProductInList = 'productInLists';
 
 class ProductInListFields {
   static String values = '''
-    prodId, listId, amount, isFire, dateCreated, isDone
+  id, prodId, listId, amount, isFire, isDone, dateCreated
  ''';
   static const String id = 'id';
   static const String prodId = 'prodId';
@@ -19,8 +19,8 @@ class ProductInList {
   final int listId;
   double amount;
   bool isFire = false;
-  final DateTime dateCreated;
   bool isDone = false;
+  final DateTime dateCreated;
   //for ui
   final String? title;
   final String? subtitle;
@@ -33,8 +33,8 @@ class ProductInList {
     required this.amount,
     required this.listId,
     this.isFire = false,
-    required this.dateCreated,
     this.isDone = false,
+    required this.dateCreated,
     this.title,
     this.subtitle,
     this.colorBg,

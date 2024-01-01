@@ -1,5 +1,5 @@
 import 'package:doshop_app/forms/product_form/product_form.dart';
-import 'package:doshop_app/forms/select_list_alert/select_list_alert.dart';
+import 'package:doshop_app/forms/select_list_alert/select_list_modal.dart';
 import 'package:doshop_app/providers/product_in_list_provider.dart';
 import 'package:doshop_app/screens/products_list_screen/view/widgets/actions.dart';
 import 'package:doshop_app/utils/constants.dart';
@@ -105,7 +105,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                 showDialog(
                     context: context,
                     builder: (_) {
-                      return SelectListAlert();
+                      return SelectListModal();
                     });
               },
               svgPath: 'assets/icons/addToList.svg',

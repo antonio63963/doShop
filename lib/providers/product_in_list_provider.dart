@@ -39,6 +39,7 @@ class ProductInListProvider extends ErrorHandler {
 
   Future<void> getProductsInList(BuildContext context, int listId) async {
     GetIt.I<AbstractDB>().getProductsInList(listId).then((response) {
+      
       if (response == null) return;
       _products = response;
       notifyListeners();
