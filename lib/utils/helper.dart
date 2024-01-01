@@ -24,10 +24,10 @@ class Helper {
       builder: (_) => AlertDialog(
         backgroundColor: MyColors.white,
         shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.all(
-          Radius.circular(5.0),
+          borderRadius: BorderRadius.all(
+            Radius.circular(5.0),
+          ),
         ),
-      ),
         title: Text(
           alert.title,
           style: theme.textTheme.bodyMedium?.copyWith(
@@ -71,24 +71,21 @@ class Helper {
   }
 
   // for more radius first(top) and last(bottom) items
-  ShapeBorder getBorderRadius(int idx, List<Object> list) {
+  static BorderRadius getBorderRadius(int idx, int listLength) {
     if (idx == 0) {
-      return const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
+      return const BorderRadius.only(
               topLeft: Radius.circular(18),
               topRight: Radius.circular(18),
               bottomRight: Radius.circular(5),
-              bottomLeft: Radius.circular(5)));
-    } else if (idx == list.length - 1) {
-      return const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(5));
+    } else if (idx == listLength - 1) {
+      return const BorderRadius.only(
               topLeft: Radius.circular(5),
               topRight: Radius.circular(5),
               bottomRight: Radius.circular(18),
-              bottomLeft: Radius.circular(18)));
+              bottomLeft: Radius.circular(18));
     } else {
-      return const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(5)));
+      return const BorderRadius.all(Radius.circular(5));
     }
   }
 }

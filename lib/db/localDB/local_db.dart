@@ -221,12 +221,13 @@ logger.i('INSERT MANY PROD IN LIST: $listIds');
   }
 
   @override
-  Future<List<ProductInList>?> getProductsInList(int listId) async {
+  Future<Map<String, List<ProductInList>>?> getProductsInList(int listId) async {
     final db = await instance.database;
     final response = await db?.rawQuery(SqlQueries.getProductsInList(listId));
-    logger.i('Get ShopingLists: $response');
+    logger.i('Get Products in ShopingLists: $response');
     if (response != null) {
-      return response.map((list) => ProductInList.fromJSON(list)).toList();
+      // return response.map((list) => ProductInList.fromJSON(list)).toList();
+      return ProductInList.sorByCategories(response);
     }
     return null;
   }

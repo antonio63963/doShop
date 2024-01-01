@@ -16,7 +16,7 @@ abstract class AbstractDB {
   Future<ProductInList?> createProductInList(ProductInList prod);
   Future<List<ProductInList>?> insertManyProductsInList(
       List<ProductInList> prodList);
-  Future<List<ProductInList>?> getProductsInList(int listId);
+  Future<Map<String, List<ProductInList>>?> getProductsInList(int listId);
   Future<int?> updateProductInList(ProductInList prodInList);
   Future<int?> deleteProductInList(int prodId);
   Future<int?> deleteManyProductInList(List<ProductInList> prodList);

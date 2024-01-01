@@ -68,15 +68,18 @@ class SqlQueries {
     SELECT *
     FROM $tableShopingLists;
   ''';
-
+// Products In List
   static String getProductsInList(int listId) => '''
     SELECT $tableProductInList.*,
     $tableCategories.${CategoryProdFields.img} as catImg,
+    $tableCategories.${CategoryProdFields.title} as catTitle,
     $tableCategories.${CategoryProdFields.colorBg},
-    $tableCategories.${CategoryProdFields.title},
-    $tableCategories.${CategoryProdFields.subtitle}
+    $tableProducts.${ProductFields.title},
+    $tableProducts.${ProductFields.subtitle},
+    $tableProducts.${ProductFields.icon},
+    $tableProducts.${ProductFields.units} as unit
     FROM $tableProductInList
-    JOIN $tableProducts ON $tableProducts.${ProductFields.id} = $tableProductInList.${ProductInListFields.prodId}
+    LEFT JOIN $tableProducts ON $tableProducts.${ProductFields.id} = $tableProductInList.${ProductInListFields.prodId}
     LEFT JOIN $tableCategories ON $tableProducts.${ProductFields.catId} IS NOT NULL AND $tableCategories.${CategoryProdFields.id} = $tableProducts.${ProductFields.catId}
     WHERE $tableProductInList.${ProductInListFields.listId} = $listId;
   ''';
@@ -86,10 +89,6 @@ class SqlQueries {
     VALUES (${product.toJSON()})
     RETURNING id;
   ''';
-  // static String insertOrUpdateProductInList(ProductInList product) => '''
-  //   INSERT INTO $tableProductInList (${ProductInListFields.values})
-  //   VALUES (${product.toJSON()}) ON DUPLICATE KEY UPDATE prodId = VALUES(prodId);
-  // ''';
 
 static String insertOrUpdateProductsInList(List<ProductInList> products) {
     final values = products.map((prod) => '''

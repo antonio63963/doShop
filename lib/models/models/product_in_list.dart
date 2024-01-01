@@ -1,3 +1,5 @@
+import 'package:doshop_app/models/models/category.dart';
+
 const String tableProductInList = 'productInLists';
 
 class ProductInListFields {
@@ -26,6 +28,8 @@ class ProductInList {
   final String? subtitle;
   final int? colorBg;
   final String? icon;
+  final String? unit;
+  final String? catTitle;
 
   ProductInList({
     this.id,
@@ -39,6 +43,8 @@ class ProductInList {
     this.subtitle,
     this.colorBg,
     this.icon,
+    this.unit,
+    this.catTitle,
   });
 
   ProductInList copy({
@@ -53,6 +59,8 @@ class ProductInList {
     int? colorBg,
     String? title,
     String? subtitle,
+    String? unit,
+    String? catTitle,
   }) {
     return ProductInList(
       id: id ?? this.id,
@@ -66,6 +74,8 @@ class ProductInList {
       title: title ?? this.title,
       colorBg: colorBg ?? this.colorBg,
       subtitle: subtitle ?? this.subtitle,
+      unit: unit ?? this.unit,
+      catTitle: catTitle ?? this.catTitle,
     );
   }
 
@@ -77,6 +87,7 @@ class ProductInList {
         ProductInListFields.isDone: isDone ? 1 : 0,
         ProductInListFields.dateCreated: dateCreated.toIso8601String(),
       };
+
   static ProductInList fromJSON(Map<String, Object?> json) {
     return ProductInList(
       id: json[ProductInListFields.id] as int,
@@ -84,13 +95,40 @@ class ProductInList {
       listId: json[ProductInListFields.listId] as int,
       isFire: intToBool(json[ProductInListFields.isFire] as int),
       title: json['title'] as String,
-      subtitle: json['subtitle'] != null ? json['subtitle'] as String : null,
-      icon: json['icon'] as String,
+      subtitle: json['subtitle'] != null && json['subtitle'] != 'null'
+          ? json['subtitle'] as String
+          : null,
+      icon: json['icon'] != null && json['icon'] != 'null'
+          ? json['icon'] as String
+          : null,
       colorBg: json['colorBg'] as int,
       isDone: intToBool(json[ProductInListFields.isDone] as int),
+      unit: json['unit'] != null ? json['unit'] as String : null,
+      catTitle: json['catTitle'] != null ? json['catTitle'] as String : null,
       dateCreated:
           DateTime.parse(json[ProductInListFields.dateCreated] as String),
     );
+  }
+
+  static Map<String, List<ProductInList>> sorByCategories(
+      List<Map<String, Object?>> resp) {
+    final Map<String, List<ProductInList>> sortedList = {};
+    for (var p in resp) {
+      if (p['catTitle'] != null) {
+        if (sortedList[p['catTitle'] as String] != null) {
+          sortedList[p['catTitle'] as String]!.add(ProductInList.fromJSON(p));
+        } else {
+          sortedList[p['catTitle'] as String] = [ProductInList.fromJSON(p)];
+        }
+      } else {
+        if (sortedList['Без категории'] != null) {
+          sortedList['Без категории']!.add(ProductInList.fromJSON(p));
+        } else {
+          sortedList['Без категории'] = [ProductInList.fromJSON(p)];
+        }
+      }
+    }
+    return sortedList;
   }
 
   static bool intToBool(int value) => value == 0 ? false : true;
@@ -108,6 +146,7 @@ class ProductInList {
       icon: $icon,
       colorBg: $colorBg,
       isDone: $isDone,
+      catTitle: $catTitle,
       dateCreated: $dateCreated,
      ''';
   }

@@ -103,10 +103,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
               onClick: () {
                 // Provider.of<ProductInListProvider>(context).insertMany(context, _productsList)
                 showDialog(
-                    context: context,
-                    builder: (_) {
-                      return SelectListModal();
-                    });
+                    context: context, builder: (_) => const SelectListModal());
               },
               svgPath: 'assets/icons/addToList.svg',
             ),
