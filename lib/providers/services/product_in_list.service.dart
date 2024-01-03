@@ -22,17 +22,19 @@ class ProductInListService {
       List<ProductInList> productsList) {
     final Map<String, List<ProductInList>> sortedProductsMap = {};
     for (var p in productsList) {
-      if (p.catTitle != null) {
-        if (sortedProductsMap[p.catTitle] != null) {
-          sortedProductsMap[p.catTitle]!.add(p);
+      if (!p.isDone) {
+        if (p.catTitle != null) {
+          if (sortedProductsMap[p.catTitle] != null) {
+            sortedProductsMap[p.catTitle]!.add(p);
+          } else {
+            sortedProductsMap[p.catTitle!] = [p];
+          }
         } else {
-          sortedProductsMap[p.catTitle!] = [p];
-        }
-      } else {
-        if (sortedProductsMap[DefaultValues.catTitle] != null) {
-          sortedProductsMap[DefaultValues.catTitle]!.add(p);
-        } else {
-          sortedProductsMap[DefaultValues.catTitle] = [p];
+          if (sortedProductsMap[DefaultValues.catTitle] != null) {
+            sortedProductsMap[DefaultValues.catTitle]!.add(p);
+          } else {
+            sortedProductsMap[DefaultValues.catTitle] = [p];
+          }
         }
       }
     }

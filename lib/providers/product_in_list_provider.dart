@@ -10,6 +10,10 @@ class ProductInListProvider extends ErrorHandler {
 
   Map<String, List<ProductInList>> get products =>
       ProductInListService.sorByCategories(_products);
+  
+  List<ProductInList> get cart {
+    return _products.where((p) => p.isDone).toList();
+  }
 
   Future<void> createProductInList(
       BuildContext context, ProductInList prod) async {
@@ -88,5 +92,14 @@ class ProductInListProvider extends ErrorHandler {
       logger.e('Clean List ERROR: $err');
       setErrorAlert(context: context, message: 'Не удалось отчистить список!');
     });
+  }
+
+  Future<void> markProductAsDone(int id) async {
+    _products.firstWhere((p) => p.id == id ).isDone = true;
+    notifyListeners();
+  }
+  Future<void> markProductAsIsNotDone(int id) async {
+    _products.firstWhere((p) => p.id == id ).isDone = false;
+    notifyListeners();
   }
 }
