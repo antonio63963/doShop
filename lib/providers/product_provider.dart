@@ -260,6 +260,7 @@ class ProductProvider extends ErrorHandler {
     final prod = _products[idx];
     if (prod.amount == 0) {
       prod.units == Units.kg ? prod.amount += 0.5 : prod.amount++;
+      isAnySelected = true;
     }
   }
 

@@ -101,7 +101,6 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
             )
           : FAB(
               onClick: () {
-                // Provider.of<ProductInListProvider>(context).insertMany(context, _productsList)
                 showDialog(
                     context: context, builder: (_) => const SelectListModal());
               },
