@@ -1,13 +1,20 @@
-import 'package:doshop_app/db/localDB/local_db.dart';
-import 'package:doshop_app/screens/shoping_list_details_screen/widgets/product_in_list_item.dart';
-import 'package:doshop_app/utils/constants.dart';
-import 'package:doshop_app/utils/helper.dart';
+import 'package:doshop_app/utils/show_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:badges/badges.dart' as badges;
+
+import 'package:doshop_app/db/localDB/local_db.dart';
+import 'package:doshop_app/utils/constants.dart';
+import 'package:doshop_app/utils/helper.dart';
 
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/product_in_list_provider.dart';
 import 'package:doshop_app/widgets/exports.dart';
+
+import 'widgets/cart_bottom_sheet/cart_bottom_sheet.dart';
+import 'widgets/cart_bottom_sheet/header_cart.dart';
+import 'widgets/slidable_product_in_list_item.dart';
+import 'widgets/slideble_done_product.dart';
 
 class ShopingListDetails extends StatefulWidget {
   static const String routeName = 'listDetails';
@@ -45,55 +52,93 @@ class _ShopingListDetailsState extends State<ShopingListDetails> {
   @override
   Widget build(BuildContext context) {
     final productsList = Provider.of<ProductInListProvider>(context).products;
+    final cartList = Provider.of<ProductInListProvider>(context).cart;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_screenArgs?.title ?? 'Не определен'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                LocalDB.instance.getAllProdsInList();
-              },
-              icon: Icon(Icons.data_array_outlined))
-        ],
-      ),
-      body: !isLoaded
-          ? const Loading()
-          : PageContentWrapper(
-              onRefresh: () =>
-                  Provider.of<ProductInListProvider>(context, listen: false)
-                      .getProductsInList(context, _screenArgs!.id!),
-              paddingHorizontal: AppPadding.bodyHorizontal,
-              paddingVertical: 32,
-              widgets: [
-                ...productsList.entries
-                    .map(
-                      (entry) => Wrap(
-                        spacing: 16,
-                        children: [
-                          SectionTitle(title: entry.key, paddingTop: 22, paddingBottom: 14,),
-                          ListView(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            children: entry.value.asMap().entries
-                                .map(
-                                  (prod) => ProductInListItem(
-                                    prod: prod.value,
-                                    borderRadius: Helper.getBorderRadius(prod.key, entry.value.length ),
-                                    onIncrease: () {},
-                                    onDecrease: () {},
-                                    onClean: () {},
-                                    onOpenDetails: (context) {},
-                                    onFire: () {},
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                        ],
-                      ),
-                    )
-                    .toList(),
-              ],
-            ),
-    );
+        appBar: AppBar(
+          title: Text(_screenArgs?.title ?? 'Не определен'),
+          actions: [
+            Padding(
+              padding:
+                  EdgeInsets.only(right: AppPadding.bodyHorizontal, left: 24),
+              child: IconButton(
+                onPressed: () {
+                  LocalDB.instance.getAllProdsInList();
+                },
+                icon: badges.Badge(
+                  badgeContent: Text(
+                    cartList.length.toString(),
+                    style: const TextStyle(
+                        fontSize: 12, fontWeight: FontWeight.w600),
+                  ),
+                  position: badges.BadgePosition.topEnd(end: -10),
+                  child: const Icon(Icons.shopping_cart_outlined),
+                ),
+              ),
+            )
+          ],
+        ),
+        body: !isLoaded
+            ? const Loading()
+            : PageContentWrapper(
+                onRefresh: () =>
+                    Provider.of<ProductInListProvider>(context, listen: false)
+                        .getProductsInList(context, _screenArgs!.id!),
+                paddingHorizontal: AppPadding.bodyHorizontal,
+                widgets: [
+                  ...productsList.entries
+                      .map(
+                        (entry) => Wrap(
+                          spacing: 16,
+                          children: [
+                            SectionTitle(
+                              title: entry.key,
+                              paddingTop: 22,
+                              paddingBottom: 14,
+                            ),
+                            ListView(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              children: entry.value
+                                  .asMap()
+                                  .entries
+                                  .map(
+                                    (prod) => SlidebleProductInListItem(
+                                      idx: prod.key,
+                                      prod: prod.value,
+                                      borderRadius: Helper.getBorderRadius(
+                                          prod.key, entry.value.length),
+                                      onClean: () {},
+                                      onOpenDetails: (context) =>
+                                          Helper.openProductDetailsScreen(
+                                              context, prod.value),
+                                      onClick: () {},
+                                      onClickTrailing: () {},
+                                      onToggleFire: () {},
+                                      onToggleDone: () {
+                                        Provider.of<ProductInListProvider>(
+                                                context,
+                                                listen: false)
+                                            .markProductAsDone(prod.value.id!);
+                                      },
+                                    ),
+                                  )
+                                  .toList(),
+                            ),
+                          ],
+                        ),
+                      )
+                      .toList(),
+                  const SizedBox(height: 50),
+                ],
+              ),
+        bottomSheet: HeaderCart(
+          productsCount: cartList.length.toString(),
+          isOpened: false,
+          onClick: () {
+            showModal(context, const CartBottomSheet());
+          },
+        )
+        //  CartBottomSheet()
+        );
   }
 }

@@ -8,6 +8,7 @@ class OptionProductRow extends StatelessWidget {
   final Function() onIncreaseAmount;
   final Function() onDecreaseAmount;
   final Function() onFire;
+  final Function()? onToggleDone;
   final bool isFire;
 
   const OptionProductRow({
@@ -17,6 +18,7 @@ class OptionProductRow extends StatelessWidget {
     required this.onIncreaseAmount,
     required this.onDecreaseAmount,
     required this.onFire,
+    this.onToggleDone,
     required this.isFire,
   });
 
@@ -64,6 +66,14 @@ class OptionProductRow extends StatelessWidget {
                   isFire ? MyColors.accent : MyColors.primary,
                   BlendMode.srcIn,
                 ),
+              ),
+            ),
+              //done
+              if(onToggleDone != null)
+            IconButton(
+              onPressed: onToggleDone,
+              icon: const Icon(
+                Icons.done_all_rounded,
               ),
             ),
           ],

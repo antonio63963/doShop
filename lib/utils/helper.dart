@@ -1,3 +1,4 @@
+import 'package:doshop_app/screens/product_details_screen.dart/exports.dart';
 import 'package:doshop_app/widgets/ui/primary_button.dart';
 import 'package:flutter/material.dart';
 // import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -74,18 +75,29 @@ class Helper {
   static BorderRadius getBorderRadius(int idx, int listLength) {
     if (idx == 0) {
       return const BorderRadius.only(
-              topLeft: Radius.circular(18),
-              topRight: Radius.circular(18),
-              bottomRight: Radius.circular(5),
-              bottomLeft: Radius.circular(5));
+          topLeft: Radius.circular(18),
+          topRight: Radius.circular(18),
+          bottomRight: Radius.circular(5),
+          bottomLeft: Radius.circular(5));
     } else if (idx == listLength - 1) {
       return const BorderRadius.only(
-              topLeft: Radius.circular(5),
-              topRight: Radius.circular(5),
-              bottomRight: Radius.circular(18),
-              bottomLeft: Radius.circular(18));
+          topLeft: Radius.circular(5),
+          topRight: Radius.circular(5),
+          bottomRight: Radius.circular(18),
+          bottomLeft: Radius.circular(18));
     } else {
       return const BorderRadius.all(Radius.circular(5));
     }
   }
+
+  static void openProductDetailsScreen(BuildContext context, prod) =>
+      Navigator.of(context).pushNamed(
+        ProductDetailsScreen.routeName,
+        arguments: ProductDetailsScreenArguments(
+          id: prod.id!,
+          title: prod.title ?? '',
+          subtitle: prod.subtitle,
+          colorBg: prod.colorBg!,
+        ),
+      );
 }
