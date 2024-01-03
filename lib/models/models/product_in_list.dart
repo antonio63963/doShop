@@ -1,4 +1,3 @@
-import 'package:doshop_app/models/models/category.dart';
 
 const String tableProductInList = 'productInLists';
 
@@ -108,27 +107,6 @@ class ProductInList {
       dateCreated:
           DateTime.parse(json[ProductInListFields.dateCreated] as String),
     );
-  }
-
-  static Map<String, List<ProductInList>> sorByCategories(
-      List<Map<String, Object?>> resp) {
-    final Map<String, List<ProductInList>> sortedList = {};
-    for (var p in resp) {
-      if (p['catTitle'] != null) {
-        if (sortedList[p['catTitle'] as String] != null) {
-          sortedList[p['catTitle'] as String]!.add(ProductInList.fromJSON(p));
-        } else {
-          sortedList[p['catTitle'] as String] = [ProductInList.fromJSON(p)];
-        }
-      } else {
-        if (sortedList['Без категории'] != null) {
-          sortedList['Без категории']!.add(ProductInList.fromJSON(p));
-        } else {
-          sortedList['Без категории'] = [ProductInList.fromJSON(p)];
-        }
-      }
-    }
-    return sortedList;
   }
 
   static bool intToBool(int value) => value == 0 ? false : true;

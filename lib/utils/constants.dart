@@ -58,6 +58,7 @@ class DefaultValues {
   static String img = DefaultValues.icon;
   static String icon = 'assets/default/label.png';
   static double plusAmount = 0.5;
+  static String catTitle = 'Другое';
 }
 
 class IconsAssets {
