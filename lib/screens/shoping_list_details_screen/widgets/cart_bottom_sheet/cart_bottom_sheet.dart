@@ -15,13 +15,6 @@ class CartBottomSheet extends StatefulWidget {
 }
 
 class _CartBottomSheetState extends State<CartBottomSheet> {
-  // bool isOpened = false;
-
-  // setIsOpend() {
-  //   setState(() {
-  //     isOpened = !isOpened;
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {

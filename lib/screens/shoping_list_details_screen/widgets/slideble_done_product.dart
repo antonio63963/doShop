@@ -1,4 +1,4 @@
-import 'package:doshop_app/screens/shoping_list_details_screen/widgets/product_in_list_tile.dart';
+import 'package:doshop_app/screens/shoping_list_details_screen/widgets/cart_product_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -41,7 +41,7 @@ class SlidebleDoneProduct extends StatelessWidget {
             icon: Icons.done_all_rounded,
           ),
         ]),
-        child: ProductInListTile(
+        child: CartProductItem(
           isOptions: false,
           prod: prod,
           borderRadius: borderRadius,
