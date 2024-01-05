@@ -1,30 +1,25 @@
+import 'package:doshop_app/providers/product_in_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/models/exports.dart';
+import 'package:provider/provider.dart';
 
 import 'product_in_list_item.dart';
 
 class SlidebleProductInListItem extends StatelessWidget {
   final ProductInList prod;
   final int idx;
-  final Function() onClick;
-  final Function() onClickTrailing;
-  final Function() onToggleFire;
   final Function() onToggleDone;
-  final Function() onClean;
+
   final BorderRadius borderRadius;
   final void Function(BuildContext) onOpenDetails;
 
   const SlidebleProductInListItem({
     required this.prod,
     required this.idx,
-    required this.onClick,
-    required this.onClickTrailing,
-    required this.onToggleFire,
     required this.onToggleDone,
-    required this.onClean,
     required this.onOpenDetails,
     required this.borderRadius,
     super.key,
@@ -32,6 +27,11 @@ class SlidebleProductInListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    void onDelete() {
+      Provider.of<ProductInListProvider>(context)
+          .deleteProductInList(context, prod.id!);
+    }
+
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Slidable(
@@ -44,7 +44,7 @@ class SlidebleProductInListItem extends StatelessWidget {
               icon: Icons.open_in_new,
             ),
             SlidableAction(
-              onPressed: (context) => onClean(),
+              onPressed: (context) => onDelete(),
               icon: Icons.delete_forever_outlined,
               foregroundColor: MyColors.danger,
               borderRadius: const BorderRadius.all(Radius.circular(5)),
@@ -58,12 +58,9 @@ class SlidebleProductInListItem extends StatelessWidget {
           ),
         ]),
         child: ProductInListItem(
-          onIncrease: onClick,
-          onDecrease: onClickTrailing,
-          onClean: onClean,
           prod: prod,
+          onDelete: onDelete,
           onOpenDetails: onOpenDetails,
-          onFire: onToggleFire,
           borderRadius: borderRadius,
           onToggleDone: onToggleDone,
         ),

@@ -1,3 +1,4 @@
+import 'package:doshop_app/models/models/category.dart';
 
 const String tableProductInList = 'productInLists';
 
@@ -90,6 +91,7 @@ class ProductInList {
   static ProductInList fromJSON(Map<String, Object?> json) {
     return ProductInList(
       id: json[ProductInListFields.id] as int,
+      prodId: json[ProductInListFields.prodId] as int,
       amount: json[ProductInListFields.amount] as double,
       listId: json[ProductInListFields.listId] as int,
       isFire: intToBool(json[ProductInListFields.isFire] as int),
@@ -109,6 +111,9 @@ class ProductInList {
     );
   }
 
+  bool isChanged(ProductInList prod2) =>
+      amount != prod2.amount || isFire != prod2.isFire ? true : false;
+
   static bool intToBool(int value) => value == 0 ? false : true;
 
   @override
@@ -116,6 +121,7 @@ class ProductInList {
     super.toString();
     return '''
       id: $id,
+      prodId: $prodId,
       amount: $amount,
       listId: $listId,
       isFire: $isFire,

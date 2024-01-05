@@ -20,7 +20,7 @@ class PageContentWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return isScreenEmpty
-        ? const EmptyScreen(message: 'Страница не найдена')
+        ? const EmptyScreen(message: 'Пока что нет списков')
         : Padding(
             padding: EdgeInsets.symmetric(
               horizontal: paddingHorizontal,

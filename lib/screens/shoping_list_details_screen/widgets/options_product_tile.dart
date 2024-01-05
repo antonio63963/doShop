@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 class OptionsProductTile extends StatelessWidget {
   final Function() onOpen;
-  final Function() onClean;
+  final Function()? onClean;
+  final Function()? onDelete;
   final Function() onIncrease;
   final Function() onDecrease;
   final Function() onFire;
@@ -16,7 +17,8 @@ class OptionsProductTile extends StatelessWidget {
   const OptionsProductTile({
     super.key,
     required this.onOpen,
-    required this.onClean,
+    this.onClean,
+    this.onDelete,
     required this.onIncrease,
     required this.onDecrease,
     required this.onFire,
@@ -36,13 +38,14 @@ class OptionsProductTile extends StatelessWidget {
           OptionProductRow(
             onOpen: onOpen,
             onClean: onClean,
+            onDelete: onDelete,
             onIncreaseAmount: onIncrease,
             onDecreaseAmount: onDecrease,
             onFire: onFire,
             isFire: isFire,
             onToggleDone: onToggleDone,
           ),
-          SizedBox(height: 22),
+          const SizedBox(height: 22),
           ButtonBar(
             children: [
               OutlinedIconButton(

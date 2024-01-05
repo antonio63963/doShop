@@ -10,7 +10,7 @@ class ProductInListProvider extends ErrorHandler {
 
   Map<String, List<ProductInList>> get products =>
       ProductInListService.sorByCategories(_products);
-  
+
   List<ProductInList> get cart {
     return _products.where((p) => p.isDone).toList();
   }
@@ -57,6 +57,7 @@ class ProductInListProvider extends ErrorHandler {
 
   Future<void> updateProductInList(
       BuildContext context, ProductInList prod) async {
+    logger.i("UPDAGE PRODUCT IN LIST!!! ${prod.toString()}");
     GetIt.I<AbstractDB>().updateProductInList(prod).then((response) {
       if (response == null) return;
       ProductInListService.addOrUpdateOne(prod, _products);
@@ -95,11 +96,12 @@ class ProductInListProvider extends ErrorHandler {
   }
 
   Future<void> markProductAsDone(int id) async {
-    _products.firstWhere((p) => p.id == id ).isDone = true;
+    _products.firstWhere((p) => p.id == id).isDone = true;
     notifyListeners();
   }
+
   Future<void> markProductAsIsNotDone(int id) async {
-    _products.firstWhere((p) => p.id == id ).isDone = false;
+    _products.firstWhere((p) => p.id == id).isDone = false;
     notifyListeners();
   }
 }

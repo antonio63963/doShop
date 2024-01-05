@@ -15,7 +15,6 @@ import 'package:doshop_app/widgets/exports.dart';
 import 'widgets/cart_bottom_sheet/cart_bottom_sheet.dart';
 import 'widgets/cart_bottom_sheet/header_cart.dart';
 import 'widgets/slidable_product_in_list_item.dart';
-import 'widgets/slideble_done_product.dart';
 
 class ShopingListDetails extends StatefulWidget {
   static const String routeName = 'listDetails';
@@ -72,7 +71,10 @@ class _ShopingListDetailsState extends State<ShopingListDetails> {
                 child: const Icon(Icons.shopping_cart_outlined),
               ),
             ),
-            MenuShoppingDetails( context: context, listTitle: _screenArgs?.title ?? '',)
+            MenuShoppingDetails(
+              context: context,
+              listTitle: _screenArgs?.title ?? '',
+            )
           ],
         ),
         body: !isLoaded
@@ -105,13 +107,9 @@ class _ShopingListDetailsState extends State<ShopingListDetails> {
                                       prod: prod.value,
                                       borderRadius: Helper.getBorderRadius(
                                           prod.key, entry.value.length),
-                                      onClean: () {},
                                       onOpenDetails: (context) =>
                                           Helper.openProductDetailsScreen(
                                               context, prod.value),
-                                      onClick: () {},
-                                      onClickTrailing: () {},
-                                      onToggleFire: () {},
                                       onToggleDone: () {
                                         Provider.of<ProductInListProvider>(
                                                 context,
