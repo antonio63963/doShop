@@ -1,30 +1,31 @@
-import 'package:doshop_app/forms/product_form/product_form.dart';
-import 'package:doshop_app/models/exports.dart';
-import 'package:doshop_app/providers/product_provider.dart';
-import 'package:doshop_app/utils/helper.dart';
-import 'package:doshop_app/utils/show_modal.dart';
-import 'package:doshop_app/widgets/ui/menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class MenuProduct extends StatefulWidget {
-  final int colorBg;
-  final Product product;
-  final BuildContext context;
+import 'package:doshop_app/models/exports.dart';
+import 'package:doshop_app/utils/helper.dart';
+import 'package:doshop_app/widgets/ui/menu_item.dart';
 
-  const MenuProduct({
-    required this.colorBg,
-    required this.product,
+enum MenuListDetails {
+  cleanCart, cleanList, deleteList
+}
+
+class MenuShoppingDetails extends StatefulWidget {
+
+  final BuildContext context;
+  final String listTitle;
+
+  const MenuShoppingDetails({
+    required this.listTitle,
     required this.context,
     super.key,
   });
 
   @override
-  State<MenuProduct> createState() => _MenuProductState();
+  State<MenuShoppingDetails> createState() => _MenuShoppingDetailsState();
 }
 
-class _MenuProductState extends State<MenuProduct> {
-  MenuOptionsValues? selectedMenu;
+class _MenuShoppingDetailsState extends State<MenuShoppingDetails> {
+  MenuListDetails? selectedMenu;
 
   @override
   Widget build(BuildContext context) {
@@ -35,65 +36,49 @@ class _MenuProductState extends State<MenuProduct> {
           text: '${prod?.title} удален из категории ${prod?.categoryTitle}');
     }
 
-    void onSelectOption(MenuOptionsValues item) {
+    void onSelectOption(MenuListDetails item) {
       switch (item) {
-        case MenuOptionsValues.photo:
+        case MenuListDetails.cleanCart:
           {
             () {};
             break;
           }
-        case MenuOptionsValues.edit:
-          showModal(
-              widget.context,
-              ProductForm(
-                catId: Provider.of<ProductProvider>(context, listen: false)
-                    .productDetails!
-                    .catId,
-                colorBg: widget.colorBg,
-                tagsList: Provider.of<ProductProvider>(context, listen: false)
-                    .copyTagsList(),
-                product: Provider.of<ProductProvider>(context, listen: false)
-                    .productDetails,
-              ));
+        case MenuListDetails.cleanList:
+        ;
 
-        case MenuOptionsValues.delete:
+        case MenuListDetails.deleteList:
           Helper.showInfoAlert(
             widget.context,
             InfoAlert(
-              title: 'Вы собираетесь удалить товар!',
-              message: 'Удалить товар?',
-              onSubmit: () =>
-                  Provider.of<ProductProvider>(context, listen: false)
-                      .deleteProduct(context, widget.product.id!)
-                      .then(
-                        (value) => onCloseScreen(widget.product),
-                      ),
+              title: 'Вы собираетесь удалить список!',
+              message: 'Удалить ${widget.listTitle}',
+              onSubmit: () {},
             ),
           );
       }
     }
 
-    return PopupMenuButton<MenuOptionsValues>(
+    return PopupMenuButton<MenuListDetails>(
       initialValue: selectedMenu,
       onSelected: onSelectOption,
       itemBuilder: (BuildContext context) =>
-          <PopupMenuEntry<MenuOptionsValues>>[
-        const PopupMenuItem<MenuOptionsValues>(
-          value: MenuOptionsValues.photo,
+          <PopupMenuEntry<MenuListDetails>>[
+        const PopupMenuItem<MenuListDetails>(
+          value: MenuListDetails.cleanCart,
           child: MenuItem(
-            title: 'Сделать фото',
-            icon: Icons.photo_camera,
+            title: 'Отчистить корзину',
+            icon: Icons.remove_shopping_cart_outlined,
           ),
         ),
-        const PopupMenuItem<MenuOptionsValues>(
-          value: MenuOptionsValues.edit,
+        const PopupMenuItem<MenuListDetails>(
+          value: MenuListDetails.cleanList,
           child: MenuItem(
-            title: 'Редактировать',
-            icon: Icons.edit_outlined,
+            title: 'Отчистить весь список',
+            icon: Icons.playlist_remove_rounded,
           ),
         ),
-        const PopupMenuItem<MenuOptionsValues>(
-          value: MenuOptionsValues.delete,
+        const PopupMenuItem<MenuListDetails>(
+          value: MenuListDetails.deleteList,
           child: MenuItem(
             title: 'Удалить',
             icon: Icons.delete_forever_rounded,

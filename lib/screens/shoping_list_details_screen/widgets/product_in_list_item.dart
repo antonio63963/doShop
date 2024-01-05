@@ -1,7 +1,9 @@
 import 'package:doshop_app/models/exports.dart';
+import 'package:doshop_app/screens/shoping_list_details_screen/widgets/options_product_tile.dart';
 import 'package:doshop_app/widgets/exports.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/screens/shoping_list_details_screen/widgets/product_in_list_tile.dart';
+import 'package:doshop_app/widgets/ui/outlined_icon_button.dart';
 import 'package:flutter/material.dart';
 
 class ProductInListItem extends StatefulWidget {
@@ -40,7 +42,7 @@ class _ProductInListItemState extends State<ProductInListItem> {
   }
 
   @override
-  Widget build(BuildContext context) {;
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: widget.borderRadius,
@@ -60,7 +62,7 @@ class _ProductInListItemState extends State<ProductInListItem> {
               toggleIsOptions: () => setState(() => isOptions = !isOptions),
             ),
             isOptions
-                ? OptionProductRow(
+                ? OptionsProductTile(
                     onOpen: () {
                       widget.onOpenDetails(context);
                       closeOptions();
@@ -72,8 +74,8 @@ class _ProductInListItemState extends State<ProductInListItem> {
                       }
                       closeOptions();
                     },
-                    onIncreaseAmount: widget.onIncrease,
-                    onDecreaseAmount: widget.onDecrease,
+                    onIncrease: widget.onIncrease,
+                    onDecrease: widget.onDecrease,
                     onFire: () {
                       widget.onFire();
                       closeOptions();
@@ -83,7 +85,8 @@ class _ProductInListItemState extends State<ProductInListItem> {
                       widget.onToggleDone();
                       closeOptions();
                     },
-                  )
+                    onSubmit: () {},
+                    onClose: closeOptions)
                 : const SizedBox(),
           ],
         ),

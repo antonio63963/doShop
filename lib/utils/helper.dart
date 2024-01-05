@@ -1,6 +1,7 @@
 import 'package:doshop_app/screens/product_details_screen.dart/exports.dart';
 import 'package:doshop_app/widgets/ui/primary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 // import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../models/exports.dart';
@@ -100,4 +101,11 @@ class Helper {
           colorBg: prod.colorBg!,
         ),
       );
+
+  static String formatDate(DateTime? date) {
+    print('DATE: $date');
+    return date is DateTime
+        ? DateFormat('dd-MM-yyyy').format(date)
+        : 'XX XX XXXX';
+  }
 }

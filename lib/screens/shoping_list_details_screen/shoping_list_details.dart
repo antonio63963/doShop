@@ -1,3 +1,4 @@
+import 'package:doshop_app/screens/shoping_list_details_screen/widgets/menu_shopping_details.dart';
 import 'package:doshop_app/utils/show_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -57,24 +58,21 @@ class _ShopingListDetailsState extends State<ShopingListDetails> {
         appBar: AppBar(
           title: Text(_screenArgs?.title ?? 'Не определен'),
           actions: [
-            Padding(
-              padding:
-                  EdgeInsets.only(right: AppPadding.bodyHorizontal, left: 24),
-              child: IconButton(
-                onPressed: () {
-                  LocalDB.instance.getAllProdsInList();
-                },
-                icon: badges.Badge(
-                  badgeContent: Text(
-                    cartList.length.toString(),
-                    style: const TextStyle(
-                        fontSize: 12, fontWeight: FontWeight.w600),
-                  ),
-                  position: badges.BadgePosition.topEnd(end: -10),
-                  child: const Icon(Icons.shopping_cart_outlined),
+            IconButton(
+              onPressed: () {
+                LocalDB.instance.getAllProdsInList();
+              },
+              icon: badges.Badge(
+                badgeContent: Text(
+                  cartList.length.toString(),
+                  style: const TextStyle(
+                      fontSize: 12, fontWeight: FontWeight.w600),
                 ),
+                position: badges.BadgePosition.topEnd(end: -10),
+                child: const Icon(Icons.shopping_cart_outlined),
               ),
-            )
+            ),
+            MenuShoppingDetails( context: context, listTitle: _screenArgs?.title ?? '',)
           ],
         ),
         body: !isLoaded

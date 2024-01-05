@@ -38,7 +38,7 @@ class SlidebleDoneProduct extends StatelessWidget {
         endActionPane: ActionPane(motion: const ScrollMotion(), children: [
           SlidableAction(
             onPressed: (context) => onToggleDone(),
-            icon: Icons.done_all_rounded,
+            icon: Icons.remove_done_rounded,
           ),
         ]),
         child: CartProductItem(

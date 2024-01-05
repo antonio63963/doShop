@@ -1,5 +1,6 @@
 import 'package:doshop_app/models/models/product_in_list.dart';
 import 'package:doshop_app/utils/constants.dart';
+import 'package:doshop_app/utils/helper.dart';
 import 'package:doshop_app/widgets/exports.dart';
 import 'package:flutter/material.dart';
 
@@ -54,12 +55,26 @@ class ProductInListTile extends StatelessWidget {
           IconFire(isFire: prod.isFire, paddingHorizontal: 4),
         ],
       ),
-      subtitle: Text(
-        '${prod.subtitle ?? ''} (${prod.unit})',
-        style: const TextStyle(
-          color: Color.fromARGB(255, 236, 236, 236),
-          fontSize: 14,
-        ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if(prod.subtitle != null)
+          Text(
+            prod.subtitle!,
+            style: const TextStyle(
+              color: Color.fromARGB(255, 236, 236, 236),
+              fontSize: 14,
+            ),
+          ),
+         if(prod.subtitle != null) const SizedBox(height: 4),
+          Text(
+            'Добавлен: ${Helper.formatDate(prod.dateCreated)}',
+            style: const TextStyle(
+              color: Color.fromARGB(255, 236, 236, 236),
+              fontSize: 12,
+            ),
+          ),
+        ],
       ),
       trailing: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
