@@ -81,6 +81,18 @@ class ProductInListProvider extends ErrorHandler {
     });
   }
 
+  Future<void> cleanCart(BuildContext context) async {
+    GetIt.I<AbstractDB>().deleteProductsFormCart().then((response) {
+      if (response == 0) return;
+      _products.removeWhere((p) => p.isDone == true);
+      notifyListeners();
+    }).catchError((err) {
+      logger.e('Delete Product in List ERROR: $err');
+      setErrorAlert(
+          context: context, message: 'Не удалось удалить товары из корзины!');
+    });
+  }
+
   Future<void> cleanShoppingList(
       BuildContext context, List<ProductInList> prodList) async {
     GetIt.I<AbstractDB>().deleteManyProductInList(prodList).then((response) {
@@ -95,13 +107,30 @@ class ProductInListProvider extends ErrorHandler {
     });
   }
 
-  Future<void> markProductAsDone(int id) async {
-    _products.firstWhere((p) => p.id == id).isDone = true;
-    notifyListeners();
+  Future<void> markProductAsDone(BuildContext context, int id) async {
+    GetIt.I<AbstractDB>().markProductAsDone(id).then((response) {
+      if (response == 0) return;
+      _products.firstWhere((p) => p.id == id).isDone = true;
+      notifyListeners();
+    }).catchError((err) {
+      logger.e('Mark Product ad Done ERROR: $err');
+      setErrorAlert(
+          context: context,
+          message: 'Не удалось отметить товар как выполненный!');
+    });
   }
 
-  Future<void> markProductAsIsNotDone(int id) async {
-    _products.firstWhere((p) => p.id == id).isDone = false;
-    notifyListeners();
+  Future<void> cancelProductAsDone(BuildContext context, int id) async {
+    GetIt.I<AbstractDB>().cancelProductAsDone(id).then((response) {
+      if (response == 0) return;
+      _products.firstWhere((p) => p.id == id).isDone = false;
+      notifyListeners();
+    }).catchError((err) {
+      logger.e('Mark Product ad Done ERROR: $err');
+      setErrorAlert(
+          context: context,
+          message: 'Не удалось отметить товар как выполненный!');
+    });
   }
+
 }

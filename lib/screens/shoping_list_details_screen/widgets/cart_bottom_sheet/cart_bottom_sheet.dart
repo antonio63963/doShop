@@ -15,7 +15,6 @@ class CartBottomSheet extends StatefulWidget {
 }
 
 class _CartBottomSheetState extends State<CartBottomSheet> {
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -42,7 +41,7 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                 idx: idx,
                 onToggleDone: () {
                   Provider.of<ProductInListProvider>(context, listen: false)
-                      .markProductAsIsNotDone(prod.id!);
+                      .cancelProductAsDone(context, prod.id!);
                 },
                 onOpenDetails: (context) =>
                     Helper.openProductDetailsScreen(context, prod),

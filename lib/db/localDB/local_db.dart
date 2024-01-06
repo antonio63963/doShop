@@ -55,7 +55,6 @@ class LocalDB implements AbstractDB {
   Future<List<CategoryProd>?> getCategories() async {
     final db = await instance.database;
     final response = await db?.rawQuery(SqlQueries.allCategories);
-    logger.i('Categories: $response');
     return response?.map((res) => CategoryProd.fromJSON(res)).toList();
   }
 
@@ -63,8 +62,6 @@ class LocalDB implements AbstractDB {
   Future<List<CategoryProd>?> getSubcategories(int catId) async {
     final db = await instance.database;
     final response = await db?.rawQuery(SqlQueries.subcategoriesByCatId(catId));
-    logger.i('SUbCatEGORIES: $response');
-
     final a = response?.map((sub) => CategoryProd.fromJSON(sub)).toList();
     logger.d('WOW: $a');
     return a;
@@ -245,6 +242,27 @@ logger.i('INSERT MANY PROD IN LIST: $listIds');
   }
 
   @override
+  Future<int?> markProductAsDone(int id) async {
+    final db = await instance.database;
+    return await db?.update(
+      tableProductInList,
+      {ProductInListFields.isDone: true},
+      where: '${ProductInListFields.id} = ?',
+      whereArgs: [id],
+    );
+  }
+  @override
+  Future<int?> cancelProductAsDone(int id) async {
+    final db = await instance.database;
+    return await db?.update(
+      tableProductInList,
+      {ProductInListFields.isDone: false},
+      where: '${ProductInListFields.id} = ?',
+      whereArgs: [id],
+    );
+  }
+
+  @override
   Future<int?> deleteProductInList(int prodId) async {
     final db = await instance.database;
     final resp = await db?.delete(
@@ -255,6 +273,19 @@ logger.i('INSERT MANY PROD IN LIST: $listIds');
     logger.i('Delete product in list response: $resp');
     return resp;
   }
+  @override
+  Future<int?> deleteProductsFormCart() async {
+    final db = await instance.database;
+    final resp = await db?.delete(
+      tableProductInList,
+      where: '${ProductInListFields.isDone} = ?',
+      whereArgs: [1],
+    );
+    logger.i('Delete Cart response: $resp');
+    return resp;
+  }
+
+
 
   @override
   Future<int?> deleteManyProductInList(List<ProductInList> prodList) async {

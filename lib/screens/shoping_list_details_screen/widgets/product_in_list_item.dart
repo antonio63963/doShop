@@ -127,7 +127,7 @@ class _ProductInListItemState extends State<ProductInListItem> {
                     onFire: () {
                       onToggleFire();
                     },
-                    isFire: product.isFire,
+                    isFire: !product.isFire,
                     onToggleDone: () {
                       widget.onToggleDone();
                       closeOptions();

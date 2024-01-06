@@ -1,3 +1,4 @@
+import 'package:doshop_app/providers/product_in_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -29,18 +30,16 @@ class _MenuShoppingDetailsState extends State<MenuShoppingDetails> {
 
   @override
   Widget build(BuildContext context) {
-    void onCloseScreen(Product? prod) {
-      Navigator.of(context).pop();
-      Helper.showSnack(
-          context: widget.context,
-          text: '${prod?.title} удален из категории ${prod?.categoryTitle}');
-    }
+
 
     void onSelectOption(MenuListDetails item) {
       switch (item) {
         case MenuListDetails.cleanCart:
           {
-            () {};
+            () {
+              logger.i('CART DELETE!!!!!!!!!!!!!!!');
+              Provider.of<ProductInListProvider>(context, listen: false).cleanCart(context).then((value) => Helper.showSnack(context: context, text: 'Корзина очищена'));
+            };
             break;
           }
         case MenuListDetails.cleanList:

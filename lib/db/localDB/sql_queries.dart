@@ -90,7 +90,7 @@ class SqlQueries {
     RETURNING id;
   ''';
 
-static String insertOrUpdateProductsInList(List<ProductInList> products) {
+  static String insertOrUpdateProductsInList(List<ProductInList> products) {
     final values = products.map((prod) => '''
     (
       (SELECT id FROM $tableProductInList WHERE prodId = ${prod.prodId}),
@@ -107,10 +107,13 @@ static String insertOrUpdateProductsInList(List<ProductInList> products) {
       ''';
   }
 
+  static String deleteProductInListFormCart = '''
+    DELETE * FROM $tableProductInList
+    WHERE $tableProductInList.${ProductInListFields.isDone} = 1
+  ''';
+
   static String getAllProductsInList() => '''
     SELECT *
     FROM $tableProductInList;
   ''';
-
-
 }

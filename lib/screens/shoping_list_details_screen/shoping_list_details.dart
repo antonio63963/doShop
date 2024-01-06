@@ -114,7 +114,7 @@ class _ShopingListDetailsState extends State<ShopingListDetails> {
                                         Provider.of<ProductInListProvider>(
                                                 context,
                                                 listen: false)
-                                            .markProductAsDone(prod.value.id!);
+                                            .markProductAsDone(context, prod.value.id!);
                                       },
                                     ),
                                   )
