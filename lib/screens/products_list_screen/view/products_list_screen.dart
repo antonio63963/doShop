@@ -1,10 +1,13 @@
 import 'package:doshop_app/forms/product_form/product_form.dart';
 import 'package:doshop_app/forms/select_list_alert/select_list_modal.dart';
 import 'package:doshop_app/providers/product_in_list_provider.dart';
+import 'package:doshop_app/providers/shopping_list_provider.dart';
 import 'package:doshop_app/screens/products_list_screen/view/widgets/actions.dart';
+import 'package:doshop_app/screens/shoping_list_details_screen/shoping_list_details.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/utils/helper.dart';
 import 'package:doshop_app/utils/show_modal.dart';
+import 'package:doshop_app/widgets/appbar_add_to_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -69,13 +72,26 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   @override
   Widget build(BuildContext context) {
     _productsList = productProvider.products;
+    final addToList =
+        Provider.of<ShoppingListProvider>(context, listen: false).addToList;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-            '${_screenArguments.title} ${_screenArguments.subtitle ?? ''}'),
-        actions: getActions(context),
-      ),
+      appBar: addToList != null
+          ? AppBarAddToList(
+              listId: addToList.id!,
+              listTitle: addToList.title,
+              backToList: () {
+                Navigator.pop(context);
+                if (_screenArguments.backToList != null) {
+                  _screenArguments.backToList!();
+                }
+              },
+            )
+          : AppBar(
+              title: Text(
+                  '${_screenArguments.title} ${_screenArguments.subtitle ?? ''}'),
+              actions: getActions(context),
+            ),
       body: PageContentWrapper(
         onRefresh: () =>
             productProvider.getProductsByCategory(context, _screenArguments.id),

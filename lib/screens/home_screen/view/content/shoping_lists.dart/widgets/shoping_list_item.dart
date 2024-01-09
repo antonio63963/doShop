@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 
 import 'menu_list_item.dart';
 
-class ShopingListItem extends StatelessWidget {
-  final ShopingList list;
+class ShoppingListItem extends StatelessWidget {
+  final ShoppingList list;
   final Function onTap;
-  const ShopingListItem({
+  const ShoppingListItem({
     required this.list,
     required this.onTap,
     super.key,

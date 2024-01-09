@@ -1,8 +1,7 @@
-import 'package:doshop_app/models/models/category.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:doshop_app/providers/shoping_list_provider.dart';
+import 'package:doshop_app/providers/shopping_list_provider.dart';
 import 'package:doshop_app/utils/constants.dart';
 
 import 'package:doshop_app/screens/home_screen/view/content/shoping_lists.dart/widgets/shoping_lists_section.dart';
@@ -23,7 +22,7 @@ class _ListsPageState extends State<ListsPage> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!isInit) {
-      Provider.of<ShopingListProvider>(context, listen: false)
+      Provider.of<ShoppingListProvider>(context, listen: false)
           .getLists(context)
           .then((value) {
         isLoaded = true;
@@ -34,19 +33,19 @@ class _ListsPageState extends State<ListsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final shopingLists = Provider.of<ShopingListProvider>(context).lists;
-logger.i('WOWOWOWOW: {$shopingLists.toString()}');
+    final shoppingLists = Provider.of<ShoppingListProvider>(context).lists;
+
     return isLoaded
         ? PageContentWrapper(
-            isScreenEmpty: shopingLists.isEmpty,
+            isScreenEmpty: shoppingLists.isEmpty,
             paddingHorizontal: AppPadding.bodyHorizontal,
             paddingVertical: 32,
             onRefresh: () async {
-              Provider.of<ShopingListProvider>(context, listen: false)
+              Provider.of<ShoppingListProvider>(context, listen: false)
                   .getLists(context);
             },
             widgets: [
-              ShopingListsSection(lists: shopingLists),
+              ShoppingListsSection(lists: shoppingLists),
             ],
           )
         : const Loading();

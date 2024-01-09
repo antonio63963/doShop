@@ -1,22 +1,23 @@
-import 'package:doshop_app/providers/product_in_list_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import 'package:doshop_app/providers/product_in_list_provider.dart';
+import 'package:doshop_app/providers/shopping_list_provider.dart';
 
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/utils/helper.dart';
 import 'package:doshop_app/widgets/ui/menu_item.dart';
 
-enum MenuListDetails {
-  cleanCart, cleanList, deleteList
-}
+enum MenuListDetails { cleanCart, cleanList, deleteList }
 
 class MenuShoppingDetails extends StatefulWidget {
-
   final BuildContext context;
   final String listTitle;
+  final int listId;
 
   const MenuShoppingDetails({
     required this.listTitle,
+    required this.listId,
     required this.context,
     super.key,
   });
@@ -30,20 +31,21 @@ class _MenuShoppingDetailsState extends State<MenuShoppingDetails> {
 
   @override
   Widget build(BuildContext context) {
-
-
     void onSelectOption(MenuListDetails item) {
       switch (item) {
         case MenuListDetails.cleanCart:
-          {
-            () {
-              logger.i('CART DELETE!!!!!!!!!!!!!!!');
-              Provider.of<ProductInListProvider>(context, listen: false).cleanCart(context).then((value) => Helper.showSnack(context: context, text: 'Корзина очищена'));
-            };
-            break;
-          }
+          Provider.of<ProductInListProvider>(context, listen: false)
+              .cleanCart(context)
+              .then((value) =>
+                  Helper.showSnack(context: context, text: 'Корзина очищена'));
+          break;
+
         case MenuListDetails.cleanList:
-        ;
+          Provider.of<ProductInListProvider>(context, listen: false)
+              .cleanShoppingList(context, widget.listId)
+              .then((value) => Helper.showSnack(
+                  context: context,
+                  text: 'Все товары удалены из ${widget.listTitle}'));
 
         case MenuListDetails.deleteList:
           Helper.showInfoAlert(
@@ -51,7 +53,14 @@ class _MenuShoppingDetailsState extends State<MenuShoppingDetails> {
             InfoAlert(
               title: 'Вы собираетесь удалить список!',
               message: 'Удалить ${widget.listTitle}',
-              onSubmit: () {},
+              onSubmit: () =>
+                  Provider.of<ShoppingListProvider>(context, listen: false)
+                      .deleteList(context, widget.listId)
+                      .then(
+                        (value) => Helper.showSnack(
+                            context: widget.context,
+                            text: 'Список ${widget.listTitle} удален'),
+                      ),
             ),
           );
       }
@@ -60,8 +69,7 @@ class _MenuShoppingDetailsState extends State<MenuShoppingDetails> {
     return PopupMenuButton<MenuListDetails>(
       initialValue: selectedMenu,
       onSelected: onSelectOption,
-      itemBuilder: (BuildContext context) =>
-          <PopupMenuEntry<MenuListDetails>>[
+      itemBuilder: (BuildContext context) => <PopupMenuEntry<MenuListDetails>>[
         const PopupMenuItem<MenuListDetails>(
           value: MenuListDetails.cleanCart,
           child: MenuItem(

@@ -1,13 +1,14 @@
+import 'package:flutter/material.dart';
+
+import 'package:doshop_app/utils/constants.dart';
+import 'package:doshop_app/utils/show_modal.dart';
 import 'package:doshop_app/db/exports.dart';
+
+import 'package:doshop_app/widgets/exports.dart';
 import 'package:doshop_app/forms/shoping_list_form/shoping_list_form.dart';
 import 'package:doshop_app/screens/home_screen/view/content/shoping_lists.dart/shoping_lists_screen.dart';
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/categories_page.dart';
 import 'package:doshop_app/screens/home_screen/view/content/templates_page.dart';
-import 'package:doshop_app/utils/constants.dart';
-import 'package:doshop_app/utils/show_modal.dart';
-import 'package:doshop_app/widgets/exports.dart';
-import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -56,7 +57,8 @@ class _HomeScreenState extends State<HomeScreen> {
       child: Scaffold(
         appBar: AppBar(
           leading: Padding(
-            padding: EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 5),
+            padding:
+                const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 5),
             child: ElevatedButton(
                 onPressed: () => LocalDB.instance.deleteDB(),
                 child: Text('Delete')),
@@ -70,7 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
         floatingActionButton: _currentTab == 0
             ? null
             : FAB(
-                onClick: () => showModal(context, const ShopingListForm()),
+                onClick: () => showModal(context, const ShoppingListForm()),
                 icon: Icons.add,
               ),
         bottomNavigationBar: BottomAppBar(

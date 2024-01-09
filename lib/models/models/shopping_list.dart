@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-const String tableShopingLists = 'shopingLists';
+const String tableShoppingLists = 'shoppingLists';
 
-class ShopingListFields {
+class ShoppingListFields {
   static const String id = 'id';
   static const String title = 'title';
   static const String subtitle = 'subtitle';
@@ -11,7 +11,7 @@ class ShopingListFields {
   static const String colorBg = 'colorBg';
 }
 
-class ShopingList {
+class ShoppingList {
   final int? id;
   final String title;
   final String? subtitle;
@@ -19,7 +19,7 @@ class ShopingList {
   final String? img;
   final int? colorBg;
 
-  ShopingList({
+  ShoppingList({
     this.id,
     required this.title,
     this.subtitle,
@@ -28,36 +28,35 @@ class ShopingList {
     this.colorBg,
   });
 
-  static ShopingList fromJSON(Map<String, Object?> json) {
-    return ShopingList(
-      id: json[ShopingListFields.id] as int,
-      title: json[ShopingListFields.title] as String,
-      subtitle: json[ShopingListFields.subtitle] != null
-          ? json[ShopingListFields.subtitle] as String
+  static ShoppingList fromJSON(Map<String, Object?> json) {
+    return ShoppingList(
+      id: json[ShoppingListFields.id] as int,
+      title: json[ShoppingListFields.title] as String,
+      subtitle: json[ShoppingListFields.subtitle] != null
+          ? json[ShoppingListFields.subtitle] as String
           : null,
-      isTemplate: intToBool(json[ShopingListFields.isTemplate] as int),
-      img: json[ShopingListFields.img] as String,
-      colorBg: json[ShopingListFields.colorBg] as int,
+      isTemplate: intToBool(json[ShoppingListFields.isTemplate] as int),
+      img: json[ShoppingListFields.img] as String,
+      colorBg: json[ShoppingListFields.colorBg] as int,
     );
   }
 
   Map<String, Object?> toJSON() => {
-        ShopingListFields.title: title,
-        ShopingListFields.subtitle: subtitle,
-        ShopingListFields.isTemplate: isTemplate,
-        ShopingListFields.img: img,
-        ShopingListFields.colorBg: colorBg,
+        ShoppingListFields.title: title,
+        ShoppingListFields.subtitle: subtitle,
+        ShoppingListFields.isTemplate: isTemplate,
+        ShoppingListFields.img: img,
+        ShoppingListFields.colorBg: colorBg,
       };
 
-  ShopingList copy({
+  ShoppingList copy({
     int? id,
     String? title,
-    String? photo,
     int? productId,
     String? img,
     int? colorBg,
   }) =>
-      ShopingList(
+      ShoppingList(
         id: id ?? this.id,
         title: title ?? this.title,
         subtitle: subtitle,
@@ -65,6 +64,9 @@ class ShopingList {
         img: img ?? this.img,
         colorBg: colorBg ?? this.colorBg,
       );
+
+  bool isChanged(ShoppingList list) =>
+      title != list.title || img != list.img || colorBg != list.colorBg;
 
   @override
   String toString() {

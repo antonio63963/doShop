@@ -96,6 +96,7 @@ class ProductProvider extends ErrorHandler {
     _products = [];
     tags = [];
     _selectedTagIdx = null;
+    notifyListeners();
   }
 
   Future<Product?> createProduct(BuildContext context, Product product) async {

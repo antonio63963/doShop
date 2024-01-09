@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class SelectListSection extends StatelessWidget {
   final int? radioListOption;
   final Function(int?, String?) onChangeOption;
-  final List<ShopingList> lists;
+  final List<ShoppingList> lists;
 
   const SelectListSection({
     super.key,

@@ -66,7 +66,7 @@ class SqlQueries {
 
   static String allLists = '''
     SELECT *
-    FROM $tableShopingLists;
+    FROM $tableShoppingLists;
   ''';
 // Products In List
   static String getProductsInList(int listId) => '''
@@ -90,7 +90,7 @@ class SqlQueries {
     RETURNING id;
   ''';
 
-  static String insertOrUpdateProductsInList(List<ProductInList> products) {
+static String insertOrUpdateProductsInList(List<ProductInList> products) {
     final values = products.map((prod) => '''
     (
       (SELECT id FROM $tableProductInList WHERE prodId = ${prod.prodId}),
@@ -107,13 +107,17 @@ class SqlQueries {
       ''';
   }
 
-  static String deleteProductInListFormCart = '''
+  static String cleanShoppingList(int listId) {
+    return '''
     DELETE * FROM $tableProductInList
-    WHERE $tableProductInList.${ProductInListFields.isDone} = 1
+    WHERE $tableProductInList.${ProductInListFields.listId} = $listId;
   ''';
+  }
 
   static String getAllProductsInList() => '''
     SELECT *
     FROM $tableProductInList;
   ''';
+
+
 }

@@ -42,13 +42,13 @@ class SqlTables {
     );
   ''';
   static String createShopingLists = '''
-    CREATE TABLE IF NOT EXISTS $tableShopingLists(
-      ${ShopingListFields.id} $idType,
-      ${ShopingListFields.title} $textType,
-      ${ShopingListFields.subtitle} TEXT,
-      ${ShopingListFields.isTemplate} INTEGER NOT NULL,
-      ${ShopingListFields.colorBg} INTEGER,
-      ${ShopingListFields.img} TEXT
+    CREATE TABLE IF NOT EXISTS $tableShoppingLists(
+      ${ShoppingListFields.id} $idType,
+      ${ShoppingListFields.title} $textType,
+      ${ShoppingListFields.subtitle} TEXT,
+      ${ShoppingListFields.isTemplate} INTEGER NOT NULL,
+      ${ShoppingListFields.colorBg} INTEGER,
+      ${ShoppingListFields.img} TEXT
     );
   ''';
   static String createProductInList = '''

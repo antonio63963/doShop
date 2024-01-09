@@ -16,7 +16,7 @@ class ButtonsFormRow extends StatelessWidget {
         spacing: 16,
         children: [
           SecondaryButton(
-            text: 'Подтвердить',
+            text: 'Сохранить',
             onPressed: onSubmit,
           ),
           PrimaryButton(

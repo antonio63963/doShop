@@ -1,7 +1,9 @@
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/exports.dart';
+import 'package:doshop_app/providers/shopping_list_provider.dart';
 import 'package:doshop_app/screens/products_list_screen/export.dart';
 import 'package:doshop_app/screens/subcategories_screen/view/subcategory_item.dart';
+import 'package:doshop_app/widgets/appbar_add_to_list.dart';
 import 'package:doshop_app/widgets/exports.dart';
 import 'package:flutter/material.dart';
 
@@ -45,61 +47,80 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final addToList =
+        Provider.of<ShoppingListProvider>(context, listen: false).addToList;
+
+    void backToList() {
+      Navigator.pop(context);
+      if (_screenArguments.backToList != null) {
+        _screenArguments.backToList!();
+      }
+    }
+
     return Scaffold(
-      // appBar: AppBar(title: const Text('Подкатегории'), actions: [
-      //   IconButton(
-      //     onPressed: () {},
-      //     icon: const Icon(Icons.more_vert),
-      //   ),
-      // ]),
-      appBar: AppBar(
-        backgroundColor: MyColors.white,
-        automaticallyImplyLeading: false,
-        toolbarHeight: 128,
-        title: SizedBox(
-          width: double.infinity,
-          child: Column(
-            children: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                    onPressed: () => Navigator.pop(context),
-                    icon: const Icon(Icons.arrow_back, color: MyColors.primary),
-                  ),
-                  IconButton(
-                      onPressed: () {},
-                      icon: const Icon(
-                        Icons.more_vert,
-                        color: MyColors.primary,
-                      ))
-                ],
+      appBar: addToList != null
+          ? AppBarAddToList(
+              listId: addToList.id!,
+              listTitle: addToList.title,
+              backToList: backToList,
+            )
+          : AppBar(
+              backgroundColor: MyColors.white,
+              automaticallyImplyLeading: false,
+              toolbarHeight: 128,
+              title: SizedBox(
+                width: double.infinity,
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        IconButton(
+                          onPressed: () => Navigator.pop(context),
+                          icon: const Icon(Icons.arrow_back,
+                              color: MyColors.primary),
+                        ),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.more_vert,
+                            color: MyColors.primary,
+                          ),
+                        )
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Image.asset(
+                          _screenArguments.catImg,
+                          height: 55.0,
+                          width: 55.0,
+                        ),
+                        const SizedBox(width: 16),
+                        Text(
+                          _screenArguments.title.toUpperCase(),
+                          style: const TextStyle(
+                              fontSize: 20.0, color: MyColors.primary),
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
               ),
-              Row(
-                children: [
-                  Image.asset(
-                    _screenArguments.catImg,
-                    height: 55.0,
-                    width: 55.0,
-                  ),
-                  const SizedBox(width: 16),
-                  Text(
-                    _screenArguments.title.toUpperCase(),
-                    style: const TextStyle(
-                        fontSize: 20.0, color: MyColors.primary),
-                    textAlign: TextAlign.center,
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
+            ),
       body: !isLoaded
           ? const Loading()
           : ListView(
               children: [
+                addToList != null
+                    ? SectionTitle(
+                        title: _screenArguments.title,
+                        paddingBottom: 0,
+                        fontSize: 20,
+                      )
+                    : const SizedBox(),
                 Input(inputController: searchController),
                 Padding(
                   padding: EdgeInsets.symmetric(
@@ -122,6 +143,7 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
                               subtitle: sub.subtitle ?? '',
                               colorBg: sub.colorBg ?? MyColors.defaultBG,
                               isSubcats: sub.isSubcat,
+                              backToList: backToList,
                             ),
                           );
                         },

@@ -17,7 +17,6 @@ class CartBottomSheet extends StatefulWidget {
 class _CartBottomSheetState extends State<CartBottomSheet> {
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final cartList = Provider.of<ProductInListProvider>(context).cart;
 
     return Column(

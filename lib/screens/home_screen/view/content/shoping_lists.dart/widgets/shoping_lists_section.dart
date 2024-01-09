@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 
 import 'package:doshop_app/models/exports.dart';
 
-class ShopingListsSection extends StatelessWidget {
-  final List<ShopingList> lists;
+class ShoppingListsSection extends StatelessWidget {
+  final List<ShoppingList> lists;
 
-  const ShopingListsSection({super.key, required this.lists});
+  const ShoppingListsSection({super.key, required this.lists});
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +21,10 @@ class ShopingListsSection extends StatelessWidget {
             itemCount: lists.length,
             itemBuilder: (_, idx) {
               final l = lists[idx];
-              return ShopingListItem(
+              return ShoppingListItem(
                 list: l,
                 onTap: () => Navigator.of(context).pushNamed(
-                  ShopingListDetails.routeName,
+                  ShoppingListDetails.routeName,
                   arguments: ProductInListDetailsScreenArguments(
                     colorBg: l.colorBg ?? MyColors.defaultBG,
                     id: l.id!,

@@ -4,12 +4,17 @@ import 'package:doshop_app/providers/error_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class ShopingListProvider extends ErrorHandler {
-  List<ShopingList> _lists = [];
+class ShoppingListProvider extends ErrorHandler {
+  List<ShoppingList> _lists = [];
+  ShoppingList? _addToList;
 
-  List<ShopingList> get lists => [..._lists];
+  List<ShoppingList> get lists => [..._lists];
 
-  Future<void> createList(BuildContext context, ShopingList list) async {
+  ShoppingList? get addToList => _addToList;
+
+  void setAddToList(ShoppingList? list) => _addToList = list;
+
+  Future<void> createList(BuildContext context, ShoppingList list) async {
     await GetIt.I<AbstractDB>().createList(list).then((response) {
       if (response == null) return;
       logger.i('Created ShoppingList, ${response.toString()}');
@@ -22,7 +27,7 @@ class ShopingListProvider extends ErrorHandler {
   }
 
   Future<void> getLists(BuildContext context) async {
-    await GetIt.I<AbstractDB>().getShopingLists().then((response) {
+    await GetIt.I<AbstractDB>().getShoppingLists().then((response) {
       _lists = response ?? [];
       notifyListeners();
     }).catchError((err) {
@@ -31,7 +36,7 @@ class ShopingListProvider extends ErrorHandler {
     });
   }
 
-  Future<void> updateList(BuildContext context, ShopingList list) async {
+  Future<void> updateList(BuildContext context, ShoppingList list) async {
     if (list.id == null) {
       logger.e('Error update List No ID');
       setErrorAlert(

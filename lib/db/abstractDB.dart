@@ -18,14 +18,15 @@ abstract class AbstractDB {
       List<ProductInList> prodList);
   Future<List<ProductInList>?> getProductsInList(int listId);
   Future<int?> updateProductInList(ProductInList prodInList);
-   Future<int?> markProductAsDone(int id);
-   Future<int?> cancelProductAsDone(int id);
+  Future<int?> markProductAsDone(int id);
+  Future<int?> cancelProductAsDone(int id);
+  Future<int?> cleanShoppingList(int listId);
   Future<int?> deleteProductInList(int prodId);
   Future<int?> deleteManyProductInList(List<ProductInList> prodList);
   Future<int?> deleteProductsFormCart();
 
-  Future<ShopingList?> createList(ShopingList product);
-  Future<List<ShopingList>?> getShopingLists();
-  Future<int?> updateShoppingList(ShopingList list);
+  Future<ShoppingList?> createList(ShoppingList product);
+  Future<List<ShoppingList>?> getShoppingLists();
+  Future<int?> updateShoppingList(ShoppingList list);
   Future<int?> deleteShoppingList(int listId);
 }

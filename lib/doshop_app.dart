@@ -1,6 +1,6 @@
 import 'package:doshop_app/providers/product_in_list_provider.dart';
 import 'package:doshop_app/providers/product_provider.dart';
-import 'package:doshop_app/providers/shoping_list_provider.dart';
+import 'package:doshop_app/providers/shopping_list_provider.dart';
 import 'package:doshop_app/themes/appTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -17,7 +17,7 @@ class DoshopApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(create: (context) => CategoriesProvider()),
         ChangeNotifierProvider(create: (context) => ProductProvider()),
-        ChangeNotifierProvider(create: (context) => ShopingListProvider()),
+        ChangeNotifierProvider(create: (context) => ShoppingListProvider()),
         ChangeNotifierProvider(create: (context) => ProductInListProvider()),
       ],
       child: MaterialApp(

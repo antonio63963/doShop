@@ -1,6 +1,6 @@
 import 'package:doshop_app/forms/widgets/select_list_section.dart';
 import 'package:doshop_app/models/exports.dart';
-import 'package:doshop_app/providers/shoping_list_provider.dart';
+import 'package:doshop_app/providers/shopping_list_provider.dart';
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/search_product_item.dart';
 import 'package:doshop_app/screens/product_details_screen.dart/exports.dart';
 import 'package:doshop_app/utils/constants.dart';
@@ -99,9 +99,9 @@ class _SelectedProductModalState extends State<SelectedProductModal> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isInit) {
-      final shopingListProvider = Provider.of<ShopingListProvider>(context);
-      if (shopingListProvider.lists.isEmpty) {
-        shopingListProvider.getLists(context);
+      final shoppingListProvider = Provider.of<ShoppingListProvider>(context);
+      if (shoppingListProvider.lists.isEmpty) {
+        shoppingListProvider.getLists(context);
         _isInit = true;
       }
     }
@@ -109,7 +109,7 @@ class _SelectedProductModalState extends State<SelectedProductModal> {
 
   @override
   Widget build(BuildContext context) {
-    final lists = Provider.of<ShopingListProvider>(context).lists;
+    final lists = Provider.of<ShoppingListProvider>(context).lists;
     return _selectedProduct == null
         ? const Text('Что-то пошло не так продукт не найден!')
         : Container(

@@ -93,13 +93,23 @@ class ProductInListProvider extends ErrorHandler {
     });
   }
 
-  Future<void> cleanShoppingList(
-      BuildContext context, List<ProductInList> prodList) async {
-    GetIt.I<AbstractDB>().deleteManyProductInList(prodList).then((response) {
+  // Future<void> deleteMany(
+  //     BuildContext context, List<ProductInList> prodList) async {
+  //   GetIt.I<AbstractDB>().deleteManyProductInList(prodList).then((response) {
+  //     if (response == 0) return;
+  //     for (var prod in prodList) {
+  //       _products.removeWhere((p) => p.id == prod.id);
+  //     }
+  //     notifyListeners();
+  //   }).catchError((err) {
+  //     logger.e('Clean List ERROR: $err');
+  //     setErrorAlert(context: context, message: 'Не удалось отчистить список!');
+  //   });
+  // }
+  Future<void> cleanShoppingList(BuildContext context, int prodList) async {
+    GetIt.I<AbstractDB>().cleanShoppingList(prodList).then((response) {
       if (response == 0) return;
-      for (var prod in prodList) {
-        _products.removeWhere((p) => p.id == prod.id);
-      }
+      _products = [];
       notifyListeners();
     }).catchError((err) {
       logger.e('Clean List ERROR: $err');
@@ -132,5 +142,4 @@ class ProductInListProvider extends ErrorHandler {
           message: 'Не удалось отметить товар как выполненный!');
     });
   }
-
 }

@@ -2,7 +2,7 @@ import 'package:doshop_app/forms/shoping_list_form/widgets/select_color_row.dart
 import 'package:doshop_app/forms/widgets/select_icon_row.dart';
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/services/shoping_list.service.dart';
-import 'package:doshop_app/providers/shoping_list_provider.dart';
+import 'package:doshop_app/providers/shopping_list_provider.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/utils/helper.dart';
 import 'package:doshop_app/utils/validators.dart';
@@ -10,15 +10,15 @@ import 'package:doshop_app/widgets/exports.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class ShopingListForm extends StatefulWidget {
-  final ShopingList? list;
-  const ShopingListForm({this.list, super.key});
+class ShoppingListForm extends StatefulWidget {
+  final ShoppingList? list;
+  const ShoppingListForm({this.list, super.key});
 
   @override
-  State<ShopingListForm> createState() => _ShopingListFormState();
+  State<ShoppingListForm> createState() => _ShoppingListFormState();
 }
 
-class _ShopingListFormState extends State<ShopingListForm> {
+class _ShoppingListFormState extends State<ShoppingListForm> {
   bool isInit = false;
   final TextEditingController titleController = TextEditingController();
   final TextEditingController subtitleController = TextEditingController();
@@ -54,6 +54,45 @@ class _ShopingListFormState extends State<ShopingListForm> {
         ..._colorsList.where((e) => e.color != _colorsList[idx].color)
       ];
     });
+  }
+
+  void onCreate(ShoppingList newList) {
+    Provider.of<ShoppingListProvider>(context, listen: false)
+        .createList(context, newList)
+        .then((value) {
+      Navigator.pop(context);
+      Helper.showSnack(
+          context: context, text: 'Список ${newList.title} добавлен');
+    });
+  }
+
+  void onUpdate(ShoppingList newList) {
+    if (widget.list == null) return;
+    final isChanged = widget.list!.isChanged(newList);
+    logger.i('IS CHANGED: $isChanged');
+    if (!isChanged) {
+      Helper.showSnack(
+          context: context, text: 'Список ${widget.list?.title} не изменен');
+    } else {
+      Provider.of<ShoppingListProvider>(context, listen: false)
+          .updateList(context, newList.copy(id: widget.list?.id))
+          .then((value) {
+        Navigator.pop(context);
+        Helper.showSnack(
+            context: context, text: 'Список ${widget.list?.title} изменен');
+      });
+    }
+  }
+
+  void onSubmit() {
+    final newList = ShoppingList(
+      title: titleController.text,
+      subtitle:
+          subtitleController.text.isEmpty ? null : subtitleController.text,
+      colorBg: _selectedColor,
+      img: _selectedIcon,
+    );
+    widget.list != null ? onUpdate(newList) : onCreate(newList);
   }
 
   @override
@@ -100,22 +139,7 @@ class _ShopingListFormState extends State<ShopingListForm> {
           colorBg: Color(_selectedColor),
         ),
       ],
-      onSubmit: () {
-        final newList = ShopingList(
-          title: titleController.text,
-          subtitle:
-              subtitleController.text.isEmpty ? null : subtitleController.text,
-          colorBg: _selectedColor,
-          img: _selectedIcon,
-        );
-        Provider.of<ShopingListProvider>(context, listen: false)
-            .createList(context, newList)
-            .then((value) {
-          Navigator.pop(context);
-          Helper.showSnack(
-              context: context, text: 'Список ${newList.title} добавлен');
-        });
-      },
+      onSubmit: onSubmit,
     );
   }
 }

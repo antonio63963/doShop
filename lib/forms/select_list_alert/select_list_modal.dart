@@ -2,7 +2,7 @@ import 'package:doshop_app/forms/widgets/buttons_form_row.dart';
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/product_in_list_provider.dart';
 import 'package:doshop_app/providers/product_provider.dart';
-import 'package:doshop_app/providers/shoping_list_provider.dart';
+import 'package:doshop_app/providers/shopping_list_provider.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/utils/helper.dart';
 import 'package:doshop_app/widgets/exports.dart';
@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/select_list_section.dart';
+import 'widgets/buttons_row.dart';
 
 class SelectListModal extends StatefulWidget {
   const SelectListModal({super.key});
@@ -44,7 +45,7 @@ class _SelectListModalState extends State<SelectListModal> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!_isInit) {
-      final shopingListProvider = Provider.of<ShopingListProvider>(context);
+      final shopingListProvider = Provider.of<ShoppingListProvider>(context);
       if (shopingListProvider.lists.isEmpty) {
         shopingListProvider.getLists(context).then((value) {
           _selectedProducts = initSelectedProducts(context);
@@ -83,13 +84,13 @@ class _SelectListModalState extends State<SelectListModal> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final lists = Provider.of<ShopingListProvider>(context).lists;
+    final lists = Provider.of<ShoppingListProvider>(context).lists;
     return Dialog(
       backgroundColor: MyColors.white,
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(5))),
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -107,9 +108,10 @@ class _SelectListModalState extends State<SelectListModal> {
                     lists: lists,
                   )
                 : const Loading(),
-            ButtonsFormRow(
-                onClose: () => Navigator.pop(context),
-                onSubmit: () => onSubmit(context))
+            ButtonsRow(
+              onClose: () => Navigator.pop(context),
+              onSubmit: () => onSubmit(context),
+            ),
           ],
         ),
       ),

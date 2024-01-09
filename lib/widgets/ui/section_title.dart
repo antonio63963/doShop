@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 
 class SectionTitle extends StatelessWidget {
   final String title;
+  final double? fontSize;
   final double paddingHorizontal;
   final double paddingTop;
   final double paddingBottom;
 
   const SectionTitle({
     required this.title,
+    this.fontSize = 16,
     this.paddingBottom = 16,
     this.paddingHorizontal = 16,
     this.paddingTop = 16,
@@ -26,9 +28,10 @@ class SectionTitle extends StatelessWidget {
       ),
       child: Text(
         title,
-        style: const TextStyle(
+        style: TextStyle(
           color: MyColors.primary,
           fontWeight: FontWeight.w600,
+          fontSize: fontSize,
         ),
       ),
     );
