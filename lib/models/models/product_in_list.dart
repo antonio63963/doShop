@@ -1,4 +1,4 @@
-import 'package:doshop_app/models/models/category.dart';
+import 'package:doshop_app/models/exports.dart';
 
 const String tableProductInList = 'productInLists';
 
@@ -9,6 +9,10 @@ class ProductInListFields {
   static const String id = 'id';
   static const String prodId = 'prodId';
   static const String listId = 'listId';
+  static const String title = 'title';
+  static const String subtitle = 'subtitle';
+  static const String info = 'info';
+  static const String unit = 'unit';
   static const String amount = 'amount';
   static const String isFire = 'isFire';
   static const String isDone = 'isDone';
@@ -26,6 +30,7 @@ class ProductInList {
   //for ui
   final String? title;
   final String? subtitle;
+  final String? info;
   final int? colorBg;
   final String? icon;
   final String? unit;
@@ -41,6 +46,7 @@ class ProductInList {
     required this.dateCreated,
     this.title,
     this.subtitle,
+    this.info,
     this.colorBg,
     this.icon,
     this.unit,
@@ -59,6 +65,7 @@ class ProductInList {
     int? colorBg,
     String? title,
     String? subtitle,
+    String? info,
     String? unit,
     String? catTitle,
   }) {
@@ -72,8 +79,9 @@ class ProductInList {
       isDone: isDone ?? this.isDone,
       icon: icon ?? this.icon,
       title: title ?? this.title,
-      colorBg: colorBg ?? this.colorBg,
       subtitle: subtitle ?? this.subtitle,
+      info: info ?? this.info,
+      colorBg: colorBg ?? this.colorBg,
       unit: unit ?? this.unit,
       catTitle: catTitle ?? this.catTitle,
     );
@@ -82,6 +90,10 @@ class ProductInList {
   Map<String, Object?> toJSON() => {
         ProductInListFields.prodId: prodId,
         ProductInListFields.listId: listId,
+        ProductInListFields.title: title,
+        ProductInListFields.subtitle: subtitle,
+        ProductInListFields.info: info,
+        ProductInListFields.unit: unit,
         ProductInListFields.amount: amount,
         ProductInListFields.isFire: isFire ? 1 : 0,
         ProductInListFields.isDone: isDone ? 1 : 0,
@@ -99,6 +111,9 @@ class ProductInList {
       subtitle: json['subtitle'] != null && json['subtitle'] != 'null'
           ? json['subtitle'] as String
           : null,
+      info: json['info'] != null && json['info'] != 'null'
+          ? json['info'] as String
+          : null,
       icon: json['icon'] != null && json['icon'] != 'null'
           ? json['icon'] as String
           : null,
@@ -115,6 +130,19 @@ class ProductInList {
       amount != prod2.amount || isFire != prod2.isFire ? true : false;
 
   static bool intToBool(int value) => value == 0 ? false : true;
+
+  static List<ProductInList> convertProductsToSelected(
+      List<Product> products, int listId) {
+    return products
+        .map((p) => ProductInList(
+              amount: p.amount,
+              prodId: p.id,
+              isFire: p.isFire,
+              listId: listId,
+              dateCreated: DateTime.now(),
+            ))
+        .toList();
+  }
 
   @override
   String toString() {

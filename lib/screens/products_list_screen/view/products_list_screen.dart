@@ -32,6 +32,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   bool isInit = false;
   bool isLoaded = false;
   late ProductsListScreenArguments _screenArguments;
+  ShoppingList? _addToList;
 
   late ProductProvider productProvider;
   List<Product> _productsList = [];
@@ -41,7 +42,6 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
       context,
       ProductForm(
         catId: _screenArguments.id,
-        catImg: _screenArguments.catImg,
         colorBg: _screenArguments.colorBg,
         tagsList: productProvider.copyTagsList(),
       ),
@@ -58,6 +58,8 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
           .getProductsByCategory(context, _screenArguments.id);
       isInit = true;
       isLoaded = true;
+      _addToList =
+          Provider.of<ShoppingListProvider>(context, listen: false).addToList;
     }
     isInit = true;
     super.didChangeDependencies();
@@ -111,15 +113,36 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
         ],
       ),
       floatingActionButton: !productProvider.isAnySelected
-          ? FAB(
-              onClick: openModal,
-              icon: Icons.add,
-            )
+          ? addToList == null
+              ? FAB(
+                  onClick: openModal,
+                  icon: Icons.add,
+                )
+              : null
           : FAB(
-              onClick: () {
-                showDialog(
-                    context: context, builder: (_) => const SelectListModal());
-              },
+              onClick: _addToList != null
+                  ? () {
+                      final productsWithAmount =
+                          Provider.of<ProductProvider>(context, listen: false)
+                              .getSelectedProducts();
+                      final selectedProducts =
+                          ProductInList.convertProductsToSelected(
+                              productsWithAmount, addToList!.id!);
+                      Provider.of<ProductInListProvider>(context, listen: false)
+                          .insertMany(context, selectedProducts)
+                          .then((value) {
+                        Navigator.pop(context);
+                        Helper.showSnack(
+                            context: context,
+                            text:
+                                'Добавлено ${productsWithAmount.length} товаров в "${addToList.title}');
+                      });
+                    }
+                  : () {
+                      showDialog(
+                          context: context,
+                          builder: (_) => const SelectListModal());
+                    },
               svgPath: 'assets/icons/addToList.svg',
             ),
     );

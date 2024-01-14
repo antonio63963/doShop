@@ -1,3 +1,4 @@
+import 'package:doshop_app/forms/add_to_list_form/add_to_list_form.dart';
 import 'package:doshop_app/providers/shopping_list_provider.dart';
 import 'package:doshop_app/screens/add_product_screen/add_from_category_screen.dart';
 import 'package:doshop_app/screens/shoping_list_details_screen/widgets/menu_shopping_details.dart';
@@ -61,6 +62,7 @@ class _ShoppingListDetailsState extends State<ShoppingListDetails> {
   Widget build(BuildContext context) {
     final productsList = Provider.of<ProductInListProvider>(context).products;
     final cartList = Provider.of<ProductInListProvider>(context).cart;
+    logger.i('LIST DETAILS: ${productsList.toString()}');
     return Scaffold(
       appBar: AppBar(
         title: Text(_screenArgs?.title ?? 'Не определен'),
@@ -94,46 +96,44 @@ class _ShoppingListDetailsState extends State<ShoppingListDetails> {
                       .getProductsInList(context, _screenArgs!.id!),
               paddingHorizontal: AppPadding.bodyHorizontal,
               widgets: [
-                ...productsList.entries
-                    .map(
-                      (entry) => Wrap(
-                        spacing: 16,
-                        children: [
-                          SectionTitle(
-                            title: entry.key,
-                            paddingTop: 22,
-                            paddingBottom: 14,
-                          ),
-                          ListView(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            children: entry.value
-                                .asMap()
-                                .entries
-                                .map(
-                                  (prod) => SlidebleProductInListItem(
-                                    idx: prod.key,
-                                    prod: prod.value,
-                                    borderRadius: Helper.getBorderRadius(
-                                        prod.key, entry.value.length),
-                                    onOpenDetails: (context) =>
-                                        Helper.openProductDetailsScreen(
-                                            context, prod.value),
-                                    onToggleDone: () {
-                                      Provider.of<ProductInListProvider>(
-                                              context,
-                                              listen: false)
-                                          .markProductAsDone(
-                                              context, prod.value.id!);
-                                    },
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                        ],
+                ...productsList.entries.map((entry) {
+                  logger.i('ENTRY: $entry');
+                  return Wrap(
+                    spacing: 16,
+                    children: [
+                      SectionTitle(
+                        title: entry.key,
+                        paddingTop: 22,
+                        paddingBottom: 14,
                       ),
-                    )
-                    .toList(),
+                      ListView(
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        children: entry.value
+                            .asMap()
+                            .entries
+                            .map(
+                              (prod) => SlidebleProductInListItem(
+                                idx: prod.key,
+                                prod: prod.value,
+                                borderRadius: Helper.getBorderRadius(
+                                    prod.key, entry.value.length),
+                                onOpenDetails: (context) =>
+                                    Helper.openProductDetailsScreen(
+                                        context, prod.value),
+                                onToggleDone: () {
+                                  Provider.of<ProductInListProvider>(context,
+                                          listen: false)
+                                      .markProductAsDone(
+                                          context, prod.value.id!);
+                                },
+                              ),
+                            )
+                            .toList(),
+                      ),
+                    ],
+                  );
+                }).toList(),
                 const SizedBox(height: 50),
               ],
             ),
@@ -172,6 +172,15 @@ class _ShoppingListDetailsState extends State<ShoppingListDetails> {
                         MyColors.primary, BlendMode.srcIn),
                   ),
                   onPressed: () {
+
+                    if (_screenArgs?.id != null) {
+                      showModal(
+                        context,
+                        AddToListForm(
+                          listId: _screenArgs!.id!,
+                        ),
+                      );
+                    }
                     final state = _key.currentState;
                     if (state != null) {
                       state.toggle();
@@ -203,8 +212,10 @@ class _ShoppingListDetailsState extends State<ShoppingListDetails> {
                   ),
                   onPressed: () {
                     final state = _key.currentState;
-                    if(_screenArgs == null) return;
-                    Provider.of<ShoppingListProvider>(context, listen: false).setAddToList(ShoppingList(title: _screenArgs!.title, id: _screenArgs!.id));
+                    if (_screenArgs == null) return;
+                    Provider.of<ShoppingListProvider>(context, listen: false)
+                        .setAddToList(ShoppingList(
+                            title: _screenArgs!.title, id: _screenArgs!.id));
                     Navigator.of(context).pushNamed(
                       AddFromCategoryScreen.routeName,
                     );
