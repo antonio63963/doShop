@@ -1,5 +1,6 @@
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/product_in_list_provider.dart';
+import 'package:doshop_app/providers/services/product.service.dart';
 import 'package:doshop_app/screens/shoping_list_details_screen/widgets/options_product_tile.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/screens/shoping_list_details_screen/widgets/product_in_list_tile.dart';
@@ -30,7 +31,6 @@ class ProductInListItem extends StatefulWidget {
 }
 
 class _ProductInListItemState extends State<ProductInListItem> {
-  // PROBLEM:::: UPDATE
   bool isLoading = false;
   late ProductInList product;
   bool isOptions = false;
@@ -42,22 +42,23 @@ class _ProductInListItemState extends State<ProductInListItem> {
   }
 
   void onIncreaseAmount() {
-    logger.i('OnIncrease Amount: ${product.toString()}');
+    logger.i('OnIncrease Amount: ${widget.prod.toString()}');
+    if(widget.prod.unit == null) return;
     setState(() {
-      product.unit == Units.kg ? product.amount += 0.5 : product.amount++;
+      widget.prod.amount += ProductService.unitDelta(widget.prod.unit!);
     });
   }
 
   void onDecreaseAmount() {
-    if (product.amount == 0) return;
+    if (widget.prod.amount == 0 || widget.prod.unit == null) return;
     setState(() {
-      product.unit == Units.kg ? product.amount -= 0.5 : product.amount--;
+     widget.prod.amount -= ProductService.unitDelta(widget.prod.unit!);
     });
   }
 
   void onToggleFire() {
     setState(() {
-      product.isFire = !product.isFire;
+      widget.prod.isFire = !widget.prod.isFire;
     });
   }
 
@@ -71,11 +72,11 @@ class _ProductInListItemState extends State<ProductInListItem> {
       isLoading = true;
     });
     Provider.of<ProductInListProvider>(context, listen: false)
-        .updateProductInList(context, product)
+        .updateProductInList(context, widget.prod)
         .then((value) {
       isLoading = false;
       Helper.showSnack(
-          context: context, text: '${product.title} был обновлен.');
+          context: context, text: '${widget.prod.title} был обновлен.');
       closeOptions();
     });
   }
@@ -83,24 +84,26 @@ class _ProductInListItemState extends State<ProductInListItem> {
   @override
   void initState() {
     super.initState();
+    //for compare changed item to update
     product = widget.prod.copy();
   }
 
   @override
   Widget build(BuildContext context) {
+        logger.f('PRODUCT IN LIST TILE: ${widget.prod.toString()}');
     return Container(
       decoration: BoxDecoration(
         borderRadius: widget.borderRadius,
       ),
       child: Material(
         borderRadius: widget.borderRadius,
-        color: Color(product.colorBg ?? MyColors.defaultBG),
+        color: Color(widget.prod.colorBg ?? MyColors.defaultBG),
         clipBehavior: Clip.hardEdge,
         elevation: 3,
         child: Column(
           children: [
             ProductInListTile(
-              prod: product,
+              prod: widget.prod,
               isOptions: isOptions,
               borderRadius: widget.borderRadius,
               toggleIsOptions: () => setState(() => isOptions = !isOptions),
@@ -116,7 +119,7 @@ class _ProductInListItemState extends State<ProductInListItem> {
                     onClean: widget.onClean != null
                         ? () {
                             widget.onClean!();
-                            if (product.isFire) {
+                            if (widget.prod.isFire) {
                               onToggleFire();
                             }
                           }
@@ -127,7 +130,7 @@ class _ProductInListItemState extends State<ProductInListItem> {
                     onFire: () {
                       onToggleFire();
                     },
-                    isFire: !product.isFire,
+                    isFire: !widget.prod.isFire,
                     onToggleDone: () {
                       widget.onToggleDone();
                       closeOptions();

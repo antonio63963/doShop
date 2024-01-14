@@ -52,6 +52,8 @@ class Units {
   static String block = "блок";
   static String lt = "л.";
   static String couple = 'пара';
+  static String meter = 'м';
+  static String square = 'м2';
 }
 
 class DefaultValues {

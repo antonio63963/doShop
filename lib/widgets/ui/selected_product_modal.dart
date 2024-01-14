@@ -1,11 +1,11 @@
 import 'package:doshop_app/forms/widgets/select_list_section.dart';
 import 'package:doshop_app/models/exports.dart';
+import 'package:doshop_app/providers/services/product.service.dart';
 import 'package:doshop_app/providers/shopping_list_provider.dart';
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/search_product_item.dart';
 import 'package:doshop_app/screens/product_details_screen.dart/exports.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/widgets/exports.dart';
-import 'package:doshop_app/widgets/ui/primary_button.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -56,9 +56,8 @@ class _SelectedProductModalState extends State<SelectedProductModal> {
   void onIncreaseAmount() {
     if (_selectedProduct != null) {
       setState(() {
-        _selectedProduct!.units == Units.kg
-            ? _selectedProduct!.amount += DefaultValues.plusAmount
-            : _selectedProduct!.amount += 1;
+        _selectedProduct!.amount +=
+            ProductService.unitDelta(_selectedProduct!.units);
       });
     }
   }
@@ -67,9 +66,8 @@ class _SelectedProductModalState extends State<SelectedProductModal> {
     if (_selectedProduct != null) {
       if (_selectedProduct!.amount == 0) return;
       setState(() {
-        _selectedProduct!.units == Units.kg
-            ? _selectedProduct!.amount -= DefaultValues.plusAmount
-            : _selectedProduct!.amount -= 1;
+        _selectedProduct!.amount -=
+            ProductService.unitDelta(_selectedProduct!.units);
         if (_selectedProduct!.amount == 0 && _selectedProduct!.isFire) {
           _selectedProduct!.isFire = false;
         }

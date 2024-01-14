@@ -10,9 +10,11 @@ class ProductService {
     ProductTag(tag: Units.pack),
     ProductTag(tag: Units.block),
     ProductTag(tag: Units.couple),
+    ProductTag(tag: Units.meter),
+    ProductTag(tag: Units.square),
   ];
 
- static List<ProductTag> get unitsList {
+  static List<ProductTag> get unitsList {
     return [..._unitsList];
   }
 
@@ -30,4 +32,11 @@ class ProductService {
       return [ProductTag(tag: DefaultValues.icon, isSelected: true)];
     }
   }
+
+  static double unitDelta(String unit) => unit == Units.kg ||
+          unit == Units.lt ||
+          unit == Units.meter ||
+          unit == Units.square
+      ? 0.5
+      : 1;
 }

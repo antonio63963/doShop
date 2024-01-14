@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/error_handler.dart';
+import 'package:doshop_app/providers/services/product.service.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
@@ -17,7 +18,7 @@ class ProductProvider extends ErrorHandler {
   int? _selectedTagIdx;
   String searchData = '';
 
-    List<Product> get products {
+  List<Product> get products {
     final filterResult = filterByTag(_selectedTagIdx, [..._products]);
     return filterByInput(searchData, filterResult);
   }
@@ -58,16 +59,15 @@ class ProductProvider extends ErrorHandler {
 
   Future<List<Product>> searchInAllProducts(
       BuildContext context, String searchData) async {
-  return  GetIt.I<AbstractDB>()
+    return GetIt.I<AbstractDB>()
         .searchInAllProducts(searchData)
         .then((resp) => resp)
         .catchError((err) {
       logger.e('Products by Search: $err');
       setErrorAlert(
           context: context, message: 'Не удалось получить Список продуктов!');
-          return [] as Future<List<Product>>;
+      return [] as Future<List<Product>>;
     });
-
   }
 
   List<Product> filterByTag(int? tagIdx, List<Product> productsList) {
@@ -81,13 +81,13 @@ class ProductProvider extends ErrorHandler {
   }
 
   void creanProductsListAmount() {
-    for(var i in _products) {
+    for (var i in _products) {
       i.amount = 0;
     }
     isAnySelected = false;
-    for(var t in tags) {
+    for (var t in tags) {
       t.isSelected = false;
-    } 
+    }
     _selectedTagIdx = null;
     notifyListeners();
   }
@@ -95,6 +95,7 @@ class ProductProvider extends ErrorHandler {
   void onLeave() {
     _products = [];
     tags = [];
+    isAnySelected = false;
     _selectedTagIdx = null;
     notifyListeners();
   }
@@ -207,9 +208,8 @@ class ProductProvider extends ErrorHandler {
     final existProdIndex =
         _products.indexWhere((existProd) => prodId == existProd.id);
     if (existProdIndex != -1) {
-      _products[existProdIndex].units == Units.kg
-          ? _products[existProdIndex].amount += 0.5
-          : _products[existProdIndex].amount++;
+      _products[existProdIndex].amount +=
+          ProductService.unitDelta(_products[existProdIndex].units);
       isAnySelected = true;
       notifyListeners();
     } else {
@@ -230,9 +230,9 @@ class ProductProvider extends ErrorHandler {
   }
 
   void cleanSelectedProducts() {
-    for(var i in _products) {
-     i.amount = 0;
-     i.isFire = false;
+    for (var i in _products) {
+      i.amount = 0;
+      i.isFire = false;
     }
   }
 
@@ -240,13 +240,14 @@ class ProductProvider extends ErrorHandler {
     if (prodId == null) return;
     final existProdIndex =
         _products.indexWhere((existProd) => prodId == existProd.id);
-    if (existProdIndex != -1 ) {
+    if (existProdIndex != -1) {
       if (_products[existProdIndex].amount == 0) {
         return;
       }
-      _products[existProdIndex].units == Units.kg
-          ? _products[existProdIndex].amount -= 0.5
-          : _products[existProdIndex].amount--;
+
+      _products[existProdIndex].amount -=
+          ProductService.unitDelta(_products[existProdIndex].units);
+
       if (_products[existProdIndex].amount == 0) {
         _products[existProdIndex].isFire = false;
       }
@@ -260,7 +261,7 @@ class ProductProvider extends ErrorHandler {
   void _markAsSelected(int idx) {
     final prod = _products[idx];
     if (prod.amount == 0) {
-      prod.units == Units.kg ? prod.amount += 0.5 : prod.amount++;
+      prod.amount += ProductService.unitDelta(prod.units);
       isAnySelected = true;
     }
   }
@@ -305,5 +306,9 @@ class ProductProvider extends ErrorHandler {
         .where((prod) =>
             prod.title.toLowerCase().contains(searchData.toLowerCase()))
         .toList();
+  }
+
+  List<Product> getSelectedProducts() {
+    return _products.where((p) => p.amount > 0).toList();
   }
 }
