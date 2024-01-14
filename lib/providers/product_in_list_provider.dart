@@ -121,6 +121,7 @@ class ProductInListProvider extends ErrorHandler {
     GetIt.I<AbstractDB>().markProductAsDone(id).then((response) {
       if (response == 0) return;
       _products.firstWhere((p) => p.id == id).isDone = true;
+      logger.i('List INFO: ${_products.toString()}');
       notifyListeners();
     }).catchError((err) {
       logger.e('Mark Product ad Done ERROR: $err');

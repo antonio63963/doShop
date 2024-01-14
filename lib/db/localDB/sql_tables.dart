@@ -57,6 +57,10 @@ class SqlTables {
       ${ProductInListFields.prodId} INTENGER NOT NULL,
       ${ProductInListFields.listId} INTENGER NOT NULL,
       ${ProductInListFields.amount} REAL,
+      ${ProductInListFields.title} TEXT,
+      ${ProductInListFields.subtitle} TEXT,
+      ${ProductInListFields.info} TEXT,
+      ${ProductInListFields.unit} TEXT,
       ${ProductInListFields.isFire} INTEGER NOT NULL,
       ${ProductInListFields.isDone} INTEGER NOT NULL,
       ${ProductInListFields.dateCreated} TEXT

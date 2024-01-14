@@ -17,14 +17,12 @@ import 'widgets/tag_input.dart';
 
 class ProductForm extends StatefulWidget {
   final Product? product;
-  final String? catImg;
   final int catId;
   final int colorBg;
   final List<ProductTag> tagsList;
 
   const ProductForm({
     this.product,
-    this.catImg,
     required this.catId,
     required this.colorBg,
     required this.tagsList,

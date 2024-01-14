@@ -28,10 +28,10 @@ class SlidebleProductInListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     void onDelete() {
-      Provider.of<ProductInListProvider>(context)
+      Provider.of<ProductInListProvider>(context, listen: false)
           .deleteProductInList(context, prod.id!);
     }
-
+    logger.f('SLIDEBLE++++: ${prod.toString()}');
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Slidable(

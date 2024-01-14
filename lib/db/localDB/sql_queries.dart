@@ -79,7 +79,7 @@ class SqlQueries {
     $tableProducts.${ProductFields.icon},
     $tableProducts.${ProductFields.units} as unit
     FROM $tableProductInList
-    LEFT JOIN $tableProducts ON $tableProducts.${ProductFields.id} = $tableProductInList.${ProductInListFields.prodId}
+    LEFT JOIN $tableProducts ON $tableProductInList.${ProductInListFields.prodId} IS NOT NULL AND $tableProducts.${ProductFields.id} = $tableProductInList.${ProductInListFields.prodId}
     LEFT JOIN $tableCategories ON $tableProducts.${ProductFields.catId} IS NOT NULL AND $tableCategories.${CategoryProdFields.id} = $tableProducts.${ProductFields.catId}
     WHERE $tableProductInList.${ProductInListFields.listId} = $listId;
   ''';
@@ -90,7 +90,7 @@ class SqlQueries {
     RETURNING id;
   ''';
 
-static String insertOrUpdateProductsInList(List<ProductInList> products) {
+  static String insertOrUpdateProductsInList(List<ProductInList> products) {
     final values = products.map((prod) => '''
     (
       (SELECT id FROM $tableProductInList WHERE prodId = ${prod.prodId}),
@@ -118,6 +118,4 @@ static String insertOrUpdateProductsInList(List<ProductInList> products) {
     SELECT *
     FROM $tableProductInList;
   ''';
-
-
 }
