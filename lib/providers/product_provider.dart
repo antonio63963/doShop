@@ -97,7 +97,8 @@ class ProductProvider extends ErrorHandler {
     tags = [];
     isAnySelected = false;
     _selectedTagIdx = null;
-    notifyListeners();
+    // notifyListeners();
+    // commited this because of conflict on dispose + Navigator.pop
   }
 
   Future<Product?> createProduct(BuildContext context, Product product) async {

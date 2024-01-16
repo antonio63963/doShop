@@ -43,16 +43,16 @@ class _ProductInListItemState extends State<ProductInListItem> {
 
   void onIncreaseAmount() {
     logger.i('OnIncrease Amount: ${widget.prod.toString()}');
-    if(widget.prod.unit == null) return;
+    if(widget.prod.units == null) return;
     setState(() {
-      widget.prod.amount += ProductService.unitDelta(widget.prod.unit!);
+      widget.prod.amount += ProductService.unitDelta(widget.prod.units!);
     });
   }
 
   void onDecreaseAmount() {
-    if (widget.prod.amount == 0 || widget.prod.unit == null) return;
+    if (widget.prod.amount == 0 || widget.prod.units == null) return;
     setState(() {
-     widget.prod.amount -= ProductService.unitDelta(widget.prod.unit!);
+     widget.prod.amount -= ProductService.unitDelta(widget.prod.units!);
     });
   }
 
@@ -90,7 +90,6 @@ class _ProductInListItemState extends State<ProductInListItem> {
 
   @override
   Widget build(BuildContext context) {
-        logger.f('PRODUCT IN LIST TILE: ${widget.prod.toString()}');
     return Container(
       decoration: BoxDecoration(
         borderRadius: widget.borderRadius,

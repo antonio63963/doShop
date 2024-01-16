@@ -13,7 +13,7 @@ abstract class AbstractDB {
   Future<int?> deleteProduct(int eventId);
   Future<Photo?> savePhoto(Photo newImg);
 
-  Future<ProductInList?> createProductInList(ProductInList prod);
+ Future<ProductInList?> createCustomProductInList(ProductInList prod);
   Future<List<ProductInList>?> insertManyProductsInList(
       List<ProductInList> prodList);
   Future<List<ProductInList>?> getProductsInList(int listId);
@@ -23,7 +23,7 @@ abstract class AbstractDB {
   Future<int?> cleanShoppingList(int listId);
   Future<int?> deleteProductInList(int prodId);
   Future<int?> deleteManyProductInList(List<ProductInList> prodList);
-  Future<int?> deleteProductsFormCart();
+  Future<int?> deleteProductsFromCart();
 
   Future<ShoppingList?> createList(ShoppingList product);
   Future<List<ShoppingList>?> getShoppingLists();

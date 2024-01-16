@@ -83,7 +83,7 @@ class ProductInListTile extends StatelessWidget {
               style: theme.textTheme.bodyLarge?.copyWith(height: 1.1)),
           const SizedBox(width: 8),
           Text(
-            prod.unit ?? '',
+            prod.units ?? '',
             style: theme.textTheme.bodyMedium?.copyWith(
               fontWeight: FontWeight.w600,
             ),

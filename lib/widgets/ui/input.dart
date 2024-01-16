@@ -10,6 +10,7 @@ class Input extends StatefulWidget {
   final double paddingVertical;
   final double paddingHorizontal;
   final int maxLines;
+  final TextInputType? inputType;
 
   const Input({
     this.validator,
@@ -20,6 +21,7 @@ class Input extends StatefulWidget {
     this.paddingHorizontal = 16,
     this.paddingVertical = 16,
     this.maxLines = 1,
+    this.inputType = TextInputType.text,
 
     super.key,
   });
@@ -40,6 +42,7 @@ class _InputState extends State<Input> {
         vertical: widget.paddingVertical,
       ),
       child: TextFormField(
+        keyboardType: widget.inputType,
         textCapitalization: TextCapitalization.sentences,
         validator: widget.validator,
         maxLines: widget.maxLines,

@@ -15,9 +15,9 @@ class ProductInListProvider extends ErrorHandler {
     return _products.where((p) => p.isDone).toList();
   }
 
-  Future<void> createProductInList(
+  Future<void> createCustomProductInList(
       BuildContext context, ProductInList prod) async {
-    GetIt.I<AbstractDB>().createProductInList(prod).then((response) {
+    GetIt.I<AbstractDB>().createCustomProductInList(prod).then((response) {
       if (response == null) return;
       logger.i('Created ProdINList, ${response.toString()}');
       ProductInListService.addOrUpdateOne(prod, _products);
@@ -31,10 +31,11 @@ class ProductInListProvider extends ErrorHandler {
 
   Future<void> insertMany(
       BuildContext context, List<ProductInList> prodList) async {
-    GetIt.I<AbstractDB>().insertManyProductsInList(prodList).then((response) {
-      if (response == null) return;
-      logger.i('Created ProdINList, ${response.toString()}');
-      ProductInListService.addOrUpdateMany(prodList, _products);
+    await GetIt.I<AbstractDB>()
+        .insertManyProductsInList(prodList)
+        .then((response) {
+      if (response == null) return false;
+      ProductInListService.addOrUpdateMany(response, _products);
       notifyListeners();
     }).catchError((err) {
       logger.e('insert many Products in List ERROR: $err');
@@ -82,7 +83,7 @@ class ProductInListProvider extends ErrorHandler {
   }
 
   Future<void> cleanCart(BuildContext context) async {
-    GetIt.I<AbstractDB>().deleteProductsFormCart().then((response) {
+    GetIt.I<AbstractDB>().deleteProductsFromCart().then((response) {
       if (response == 0) return;
       _products.removeWhere((p) => p.isDone == true);
       notifyListeners();

@@ -1,4 +1,5 @@
 import 'package:doshop_app/models/exports.dart';
+import 'package:doshop_app/utils/constants.dart';
 
 const String tableProductInList = 'productInLists';
 
@@ -6,13 +7,14 @@ class ProductInListFields {
   static String values = '''
   id, prodId, listId, amount, isFire, isDone, dateCreated
  ''';
+
   static const String id = 'id';
   static const String prodId = 'prodId';
   static const String listId = 'listId';
   static const String title = 'title';
   static const String subtitle = 'subtitle';
   static const String info = 'info';
-  static const String unit = 'unit';
+  static const String units = 'units';
   static const String amount = 'amount';
   static const String isFire = 'isFire';
   static const String isDone = 'isDone';
@@ -33,7 +35,7 @@ class ProductInList {
   final String? info;
   final int? colorBg;
   final String? icon;
-  final String? unit;
+  final String? units;
   final String? catTitle;
 
   ProductInList({
@@ -49,7 +51,7 @@ class ProductInList {
     this.info,
     this.colorBg,
     this.icon,
-    this.unit,
+    this.units,
     this.catTitle,
   });
 
@@ -66,7 +68,7 @@ class ProductInList {
     String? title,
     String? subtitle,
     String? info,
-    String? unit,
+    String? units,
     String? catTitle,
   }) {
     return ProductInList(
@@ -82,7 +84,7 @@ class ProductInList {
       subtitle: subtitle ?? this.subtitle,
       info: info ?? this.info,
       colorBg: colorBg ?? this.colorBg,
-      unit: unit ?? this.unit,
+      units: units ?? this.units,
       catTitle: catTitle ?? this.catTitle,
     );
   }
@@ -93,7 +95,7 @@ class ProductInList {
         ProductInListFields.title: title,
         ProductInListFields.subtitle: subtitle,
         ProductInListFields.info: info,
-        ProductInListFields.unit: unit,
+        ProductInListFields.units: units,
         ProductInListFields.amount: amount,
         ProductInListFields.isFire: isFire ? 1 : 0,
         ProductInListFields.isDone: isDone ? 1 : 0,
@@ -103,7 +105,10 @@ class ProductInList {
   static ProductInList fromJSON(Map<String, Object?> json) {
     return ProductInList(
       id: json[ProductInListFields.id] as int,
-      prodId: json[ProductInListFields.prodId] as int,
+      prodId: json[ProductInListFields.prodId] != null &&
+              json[ProductInListFields.prodId] != 'null'
+          ? json[ProductInListFields.prodId] as int
+          : null,
       amount: json[ProductInListFields.amount] as double,
       listId: json[ProductInListFields.listId] as int,
       isFire: intToBool(json[ProductInListFields.isFire] as int),
@@ -117,9 +122,10 @@ class ProductInList {
       icon: json['icon'] != null && json['icon'] != 'null'
           ? json['icon'] as String
           : null,
-      colorBg: json['colorBg'] as int,
+      colorBg:
+          json['colorBg'] is int ? json['colorBg'] as int : MyColors.defaultBG,
       isDone: intToBool(json[ProductInListFields.isDone] as int),
-      unit: json['unit'] != null ? json['unit'] as String : null,
+      units: json['units'] != null ? json['units'] as String : null,
       catTitle: json['catTitle'] != null ? json['catTitle'] as String : null,
       dateCreated:
           DateTime.parse(json[ProductInListFields.dateCreated] as String),
@@ -142,6 +148,15 @@ class ProductInList {
               dateCreated: DateTime.now(),
             ))
         .toList();
+  }
+
+  static List<ProductInList> twoMapsConcatToList(
+    List<Map<String, Object?>> map1,
+    List<Map<String, Object?>> map2,
+  ) {
+    final prodsResult1 = map1.map((p) => ProductInList.fromJSON(p)).toList();
+    final prodsResult2 = map2.map((p) => ProductInList.fromJSON(p)).toList();
+    return [...prodsResult1, ...prodsResult2];
   }
 
   @override

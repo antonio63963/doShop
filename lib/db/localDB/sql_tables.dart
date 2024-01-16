@@ -54,13 +54,13 @@ class SqlTables {
   static String createProductInList = '''
     CREATE TABLE IF NOT EXISTS $tableProductInList(
       ${ProductInListFields.id} $idType,
-      ${ProductInListFields.prodId} INTENGER NOT NULL,
+      ${ProductInListFields.prodId} INTENGER,
       ${ProductInListFields.listId} INTENGER NOT NULL,
       ${ProductInListFields.amount} REAL,
       ${ProductInListFields.title} TEXT,
       ${ProductInListFields.subtitle} TEXT,
       ${ProductInListFields.info} TEXT,
-      ${ProductInListFields.unit} TEXT,
+      ${ProductInListFields.units} TEXT,
       ${ProductInListFields.isFire} INTEGER NOT NULL,
       ${ProductInListFields.isDone} INTEGER NOT NULL,
       ${ProductInListFields.dateCreated} TEXT

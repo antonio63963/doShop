@@ -71,24 +71,29 @@ class SqlQueries {
 // Products In List
   static String getProductsInList(int listId) => '''
     SELECT $tableProductInList.*,
-    $tableCategories.${CategoryProdFields.img} as catImg,
     $tableCategories.${CategoryProdFields.title} as catTitle,
     $tableCategories.${CategoryProdFields.colorBg},
     $tableProducts.${ProductFields.title},
     $tableProducts.${ProductFields.subtitle},
     $tableProducts.${ProductFields.icon},
-    $tableProducts.${ProductFields.units} as unit
+    $tableProducts.${ProductFields.units}
     FROM $tableProductInList
     LEFT JOIN $tableProducts ON $tableProductInList.${ProductInListFields.prodId} IS NOT NULL AND $tableProducts.${ProductFields.id} = $tableProductInList.${ProductInListFields.prodId}
     LEFT JOIN $tableCategories ON $tableProducts.${ProductFields.catId} IS NOT NULL AND $tableCategories.${CategoryProdFields.id} = $tableProducts.${ProductFields.catId}
-    WHERE $tableProductInList.${ProductInListFields.listId} = $listId;
+    WHERE $tableProductInList.${ProductInListFields.listId} = $listId AND $tableProductInList.prodId IS NOT NULL;
   ''';
 
-  static String insertProductInList(ProductInList product) => '''
-    INSERT OR REPLACE INTO $tableProductInList (${ProductInListFields.values})
-    VALUES (${product.toJSON()})
-    RETURNING id;
+  static String customProductsInList(int listId) => '''
+    SELECT *
+    FROM $tableProductInList
+    WHERE $tableProductInList.${ProductInListFields.listId} = $listId AND $tableProductInList.${ProductInListFields.prodId} IS NULL;
   ''';
+
+  // static String insertProductInList(ProductInList product) => '''
+  //   INSERT OR REPLACE INTO $tableProductInList (${ProductInListFields.values})
+  //   VALUES (${product.toJSON()})
+  //   RETURNING id;
+  // ''';
 
   static String insertOrUpdateProductsInList(List<ProductInList> products) {
     final values = products.map((prod) => '''
@@ -111,6 +116,21 @@ class SqlQueries {
     return '''
     DELETE * FROM $tableProductInList
     WHERE $tableProductInList.${ProductInListFields.listId} = $listId;
+  ''';
+  }
+  static String getProductsInListByIds(String ids) {
+    return '''
+    SELECT $tableProductInList.*,
+    $tableCategories.${CategoryProdFields.title} as catTitle,
+    $tableCategories.${CategoryProdFields.colorBg},
+    $tableProducts.${ProductFields.title},
+    $tableProducts.${ProductFields.subtitle},
+    $tableProducts.${ProductFields.icon},
+    $tableProducts.${ProductFields.units}
+    FROM $tableProductInList
+    LEFT JOIN $tableProducts ON $tableProductInList.${ProductInListFields.prodId} IS NOT NULL AND $tableProducts.${ProductFields.id} = $tableProductInList.${ProductInListFields.prodId}
+    LEFT JOIN $tableCategories ON $tableProducts.${ProductFields.catId} IS NOT NULL AND $tableCategories.${CategoryProdFields.id} = $tableProducts.${ProductFields.catId}
+    WHERE $tableProductInList.id IN($ids);
   ''';
   }
 

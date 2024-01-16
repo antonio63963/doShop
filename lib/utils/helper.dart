@@ -74,18 +74,20 @@ class Helper {
 
   // for more radius first(top) and last(bottom) items
   static BorderRadius getBorderRadius(int idx, int listLength) {
-    if (idx == 0) {
+    if (listLength == 1) {
+      return const BorderRadius.all(Radius.circular(16));
+    } else if (idx == 0) {
       return const BorderRadius.only(
-          topLeft: Radius.circular(18),
-          topRight: Radius.circular(18),
+          topLeft: Radius.circular(16),
+          topRight: Radius.circular(16),
           bottomRight: Radius.circular(5),
           bottomLeft: Radius.circular(5));
     } else if (idx == listLength - 1) {
       return const BorderRadius.only(
           topLeft: Radius.circular(5),
           topRight: Radius.circular(5),
-          bottomRight: Radius.circular(18),
-          bottomLeft: Radius.circular(18));
+          bottomRight: Radius.circular(16),
+          bottomLeft: Radius.circular(16));
     } else {
       return const BorderRadius.all(Radius.circular(5));
     }
@@ -98,7 +100,7 @@ class Helper {
           id: prod.id!,
           title: prod.title ?? '',
           subtitle: prod.subtitle,
-          colorBg: prod.colorBg!,
+          colorBg: prod.colorBg ?? MyColors.defaultBG,
         ),
       );
 

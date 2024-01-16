@@ -6,7 +6,6 @@ import 'package:provider/provider.dart';
 
 import 'package:doshop_app/utils/validators.dart';
 import 'package:doshop_app/utils/constants.dart';
-import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/services/product.service.dart';
 
@@ -30,8 +29,8 @@ class _AddToListFormState extends State<AddToListForm> {
   TextEditingController titleController = TextEditingController();
   TextEditingController subtitleController = TextEditingController();
   TextEditingController infoController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
   String selectedUnit = Units.kg;
-  double amount = 0;
 
   bool isLoading = false;
 
@@ -53,7 +52,7 @@ class _AddToListFormState extends State<AddToListForm> {
 
   void onAddNewProduct(BuildContext context, ProductInList prod) {
     Provider.of<ProductInListProvider>(context, listen: false)
-        .createProductInList(context, prod)
+        .createCustomProductInList(context, prod)
         .then((value) {
       Navigator.pop(context);
       Helper.showSnack(context: context, text: 'Товар добавлен в список');
@@ -69,9 +68,9 @@ class _AddToListFormState extends State<AddToListForm> {
       title: titleController.text,
       subtitle:
           subtitleController.text.isNotEmpty ? subtitleController.text : null,
-      unit: selectedUnit,
+      units: selectedUnit,
       info: infoController.text.isEmpty ? null : infoController.text,
-      amount: amount,
+      amount: double.parse(amountController.text),
       dateCreated: DateTime.now(),
     );
     onAddNewProduct(context, prod);
@@ -110,6 +109,12 @@ class _AddToListFormState extends State<AddToListForm> {
           unitsList: unitsList,
           markUnitAsSelected: markUnitAsSelected,
         ),
+        Input(
+          label: 'Количество',
+          inputController: amountController,
+          inputType: TextInputType.number,
+          validator: Validator.amount,
+        )
       ],
       onSubmit: () => submitForm(context),
     );

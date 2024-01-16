@@ -1,18 +1,17 @@
-import 'package:doshop_app/forms/product_form/product_form.dart';
-import 'package:doshop_app/forms/select_list_alert/select_list_modal.dart';
-import 'package:doshop_app/providers/product_in_list_provider.dart';
-import 'package:doshop_app/providers/shopping_list_provider.dart';
-import 'package:doshop_app/screens/products_list_screen/view/widgets/actions.dart';
-import 'package:doshop_app/screens/shoping_list_details_screen/shoping_list_details.dart';
-import 'package:doshop_app/utils/constants.dart';
-import 'package:doshop_app/utils/helper.dart';
-import 'package:doshop_app/utils/show_modal.dart';
-import 'package:doshop_app/widgets/appbar_add_to_list.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/models/exports.dart';
+import 'package:doshop_app/utils/helper.dart';
+import 'package:doshop_app/utils/show_modal.dart';
+
+import 'package:doshop_app/forms/product_form/product_form.dart';
+import 'package:doshop_app/forms/select_list_alert/select_list_modal.dart';
+import 'package:doshop_app/providers/product_in_list_provider.dart';
+import 'package:doshop_app/providers/shopping_list_provider.dart';
+import 'package:doshop_app/screens/products_list_screen/view/widgets/actions.dart';
+import 'package:doshop_app/widgets/appbar_add_to_list.dart';
 
 import 'package:doshop_app/screens/products_list_screen/view/widgets/tags_section.dart';
 import 'package:doshop_app/widgets/exports.dart';
@@ -54,7 +53,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
       _screenArguments = ModalRoute.of(context)?.settings.arguments
           as ProductsListScreenArguments;
       productProvider = Provider.of<ProductProvider>(context);
-      Provider.of<ProductProvider>(context)
+      Provider.of<ProductProvider>(context, listen: false)
           .getProductsByCategory(context, _screenArguments.id);
       isInit = true;
       isLoaded = true;
@@ -130,7 +129,8 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                               productsWithAmount, addToList!.id!);
                       Provider.of<ProductInListProvider>(context, listen: false)
                           .insertMany(context, selectedProducts)
-                          .then((value) {
+                          .then((isStatusOk) async {
+                        logger.i('ADDED ASYNC');
                         Navigator.pop(context);
                         Helper.showSnack(
                             context: context,

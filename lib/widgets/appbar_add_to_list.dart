@@ -25,7 +25,7 @@ class AppBarAddToList extends StatelessWidget implements PreferredSizeWidget {
         icon: const Icon(Icons.format_list_bulleted_add),
         onPressed: () {
           backToList();
-          Provider.of<ShoppingListProvider>(context).setAddToList(null);
+          Provider.of<ShoppingListProvider>(context, listen: false).setAddToList(null);
         },
       ),
       title: Text(listTitle),

@@ -62,7 +62,7 @@ class _ShoppingListDetailsState extends State<ShoppingListDetails> {
   Widget build(BuildContext context) {
     final productsList = Provider.of<ProductInListProvider>(context).products;
     final cartList = Provider.of<ProductInListProvider>(context).cart;
-    logger.i('LIST DETAILS: ${productsList.toString()}');
+logger.i('FRESH SCREEN: $productsList');
     return Scaffold(
       appBar: AppBar(
         title: Text(_screenArgs?.title ?? 'Не определен'),
@@ -97,7 +97,6 @@ class _ShoppingListDetailsState extends State<ShoppingListDetails> {
               paddingHorizontal: AppPadding.bodyHorizontal,
               widgets: [
                 ...productsList.entries.map((entry) {
-                  logger.i('ENTRY: $entry');
                   return Wrap(
                     spacing: 16,
                     children: [
@@ -134,7 +133,7 @@ class _ShoppingListDetailsState extends State<ShoppingListDetails> {
                     ],
                   );
                 }).toList(),
-                const SizedBox(height: 50),
+                const SizedBox(height: 80),
               ],
             ),
       bottomSheet: HeaderCart(

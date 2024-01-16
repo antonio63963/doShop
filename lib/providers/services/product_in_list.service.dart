@@ -13,7 +13,7 @@ class ProductInListService {
 
   static void addOrUpdateMany(
       List<ProductInList> newProds, List<ProductInList> srcList) {
-    for (var p in srcList) {
+    for (var p in newProds) {
       addOrUpdateOne(p, srcList);
     }
   }
