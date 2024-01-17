@@ -1,3 +1,5 @@
+import 'package:doshop_app/models/models/user_template.dart';
+
 import '../../models/exports.dart';
 
 const idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
@@ -46,7 +48,6 @@ class SqlTables {
       ${ShoppingListFields.id} $idType,
       ${ShoppingListFields.title} $textType,
       ${ShoppingListFields.subtitle} TEXT,
-      ${ShoppingListFields.isTemplate} INTEGER NOT NULL,
       ${ShoppingListFields.colorBg} INTEGER,
       ${ShoppingListFields.img} TEXT
     );
@@ -64,6 +65,15 @@ class SqlTables {
       ${ProductInListFields.isFire} INTEGER NOT NULL,
       ${ProductInListFields.isDone} INTEGER NOT NULL,
       ${ProductInListFields.dateCreated} TEXT
+    );
+  ''';
+  static String createUserTemplate = '''
+    CREATE TABLE IF NOT EXISTS $tableUserTemplates(
+      ${UserTemplateFields.id} $idType,
+      ${UserTemplateFields.title} TEXT,
+      ${UserTemplateFields.subtitle} TEXT,
+      ${UserTemplateFields.img} TEXT,
+      ${UserTemplateFields.productsIds} TEXT    
     );
   ''';
 }

@@ -46,6 +46,7 @@ class LocalDB implements AbstractDB {
     await db.execute(SqlTables.createPhotos);
     await db.execute(SqlTables.createShopingLists);
     await db.execute(SqlTables.createProductInList);
+    await db.execute(SqlTables.createUserTemplate);
     await db.rawQuery(SqlInitialData.initCategories());
     await db.rawQuery(SqlInitialData.initProducts());
   }
@@ -213,14 +214,6 @@ class LocalDB implements AbstractDB {
           await txn.rawQuery(SqlQueries.getProductsInListByIds(ids));
       return addedProds.map((p) => ProductInList.fromJSON(p)).toList();
     });
-
-    // return listIds.length == prodList.length
-    //     ? prodList
-    //         .asMap()
-    //         .entries
-    //         .map((p) => p.value.copy(id: listIds[p.key]["id"] as int))
-    //         .toList()
-    //     : null;
   }
 
   @override

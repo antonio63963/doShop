@@ -1,12 +1,9 @@
-import 'dart:ui';
-
 const String tableShoppingLists = 'shoppingLists';
 
 class ShoppingListFields {
   static const String id = 'id';
   static const String title = 'title';
   static const String subtitle = 'subtitle';
-  static const String isTemplate = 'isTemplate';
   static const String img = 'img';
   static const String colorBg = 'colorBg';
 }
@@ -15,7 +12,6 @@ class ShoppingList {
   final int? id;
   final String title;
   final String? subtitle;
-  final bool isTemplate;
   final String? img;
   final int? colorBg;
 
@@ -23,7 +19,6 @@ class ShoppingList {
     this.id,
     required this.title,
     this.subtitle,
-    this.isTemplate = false,
     this.img,
     this.colorBg,
   });
@@ -35,7 +30,6 @@ class ShoppingList {
       subtitle: json[ShoppingListFields.subtitle] != null
           ? json[ShoppingListFields.subtitle] as String
           : null,
-      isTemplate: intToBool(json[ShoppingListFields.isTemplate] as int),
       img: json[ShoppingListFields.img] as String,
       colorBg: json[ShoppingListFields.colorBg] as int,
     );
@@ -44,7 +38,6 @@ class ShoppingList {
   Map<String, Object?> toJSON() => {
         ShoppingListFields.title: title,
         ShoppingListFields.subtitle: subtitle,
-        ShoppingListFields.isTemplate: isTemplate,
         ShoppingListFields.img: img,
         ShoppingListFields.colorBg: colorBg,
       };
@@ -60,7 +53,6 @@ class ShoppingList {
         id: id ?? this.id,
         title: title ?? this.title,
         subtitle: subtitle,
-        isTemplate: isTemplate,
         img: img ?? this.img,
         colorBg: colorBg ?? this.colorBg,
       );
@@ -75,7 +67,6 @@ class ShoppingList {
       id: $id,
       title: $title,
       subtitle: $subtitle,
-      isTemplate: $isTemplate,
       img: $img,
       colorBg: $colorBg,
     ''';
