@@ -118,6 +118,7 @@ class SqlQueries {
     WHERE $tableProductInList.${ProductInListFields.listId} = $listId;
   ''';
   }
+
   static String getProductsInListByIds(String ids) {
     return '''
     SELECT $tableProductInList.*,
@@ -137,5 +138,12 @@ class SqlQueries {
   static String getAllProductsInList() => '''
     SELECT *
     FROM $tableProductInList;
+  ''';
+
+  // UserTemplates
+
+  static String getAllTemplates = '''
+    SELECT *
+    FROM $tableUserTemplates;
   ''';
 }

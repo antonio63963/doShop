@@ -57,8 +57,8 @@ class UserTemplate {
         productsIds: productsIds ?? this.productsIds,
       );
 
-  bool isChanged(UserTemplate list) =>
-      title != list.title || img != list.img || productsIds != list.productsIds;
+  bool isChanged(UserTemplate uTemp) =>
+      title != uTemp.title || img != uTemp.img || productsIds != uTemp.productsIds;
 
   @override
   String toString() {

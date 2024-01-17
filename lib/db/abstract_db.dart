@@ -29,4 +29,9 @@ abstract class AbstractDB {
   Future<List<ShoppingList>?> getShoppingLists();
   Future<int?> updateShoppingList(ShoppingList list);
   Future<int?> deleteShoppingList(int listId);
+
+  Future<UserTemplate?> createTempate(UserTemplate uTemp);
+  Future<List<UserTemplate>?> getAllTemplates();
+  Future<int?> updateTemplate(UserTemplate uTemp);
+  Future<int?> deleteTemplate(int tempId);
 }

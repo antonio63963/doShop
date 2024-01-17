@@ -1,4 +1,4 @@
-import 'package:doshop_app/db/abstractDB.dart';
+import 'package:doshop_app/db/abstract_db.dart';
 import 'package:doshop_app/db/localDB/sql_initial_data.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
@@ -315,6 +315,48 @@ class LocalDB implements AbstractDB {
     final response = await db?.rawQuery(SqlQueries.getAllProductsInList());
     logger.i('All PRODUCTS in list. response: $response');
     return null;
+  }
+
+  // TEMPLATES
+  @override
+  Future<UserTemplate?> createTempate(UserTemplate uTemp) async {
+    final db = await instance.database;
+    final tempId = await db?.insert(tableUserTemplates, uTemp.toJSON());
+    logger
+        .i('Created Template ID: $tempId, ${uTemp.copy(id: tempId).toJSON()}');
+    return uTemp.copy(id: tempId);
+  }
+
+  @override
+  Future<List<UserTemplate>?> getAllTemplates() async {
+    final db = await instance.database;
+    final tempsMap = await db?.rawQuery(SqlQueries.getAllTemplates);
+    logger.i('Get Templates: $tempsMap');
+    if (tempsMap != null) {
+      return tempsMap.map((t) => UserTemplate.fromJSON(t)).toList();
+    }
+    return null;
+  }
+
+  @override
+  Future<int?> updateTemplate(UserTemplate uTemp) async {
+    final db = await instance.database;
+    return await db?.update(
+      tableUserTemplates,
+      uTemp.toJSON(),
+      where: '${UserTemplateFields.id} = ?',
+      whereArgs: [uTemp.id],
+    );
+  }
+
+  @override
+  Future<int?> deleteTemplate(int tempId) async {
+    final db = await instance.database;
+    return await db?.delete(
+      tableUserTemplates,
+      where: '${UserTemplateFields.id} = ?',
+      whereArgs: [tempId],
+    );
   }
 
   //utils functions
