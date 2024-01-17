@@ -39,6 +39,9 @@ class _CartBottomSheetState extends State<CartBottomSheet> {
                 prod: prod,
                 idx: idx,
                 onToggleDone: () {
+                  if(cartList.length == 1) {
+                    Navigator.pop(context);
+                  }
                   Provider.of<ProductInListProvider>(context, listen: false)
                       .cancelProductAsDone(context, prod.id!);
                 },

@@ -28,7 +28,7 @@ class HeaderCart extends StatelessWidget {
               vertical: 14.0, horizontal: AppPadding.bodyHorizontal),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Wrap(
                 children: [
@@ -52,7 +52,8 @@ class HeaderCart extends StatelessWidget {
                   ),
                 ],
               ),
-              Icon(isOpened ? Icons.arrow_drop_up : Icons.arrow_drop_down),
+              const SizedBox(width: 24),
+              Icon(!isOpened ? Icons.arrow_drop_up : Icons.arrow_drop_down),
             ],
           ),
         ),

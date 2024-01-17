@@ -1,14 +1,11 @@
-import 'package:doshop_app/forms/add_to_list_form/add_to_list_form.dart';
-import 'package:doshop_app/providers/shopping_list_provider.dart';
-import 'package:doshop_app/screens/add_product_screen/add_from_category_screen.dart';
-import 'package:doshop_app/screens/shoping_list_details_screen/widgets/menu_shopping_details.dart';
-import 'package:doshop_app/utils/show_modal.dart';
-
+import 'package:doshop_app/screens/shoping_list_details_screen/widgets/fab_expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_expandable_fab/flutter_expandable_fab.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:badges/badges.dart' as badges;
+
+import 'package:doshop_app/screens/shoping_list_details_screen/widgets/menu_shopping_details.dart';
+import 'package:doshop_app/utils/show_modal.dart';
 
 import 'package:doshop_app/db/localDB/local_db.dart';
 import 'package:doshop_app/utils/constants.dart';
@@ -62,7 +59,7 @@ class _ShoppingListDetailsState extends State<ShoppingListDetails> {
   Widget build(BuildContext context) {
     final productsList = Provider.of<ProductInListProvider>(context).products;
     final cartList = Provider.of<ProductInListProvider>(context).cart;
-logger.i('FRESH SCREEN: $productsList');
+
     return Scaffold(
       appBar: AppBar(
         title: Text(_screenArgs?.title ?? 'Не определен'),
@@ -145,86 +142,7 @@ logger.i('FRESH SCREEN: $productsList');
       ),
       floatingActionButtonLocation: ExpandableFab.location,
       floatingActionButton: _screenArgs != null
-          ? ExpandableFab(
-              key: _key,
-              openButtonBuilder: RotateFloatingActionButtonBuilder(
-                child: const Icon(Icons.format_list_bulleted_add),
-                fabSize: ExpandableFabSize.regular,
-                foregroundColor: MyColors.white,
-                backgroundColor: MyColors.primary,
-                shape: const CircleBorder(),
-              ),
-              closeButtonBuilder: DefaultFloatingActionButtonBuilder(
-                child: const Icon(Icons.close),
-                fabSize: ExpandableFabSize.small,
-                foregroundColor: MyColors.white,
-                backgroundColor: MyColors.accent,
-                shape: const CircleBorder(),
-              ),
-              children: [
-                FloatingActionButton.small(
-                  // shape: const CircleBorder(),
-                  heroTag: null,
-                  child: SvgPicture.asset(
-                    'assets/icons/newNotice.svg',
-                    colorFilter: const ColorFilter.mode(
-                        MyColors.primary, BlendMode.srcIn),
-                  ),
-                  onPressed: () {
-
-                    if (_screenArgs?.id != null) {
-                      showModal(
-                        context,
-                        AddToListForm(
-                          listId: _screenArgs!.id!,
-                        ),
-                      );
-                    }
-                    final state = _key.currentState;
-                    if (state != null) {
-                      state.toggle();
-                    }
-                  },
-                ),
-                FloatingActionButton.small(
-                  // shape: const CircleBorder(),
-                  heroTag: null,
-                  child: SvgPicture.asset(
-                    'assets/icons/templates.svg',
-                    colorFilter: const ColorFilter.mode(
-                        MyColors.primary, BlendMode.srcIn),
-                  ),
-                  onPressed: () {
-                    final state = _key.currentState;
-                    if (state != null) {
-                      state.toggle();
-                    }
-                  },
-                ),
-                FloatingActionButton.small(
-                  // shape: const CircleBorder(),
-                  heroTag: null,
-                  child: SvgPicture.asset(
-                    'assets/icons/categories.svg',
-                    colorFilter: const ColorFilter.mode(
-                        MyColors.primary, BlendMode.srcIn),
-                  ),
-                  onPressed: () {
-                    final state = _key.currentState;
-                    if (_screenArgs == null) return;
-                    Provider.of<ShoppingListProvider>(context, listen: false)
-                        .setAddToList(ShoppingList(
-                            title: _screenArgs!.title, id: _screenArgs!.id));
-                    Navigator.of(context).pushNamed(
-                      AddFromCategoryScreen.routeName,
-                    );
-                    if (state != null) {
-                      state.toggle();
-                    }
-                  },
-                ),
-              ],
-            )
+          ? FabExpandable(globalKey: _key, screenArgs: _screenArgs!)
           : null,
       //  CartBottomSheet()
     );

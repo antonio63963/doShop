@@ -28,7 +28,7 @@ class AppBarAddToList extends StatelessWidget implements PreferredSizeWidget {
           Provider.of<ShoppingListProvider>(context, listen: false).setAddToList(null);
         },
       ),
-      title: Text(listTitle),
+      title: Text('Добавить в $listTitle'),
       actions: [
         IconButton(
           onPressed: () {
