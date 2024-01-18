@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:doshop_app/utils/helper.dart';
 import 'package:flutter/material.dart';
 
@@ -19,13 +18,5 @@ class ErrorHandler with ChangeNotifier {
   void clearErrorAlert() {
     errorProvider = null;
     notifyListeners();
-  }
-
-  void sendReport(String message) {
-       Map<String, String> log = {
-      'date': DateTime.now().toString(),
-      'errorMessage': message,
-      'directory': Directory.current.path,
-    };
   }
 }

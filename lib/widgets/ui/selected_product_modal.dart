@@ -100,8 +100,9 @@ class _SelectedProductModalState extends State<SelectedProductModal> {
       final shoppingListProvider = Provider.of<ShoppingListProvider>(context);
       if (shoppingListProvider.lists.isEmpty) {
         shoppingListProvider.getLists(context);
-        _isInit = true;
       }
+      _isInit = true;
+      _isLoaded = true;
     }
   }
 
@@ -126,6 +127,10 @@ class _SelectedProductModalState extends State<SelectedProductModal> {
                   paddingVertical: 0,
                   onTrailing: onClose,
                 ),
+                if (!_isLoaded)
+                  const LinearProgressIndicator(
+                    color: MyColors.primary,
+                  ),
                 OptionProductRow(
                   onOpen: () => onOpen(context, _selectedProduct),
                   onClean: onClean,

@@ -13,14 +13,14 @@ class UserTemplate {
   final String title;
   final String? subtitle;
   final String? img;
-  final String? productsIds;
+  final String productsIds;
 
   UserTemplate({
     this.id,
     required this.title,
     this.subtitle,
     this.img,
-    this.productsIds,
+    required this.productsIds,
   });
 
   static UserTemplate fromJSON(Map<String, Object?> json) {

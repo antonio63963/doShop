@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
+
+import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/models/exports.dart';
-import 'package:doshop_app/providers/shopping_list_provider.dart';
+
 import 'package:doshop_app/screens/products_list_screen/export.dart';
 import 'package:doshop_app/screens/subcategories_screen/view/subcategories_screen.dart';
-import 'package:doshop_app/utils/constants.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 import 'category_item.dart';
 
@@ -15,7 +15,6 @@ class CategoriesListSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final addToList = Provider.of<ShoppingListProvider>(context, listen: false).addToList;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16.0),
       child: GridView.builder(

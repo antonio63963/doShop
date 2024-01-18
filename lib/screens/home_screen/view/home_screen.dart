@@ -1,3 +1,4 @@
+import 'package:doshop_app/forms/user_template_form/user_temlate_form.dart';
 import 'package:flutter/material.dart';
 
 import 'package:doshop_app/utils/constants.dart';
@@ -8,7 +9,7 @@ import 'package:doshop_app/widgets/exports.dart';
 import 'package:doshop_app/forms/shoping_list_form/shoping_list_form.dart';
 import 'package:doshop_app/screens/home_screen/view/content/shoping_lists.dart/shoping_lists_screen.dart';
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/categories_page.dart';
-import 'package:doshop_app/screens/home_screen/view/content/templates_page.dart';
+import 'package:doshop_app/screens/home_screen/view/content/templates_page/templates_page.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -61,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 5),
             child: ElevatedButton(
                 onPressed: () => LocalDB.instance.deleteDB(),
-                child: Text('Delete')),
+                child: const Text('Delete')),
           ),
           title: Text(getTitle()),
         ),
@@ -69,12 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
           bucket: bucket,
           child: currentScreen,
         ),
-        floatingActionButton: _currentTab == 0
-            ? null
-            : FAB(
-                onClick: () => showModal(context, const ShoppingListForm()),
-                icon: Icons.add,
-              ),
+        floatingActionButton: getFabByTab(context, _currentTab),
         bottomNavigationBar: BottomAppBar(
           color: MyColors.white,
           shape: const CircularNotchedRectangle(),
@@ -117,5 +113,25 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+}
+
+Widget? getFabByTab(BuildContext context, int currentTab) {
+  if (currentTab == 0) return null;
+  switch (currentTab) {
+    case 0:
+      return null;
+    case 1:
+      return FAB(
+        onClick: () => showModal(context, const UserTemplateForm()),
+        icon: Icons.add,
+      );
+    case 2:
+      return FAB(
+        onClick: () => showModal(context, const ShoppingListForm()),
+        icon: Icons.add,
+      );
+    default:
+      return null;
   }
 }

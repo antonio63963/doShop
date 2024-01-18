@@ -18,3 +18,4 @@ export 'ui/options_product_row.dart';
 export 'ui/selected_product_modal.dart';
 export 'ui/primary_button.dart';
 export 'ui/outlined_icon_button.dart';
+export 'ui/big_list_item.dart';

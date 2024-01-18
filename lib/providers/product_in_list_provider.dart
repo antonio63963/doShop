@@ -41,6 +41,7 @@ class ProductInListProvider extends ErrorHandler {
       logger.e('insert many Products in List ERROR: $err');
       setErrorAlert(
           context: context, message: 'Не удалось добавить товары в список!');
+      return false;
     });
   }
 

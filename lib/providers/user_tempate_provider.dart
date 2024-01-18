@@ -4,7 +4,7 @@ import 'package:doshop_app/providers/error_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 
-class TemplateProvider extends ErrorHandler {
+class UserTemplateProvider extends ErrorHandler {
   List<UserTemplate> _uTemps = [];
   ShoppingList? _addToList;
 
@@ -44,6 +44,29 @@ class TemplateProvider extends ErrorHandler {
       return;
     }
     await GetIt.I<AbstractDB>().updateTemplate(uTemp).then((id) {
+      if (id is int) {
+        final idx = _uTemps.indexWhere((l) => l.id == uTemp.id);
+        if (idx != -1) {
+          _uTemps[idx] = uTemp;
+          notifyListeners();
+        } else {
+          throw Error();
+        }
+      }
+    }).catchError((err) {
+      logger.e("Update Template Error!!! $err");
+      setErrorAlert(context: context, message: 'Не удалось обновить Шаблон!');
+    });
+  }
+
+  Future<void> cleanTemplate(BuildContext context, UserTemplate uTemp) async {
+    if (uTemp.id == null) {
+      logger.e('Error update Template No ID');
+      setErrorAlert(
+          context: context, message: 'Не возможно редактировать Шаблон!');
+      return;
+    }
+    await GetIt.I<AbstractDB>().updateTemplate(uTemp.copy(productsIds: '')).then((id) {
       if (id is int) {
         final idx = _uTemps.indexWhere((l) => l.id == uTemp.id);
         if (idx != -1) {

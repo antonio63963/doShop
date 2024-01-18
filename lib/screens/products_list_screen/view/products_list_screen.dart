@@ -16,7 +16,6 @@ import 'package:doshop_app/widgets/appbar_add_to_list.dart';
 import 'package:doshop_app/screens/products_list_screen/view/widgets/tags_section.dart';
 import 'package:doshop_app/widgets/exports.dart';
 import 'widgets/products_list.dart';
-import 'widgets/search_input.dart';
 
 class ProductsListScreen extends StatefulWidget {
   static String routeName = '/products';
@@ -32,6 +31,8 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   bool isLoaded = false;
   late ProductsListScreenArguments _screenArguments;
   ShoppingList? _addToList;
+
+  TextEditingController _searchController = TextEditingController();
 
   late ProductProvider productProvider;
   List<Product> _productsList = [];
@@ -97,8 +98,8 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
         onRefresh: () =>
             productProvider.getProductsByCategory(context, _screenArguments.id),
         widgets: [
-          SearchInput(
-            onInput: (String value) => productProvider.setSearchData(value),
+          Input(
+            inputController: _searchController,
           ),
           const TagsSection(),
           _productsList.isNotEmpty
