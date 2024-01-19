@@ -1,4 +1,4 @@
-import 'package:doshop_app/providers/user_tempate_provider.dart';
+import 'package:doshop_app/providers/user_template_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -58,16 +58,18 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
           as ProductsListScreenArguments;
       productProvider = Provider.of<ProductProvider>(context);
       Provider.of<ProductProvider>(context, listen: false)
-          .getProductsByCategory(context, _screenArguments.id);
-      isInit = true;
-      isLoaded = true;
-      _addToList =
-          Provider.of<ShoppingListProvider>(context, listen: false).addToList;
-      if (_addToList == null) {
-        _addToTemplate =
-            Provider.of<UserTemplateProvider>(context, listen: false)
-                .addToTempate;
-      }
+          .getProductsByCategory(context, _screenArguments.id)
+          .then((value) {
+        isInit = true;
+        isLoaded = true;
+        _addToList =
+            Provider.of<ShoppingListProvider>(context, listen: false).addToList;
+        if (_addToList == null) {
+          _addToTemplate =
+              Provider.of<UserTemplateProvider>(context, listen: false)
+                  .addToTempate;
+        }
+      });
     }
     isInit = true;
     super.didChangeDependencies();
@@ -103,26 +105,28 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                   '${_screenArguments.title} ${_screenArguments.subtitle ?? ''}'),
               actions: getActions(context),
             ),
-      body: PageContentWrapper(
-        onRefresh: () =>
-            productProvider.getProductsByCategory(context, _screenArguments.id),
-        widgets: [
-          Input(
-            inputController: _searchController,
-          ),
-          const TagsSection(),
-          _productsList.isNotEmpty
-              ? _addToTemplate != null
-                  ? const ProductsListForTemplate()
-                  : const ProductList()
-              : const EmptyScreen(
-                  message: 'Пока что нет товаров',
+      body: !isLoaded
+          ? const Loading()
+          : PageContentWrapper(
+              onRefresh: () => productProvider.getProductsByCategory(
+                  context, _screenArguments.id),
+              widgets: [
+                Input(
+                  inputController: _searchController,
                 ),
-          const SizedBox(
-            height: 32,
-          )
-        ],
-      ),
+                const TagsSection(),
+                _productsList.isNotEmpty
+                    ? _addToTemplate != null
+                        ? const ProductsListForTemplate()
+                        : const ProductList()
+                    : const EmptyScreen(
+                        message: 'Пока что нет товаров',
+                      ),
+                const SizedBox(
+                  height: 32,
+                )
+              ],
+            ),
       floatingActionButton: !productProvider.isAnySelected
           ? _addToList == null || _addToTemplate != null
               ? FAB(

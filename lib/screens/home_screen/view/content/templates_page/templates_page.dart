@@ -4,7 +4,7 @@ import 'package:doshop_app/widgets/ui/page_content_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import 'package:doshop_app/providers/user_tempate_provider.dart';
+import 'package:doshop_app/providers/user_template_provider.dart';
 
 import 'widgets/templates_list_section.dart';
 

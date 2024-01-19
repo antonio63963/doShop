@@ -1,5 +1,5 @@
 import 'package:doshop_app/providers/product_provider.dart';
-import 'package:doshop_app/providers/user_tempate_provider.dart';
+import 'package:doshop_app/providers/user_template_provider.dart';
 import 'package:doshop_app/screens/add_product_screen/add_from_category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

@@ -1,7 +1,7 @@
 import 'package:doshop_app/providers/product_in_list_provider.dart';
 import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/providers/shopping_list_provider.dart';
-import 'package:doshop_app/providers/user_tempate_provider.dart';
+import 'package:doshop_app/providers/user_template_provider.dart';
 import 'package:doshop_app/themes/appTheme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

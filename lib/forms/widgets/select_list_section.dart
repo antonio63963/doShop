@@ -20,7 +20,7 @@ class SelectListSection extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: AppPadding.bodyHorizontal,
-        vertical: 24,
+        vertical: 18,
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

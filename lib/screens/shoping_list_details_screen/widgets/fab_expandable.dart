@@ -1,5 +1,5 @@
 import 'package:doshop_app/forms/add_to_list_form/add_to_list_form.dart';
-import 'package:doshop_app/providers/user_tempate_provider.dart';
+import 'package:doshop_app/providers/user_template_provider.dart';
 import 'package:doshop_app/utils/show_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';

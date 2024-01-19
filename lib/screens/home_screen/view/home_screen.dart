@@ -10,6 +10,7 @@ import 'package:doshop_app/forms/shoping_list_form/shoping_list_form.dart';
 import 'package:doshop_app/screens/home_screen/view/content/shoping_lists.dart/shoping_lists_screen.dart';
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/categories_page.dart';
 import 'package:doshop_app/screens/home_screen/view/content/templates_page/templates_page.dart';
+import 'package:flutter_svg/svg.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -57,14 +58,30 @@ class _HomeScreenState extends State<HomeScreen> {
       onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
       child: Scaffold(
         appBar: AppBar(
-          leading: Padding(
-            padding:
-                const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 5),
-            child: ElevatedButton(
-                onPressed: () => LocalDB.instance.deleteDB(),
-                child: const Text('Delete')),
+          // leading: Padding(
+          //   padding:
+          //       const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 5),
+          //   child: ElevatedButton(
+          //       onPressed: () => LocalDB.instance.deleteDB(),
+          //       child: const Text('Delete')),
+          // ),
+
+          title: Wrap(
+            spacing: 12,
+            children: [
+              SizedBox(
+                width: 24,
+                height: 24,
+                child: SvgPicture.asset(
+                  getIconByTab(_currentTab),
+                  fit: BoxFit.contain,
+                  colorFilter:
+                      const ColorFilter.mode(MyColors.primary, BlendMode.srcIn),
+                ),
+              ),
+              Text(getTitle()),
+            ],
           ),
-          title: Text(getTitle()),
         ),
         body: PageStorage(
           bucket: bucket,
@@ -133,5 +150,18 @@ Widget? getFabByTab(BuildContext context, int currentTab) {
       );
     default:
       return null;
+  }
+}
+
+String getIconByTab(int currentTab) {
+  switch (currentTab) {
+    case 0:
+      return 'assets/icons/categories.svg';
+    case 1:
+      return 'assets/icons/templates.svg';
+    case 2:
+      return 'assets/icons/lists.svg';
+    default:
+      return 'assets/icons/categories.svg';
   }
 }

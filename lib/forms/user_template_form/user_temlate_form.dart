@@ -6,7 +6,7 @@ import 'package:doshop_app/utils/helper.dart';
 import 'package:doshop_app/utils/validators.dart';
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/services/shoping_list.service.dart';
-import 'package:doshop_app/providers/user_tempate_provider.dart';
+import 'package:doshop_app/providers/user_template_provider.dart';
 
 import 'package:doshop_app/forms/widgets/select_icon_row.dart';
 import 'package:doshop_app/widgets/exports.dart';

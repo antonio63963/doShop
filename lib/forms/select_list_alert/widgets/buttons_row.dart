@@ -38,7 +38,7 @@ class ButtonsRow extends StatelessWidget {
               ],
             ),
           ),
-          const SizedBox(width: 24),
+          const SizedBox(width: 16),
           TextButton(
             onPressed: onClose,
             style: TextButton.styleFrom(
@@ -51,8 +51,8 @@ class ButtonsRow extends StatelessWidget {
             child: const Row(
               children: [
                 Icon(Icons.close_rounded),
-                SizedBox(width: 12),
-                Text('Отменить')
+                SizedBox(width: 10),
+                FittedBox(child: Text('Отмена'))
               ],
             ),
           ),

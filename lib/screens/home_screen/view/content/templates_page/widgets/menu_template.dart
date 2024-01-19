@@ -6,7 +6,7 @@ import 'package:doshop_app/utils/helper.dart';
 import 'package:doshop_app/utils/constants.dart';
 
 import 'package:doshop_app/forms/user_template_form/user_temlate_form.dart';
-import 'package:doshop_app/providers/user_tempate_provider.dart';
+import 'package:doshop_app/providers/user_template_provider.dart';
 
 import 'package:doshop_app/utils/show_modal.dart';
 import 'package:doshop_app/widgets/ui/menu_item.dart';

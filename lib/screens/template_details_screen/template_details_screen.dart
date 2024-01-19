@@ -5,7 +5,7 @@ import 'package:badges/badges.dart' as badges;
 import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/product_provider.dart';
-import 'package:doshop_app/providers/user_tempate_provider.dart';
+import 'package:doshop_app/providers/user_template_provider.dart';
 import 'package:doshop_app/providers/shopping_list_provider.dart';
 
 import 'package:doshop_app/forms/select_list_alert/select_list_modal.dart';

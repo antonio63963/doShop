@@ -3,7 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/shopping_list_provider.dart';
-import 'package:doshop_app/providers/user_tempate_provider.dart';
+import 'package:doshop_app/providers/user_template_provider.dart';
 
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/categories_page.dart';
 import 'package:doshop_app/widgets/appbar_add_to_list.dart';

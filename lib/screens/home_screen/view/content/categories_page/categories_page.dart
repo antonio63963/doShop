@@ -6,6 +6,7 @@ import 'package:doshop_app/screens/home_screen/view/content/categories_page/widg
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/widgets/search_data_list.dart';
 import 'package:doshop_app/utils/show_modal.dart';
 import 'package:doshop_app/widgets/exports.dart';
+import 'package:doshop_app/widgets/ui/screen_with_search.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -32,7 +33,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   void getProductsBySearch(String searchStr) {
     checkTypingTimer?.cancel();
 
-    checkTypingTimer = Timer(const Duration(microseconds: 1000), () async {
+    checkTypingTimer = Timer(const Duration(milliseconds: 1000), () async {
       final searchData =
           await _productProvider.searchInAllProducts(context, searchStr);
       setState(() {
@@ -58,7 +59,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
   void didChangeDependencies() {
     if (!isInit) {
       _productProvider = Provider.of<ProductProvider>(context);
-      Provider.of<CategoriesProvider>(context).getCategoriesList(context);
+      Provider.of<CategoriesProvider>(context).getCategoriesList(context).then((value) => isLoaded = true);
     }
     isInit = true;
     super.didChangeDependencies();
@@ -71,7 +72,8 @@ class _CategoriesPageState extends State<CategoriesPage> {
 
     return RefreshIndicator(
       onRefresh: () => categoriesProvider.getCategoriesList(context),
-      child: ListView(children: [
+      child:
+      ListView(children: [
         addToList != null
             ? const SectionTitle(
                 title: 'Категории',
