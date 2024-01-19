@@ -99,7 +99,7 @@ class _UserTemplateFormState extends State<UserTemplateForm> {
   @override
   Widget build(BuildContext context) {
     return ModalBottomFormLayout(
-      title: 'Создать Список',
+      title: 'Создать Шаблон',
       widgets: [
         Input(
           label: 'Заголовок',

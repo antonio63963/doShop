@@ -350,6 +350,17 @@ class LocalDB implements AbstractDB {
   }
 
   @override
+  Future<List<Product>?> getTemplateProducts(String prodsIds) async {
+    final db = await instance.database;
+    final resp = await db?.rawQuery(SqlQueries.getTemplateProducts(prodsIds));
+    if(resp != null) {
+      return resp.map((p) => Product.fromJSON(p)).toList();
+    }
+    logger.i('Get Template Products. response: $resp');
+    return null;
+  }
+
+  @override
   Future<int?> deleteTemplate(int tempId) async {
     final db = await instance.database;
     return await db?.delete(

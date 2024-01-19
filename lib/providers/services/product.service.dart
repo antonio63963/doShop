@@ -39,4 +39,19 @@ class ProductService {
           unit == Units.square
       ? 0.5
       : 1;
+
+  static Map<String, List<Product>> sorByCategories(
+      List<Product> productsList) {
+    final Map<String, List<Product>> sortedProductsMap = {};
+    for (var p in productsList) {
+      if (p.categoryTitle != null) {
+        if (sortedProductsMap[p.categoryTitle] != null) {
+          sortedProductsMap[p.categoryTitle]!.add(p);
+        } else {
+          sortedProductsMap[p.categoryTitle!] = [p];
+        }
+      }
+    }
+    return sortedProductsMap;
+  }
 }

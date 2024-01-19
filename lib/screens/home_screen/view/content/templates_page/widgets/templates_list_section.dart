@@ -1,5 +1,6 @@
 
 import 'package:doshop_app/screens/shoping_list_details_screen/shoping_list_details.dart';
+import 'package:doshop_app/screens/template_details_screen/template_details_screen.dart';
 import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/widgets/exports.dart';
 import 'package:flutter/material.dart';
@@ -30,11 +31,12 @@ class TemplatesListSection extends StatelessWidget {
                 img: t.img ?? DefaultValues.img,
                 colorBg: MyColors.primary,
                 onTap: () => Navigator.of(context).pushNamed(
-                  ShoppingListDetails.routeName,
-                  arguments: ProductInListDetailsScreenArguments(
+                  TemplateDetailsScreen.routeName,
+                  arguments: TempateDetailsScreenArguments(
                     id: t.id!,
                     title: t.title,
                     subtitle: t.subtitle,
+                    prodsIds: t.productsIds,
                   ),
                 ),
               );

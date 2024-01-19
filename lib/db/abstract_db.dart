@@ -34,4 +34,5 @@ abstract class AbstractDB {
   Future<List<UserTemplate>?> getAllTemplates();
   Future<int?> updateTemplate(UserTemplate uTemp);
   Future<int?> deleteTemplate(int tempId);
+  Future<List<Product>?> getTemplateProducts(String prodsIds);
 }

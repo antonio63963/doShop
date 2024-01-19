@@ -6,13 +6,20 @@ import 'package:get_it/get_it.dart';
 
 class UserTemplateProvider extends ErrorHandler {
   List<UserTemplate> _uTemps = [];
-  ShoppingList? _addToList;
+  // for add products by form with categories
+  UserTemplate? _addToTemplate;
 
   List<UserTemplate> get templates => [..._uTemps];
 
-  ShoppingList? get addToList => _addToList;
+  UserTemplate? get addToTempate => _addToTemplate?.copy();
 
-  void setAddToList(ShoppingList? list) => _addToList = list;
+  void setAddToTemplate(int? tempId) {
+    if (tempId != null) {
+      _addToTemplate = _uTemps.firstWhere((p) => p.id == tempId);
+    } else {
+      _addToTemplate = null;
+    }
+  }
 
   Future<void> createTemplate(BuildContext context, UserTemplate uTemp) async {
     await GetIt.I<AbstractDB>().createTempate(uTemp).then((response) {
@@ -66,7 +73,9 @@ class UserTemplateProvider extends ErrorHandler {
           context: context, message: 'Не возможно редактировать Шаблон!');
       return;
     }
-    await GetIt.I<AbstractDB>().updateTemplate(uTemp.copy(productsIds: '')).then((id) {
+    await GetIt.I<AbstractDB>()
+        .updateTemplate(uTemp.copy(productsIds: ''))
+        .then((id) {
       if (id is int) {
         final idx = _uTemps.indexWhere((l) => l.id == uTemp.id);
         if (idx != -1) {

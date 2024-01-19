@@ -1,3 +1,4 @@
+import 'package:doshop_app/providers/user_tempate_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -16,6 +17,7 @@ import 'package:doshop_app/widgets/appbar_add_to_list.dart';
 import 'package:doshop_app/screens/products_list_screen/view/widgets/tags_section.dart';
 import 'package:doshop_app/widgets/exports.dart';
 import 'widgets/products_list.dart';
+import 'widgets/products_list_for_template.dart';
 
 class ProductsListScreen extends StatefulWidget {
   static String routeName = '/products';
@@ -31,6 +33,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   bool isLoaded = false;
   late ProductsListScreenArguments _screenArguments;
   ShoppingList? _addToList;
+  UserTemplate? _addToTemplate;
 
   TextEditingController _searchController = TextEditingController();
 
@@ -60,6 +63,11 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
       isLoaded = true;
       _addToList =
           Provider.of<ShoppingListProvider>(context, listen: false).addToList;
+      if (_addToList == null) {
+        _addToTemplate =
+            Provider.of<UserTemplateProvider>(context, listen: false)
+                .addToTempate;
+      }
     }
     isInit = true;
     super.didChangeDependencies();
@@ -74,14 +82,15 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   @override
   Widget build(BuildContext context) {
     _productsList = productProvider.products;
-    final addToList =
-        Provider.of<ShoppingListProvider>(context, listen: false).addToList;
 
     return Scaffold(
-      appBar: addToList != null
+      appBar: _addToList != null || _addToTemplate != null
           ? AppBarAddToList(
-              listId: addToList.id!,
-              listTitle: addToList.title,
+              listId:
+                  _addToList != null ? _addToList!.id! : _addToTemplate!.id!,
+              listTitle: _addToList != null
+                  ? _addToList!.title
+                  : _addToTemplate!.title,
               backToList: () {
                 Navigator.pop(context);
                 if (_screenArguments.backToList != null) {
@@ -103,7 +112,9 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
           ),
           const TagsSection(),
           _productsList.isNotEmpty
-              ? const ProductList()
+              ? _addToTemplate != null
+                  ? const ProductsListForTemplate()
+                  : const ProductList()
               : const EmptyScreen(
                   message: 'Пока что нет товаров',
                 ),
@@ -113,32 +124,17 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
         ],
       ),
       floatingActionButton: !productProvider.isAnySelected
-          ? addToList == null
+          ? _addToList == null || _addToTemplate != null
               ? FAB(
                   onClick: openModal,
                   icon: Icons.add,
                 )
               : null
           : FAB(
-              onClick: _addToList != null
-                  ? () {
-                      final productsWithAmount =
-                          Provider.of<ProductProvider>(context, listen: false)
-                              .getSelectedProducts();
-                      final selectedProducts =
-                          ProductInList.convertProductsToSelected(
-                              productsWithAmount, addToList!.id!);
-                      Provider.of<ProductInListProvider>(context, listen: false)
-                          .insertMany(context, selectedProducts)
-                          .then((isStatusOk) async {
-                        logger.i('ADDED ASYNC');
-                        Navigator.pop(context);
-                        Helper.showSnack(
-                            context: context,
-                            text:
-                                'Добавлено ${productsWithAmount.length} товаров в "${addToList.title}');
-                      });
-                    }
+              onClick: _addToList != null || _addToTemplate != null
+                  ? _addToList != null
+                      ? () => onAddToList(context, _addToList!)
+                      : () => onAddToTemplate(context, _addToTemplate!)
                   : () {
                       showDialog(
                           context: context,
@@ -148,4 +144,47 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
             ),
     );
   }
+}
+
+void onAddToList(BuildContext context, ShoppingList addToList) {
+  final productsWithAmount =
+      Provider.of<ProductProvider>(context, listen: false)
+          .getSelectedProducts();
+  final selectedProducts = ProductInList.convertProductsToSelected(
+      productsWithAmount, addToList.id!);
+  Provider.of<ProductInListProvider>(context, listen: false)
+      .insertMany(context, selectedProducts)
+      .then((isStatusOk) {
+    Navigator.pop(context);
+    Helper.showSnack(
+        context: context,
+        text:
+            'Добавлено ${productsWithAmount.length} товаров в "${addToList.title}');
+  });
+}
+
+void onAddToTemplate(BuildContext context, UserTemplate addToTemplate) {
+  final selectedProducts = Provider.of<ProductProvider>(context, listen: false)
+      .products
+      .where((p) => p.amount > 0)
+      .toList();
+  final idsList =
+      selectedProducts.fold([], (value, element) => [...value, element.id]);
+  String uniqueIdsString = '';
+  if (addToTemplate.productsIds.isNotEmpty) {
+    uniqueIdsString = {...addToTemplate.productsIds.split(','), ...idsList}
+        .toList()
+        .join(',');
+  } else {
+    uniqueIdsString = idsList.join(',');
+  }
+
+  Provider.of<UserTemplateProvider>(context, listen: false)
+      .updateTemplate(context, addToTemplate.copy(productsIds: uniqueIdsString))
+      .then((value) {
+    Navigator.pop(context);
+    Helper.showSnack(
+        context: context,
+        text: 'Добавлено ${idsList.length} товаров в "${addToTemplate.title}');
+  });
 }

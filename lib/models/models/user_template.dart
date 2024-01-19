@@ -32,6 +32,10 @@ class UserTemplate {
           : null,
       img: json[UserTemplateFields.img] as String,
       productsIds: json[UserTemplateFields.productsIds] as String,
+      // json[UserTemplateFields.productsIds] != null &&
+      //         (json[UserTemplateFields.productsIds] as String).isNotEmpty
+      //     ? (json[UserTemplateFields.productsIds] as String).split(',') as List<int>
+      //     : [],
     );
   }
 
@@ -45,7 +49,6 @@ class UserTemplate {
   UserTemplate copy({
     int? id,
     String? title,
-    int? productId,
     String? img,
     String? productsIds,
   }) =>
@@ -58,7 +61,9 @@ class UserTemplate {
       );
 
   bool isChanged(UserTemplate uTemp) =>
-      title != uTemp.title || img != uTemp.img || productsIds != uTemp.productsIds;
+      title != uTemp.title ||
+      img != uTemp.img ||
+      productsIds != uTemp.productsIds;
 
   @override
   String toString() {

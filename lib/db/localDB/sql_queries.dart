@@ -146,4 +146,15 @@ class SqlQueries {
     SELECT *
     FROM $tableUserTemplates;
   ''';
+
+  static String getTemplateProducts(String ids) {
+    return '''
+    SELECT $tableProducts.*,
+    $tableCategories.${CategoryProdFields.title} as categoryTitle,
+    $tableCategories.${CategoryProdFields.colorBg}
+    FROM $tableProducts
+    LEFT JOIN $tableCategories ON $tableCategories.${CategoryProdFields.id} = $tableProducts.${ProductFields.catId}
+    WHERE $tableProducts.${ProductFields.id} IN ($ids)
+  ''';
+  }
 }

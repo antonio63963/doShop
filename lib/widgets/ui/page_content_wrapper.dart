@@ -7,6 +7,7 @@ class PageContentWrapper extends StatelessWidget {
   final List<Widget> widgets;
   final double paddingHorizontal;
   final double paddingVertical;
+  final String? emptyScreenText;
 
   const PageContentWrapper({
     this.isScreenEmpty = false,
@@ -14,13 +15,14 @@ class PageContentWrapper extends StatelessWidget {
     required this.widgets,
     this.paddingHorizontal = 0,
     this.paddingVertical = 0,
+    this.emptyScreenText,
     super.key,
   });
 
   @override
   Widget build(BuildContext context) {
     return isScreenEmpty
-        ? const EmptyScreen(message: 'Пока что нет списков')
+        ? EmptyScreen(message: emptyScreenText ?? 'Пока что нет списков')
         : Padding(
             padding: EdgeInsets.symmetric(
               horizontal: paddingHorizontal,
