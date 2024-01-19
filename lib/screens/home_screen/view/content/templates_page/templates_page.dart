@@ -37,6 +37,7 @@ class _TemplatesPageState extends State<TemplatesPage> {
     final templatesList = Provider.of<UserTemplateProvider>(context).templates;
     return isLoaded
         ? PageContentWrapper(
+            emptyScreenText: 'Пока что нет Шаблонов',
             isScreenEmpty: templatesList.isEmpty,
             paddingHorizontal: AppPadding.bodyHorizontal,
             paddingVertical: 32,

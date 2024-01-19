@@ -1,4 +1,5 @@
 import 'package:doshop_app/forms/add_to_list_form/add_to_list_form.dart';
+import 'package:doshop_app/providers/user_tempate_provider.dart';
 import 'package:doshop_app/utils/show_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -89,6 +90,9 @@ class FabExpandable extends StatelessWidget {
             Provider.of<ShoppingListProvider>(context, listen: false)
                 .setAddToList(
                     ShoppingList(title: screenArgs.title, id: screenArgs.id));
+            //to avoid 2 params at the same time:
+            Provider.of<UserTemplateProvider>(context, listen: false).setAddToTemplate(null);
+            
             Navigator.of(context).pushNamed(
               AddFromCategoryScreen.routeName,
             );

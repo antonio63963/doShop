@@ -1,6 +1,7 @@
 import 'package:doshop_app/models/exports.dart';
 import 'package:doshop_app/providers/exports.dart';
 import 'package:doshop_app/providers/shopping_list_provider.dart';
+import 'package:doshop_app/providers/user_tempate_provider.dart';
 import 'package:doshop_app/screens/products_list_screen/export.dart';
 import 'package:doshop_app/screens/subcategories_screen/view/subcategory_item.dart';
 import 'package:doshop_app/widgets/appbar_add_to_list.dart';
@@ -26,6 +27,9 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
   bool isLoaded = false;
   late SubcategoriesScreenArguments _screenArguments;
 
+  ShoppingList? _addToList;
+  UserTemplate? _addToTemplate;
+
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
@@ -40,6 +44,13 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
           _subcategories = value ?? [];
           isLoaded = true;
         });
+        _addToList =
+            Provider.of<ShoppingListProvider>(context, listen: false).addToList;
+        if (_addToList == null) {
+          _addToTemplate =
+              Provider.of<UserTemplateProvider>(context, listen: false)
+                  .addToTempate;
+        }
       });
     }
     isInit = true;
@@ -47,9 +58,6 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final addToList =
-        Provider.of<ShoppingListProvider>(context, listen: false).addToList;
-
     void backToList() {
       Navigator.pop(context);
       if (_screenArguments.backToList != null) {
@@ -58,10 +66,10 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
     }
 
     return Scaffold(
-      appBar: addToList != null
+      appBar: _addToList != null || _addToTemplate != null
           ? AppBarAddToList(
-              listId: addToList.id!,
-              listTitle: addToList.title,
+              listId: _addToList != null? _addToList!.id! : _addToTemplate!.id! ,
+              listTitle: _addToList != null ? _addToList!.title : _addToTemplate!.title ,
               backToList: backToList,
             )
           : AppBar(
@@ -114,7 +122,7 @@ class _SubcategoriesScreenState extends State<SubcategoriesScreen> {
           ? const Loading()
           : ListView(
               children: [
-                addToList != null
+                _addToList != null || _addToTemplate != null
                     ? SectionTitle(
                         title: _screenArguments.title,
                         paddingBottom: 0,

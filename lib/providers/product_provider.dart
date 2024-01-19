@@ -12,6 +12,10 @@ import '../db/exports.dart';
 class ProductProvider extends ErrorHandler {
   List<Product> _products = [];
   Product? productDetails;
+
+  Map<String, List<Product>> get templateProducts =>
+      ProductService.sorByCategories(_products);
+
   List<ProductTag> tags = [];
   bool isAnySelected = false;
   int? _selectedTagIdx;
@@ -234,6 +238,8 @@ class ProductProvider extends ErrorHandler {
       i.amount = 0;
       i.isFire = false;
     }
+    isAnySelected = false;
+    notifyListeners();
   }
 
   void decreaseAmount(int? prodId) {
@@ -265,6 +271,17 @@ class ProductProvider extends ErrorHandler {
       isAnySelected = true;
     }
   }
+// for add to template
+  void setIsChecked(int prodId) {
+    final idx = _products.indexWhere((p) => p.id == prodId);
+    if (idx != -1) {
+      _products[idx].amount == 0
+          ? _products[idx].amount = 1
+          : _products[idx].amount = 0;
+      _checkIfExistsSelected();
+      notifyListeners();
+    }
+  }
 
   void _checkIfExistsSelected() {
     isAnySelected = false;
@@ -291,6 +308,19 @@ class ProductProvider extends ErrorHandler {
     } else {
       return;
     }
+  }
+
+  //Template
+    Future<void> getTemplateProducts(BuildContext context, String ids) async {
+    await GetIt.I<AbstractDB>().getTemplateProducts(ids).then((respose) {
+      _products = respose ?? [];
+      logger.i('Get Template Products: ${_products.toString()}');
+      notifyListeners();
+    }).catchError((err) {
+      logger.e("Get Template Products Error!!! $err");
+      setErrorAlert(
+          context: context, message: 'Не удалось получить продукты шаблона!');
+    });
   }
 
   //UTILS

@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 
 import 'package:doshop_app/providers/product_provider.dart';
 import 'package:doshop_app/utils/constants.dart';
-import 'slidable_product_item.dart';
+import 'slideble_product_item.dart';
 
 class ProductList extends StatelessWidget {
   const ProductList({super.key});
@@ -23,7 +23,7 @@ class ProductList extends StatelessWidget {
         itemCount: productsList.length,
         itemBuilder: (_, idx) {
           final prod = productsList[idx];
-          return SlidableProductItem(
+          return SlidebleProductItem(
             onClick: () => productProvider.increaseAmount(prod.id),
             onClickTrailing: () => productProvider.decreaseAmount(prod.id),
             onToggleFire: () => productProvider.toggleFire(prod.id),

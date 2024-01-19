@@ -7,7 +7,7 @@ import 'package:doshop_app/models/exports.dart';
 
 import 'package:doshop_app/screens/products_list_screen/view/widgets/product_item.dart';
 
-class SlidableProductItem extends StatelessWidget {
+class SlidebleProductItem extends StatelessWidget {
   final Product prod;
   final int idx;
   final Function() onClick;
@@ -16,7 +16,7 @@ class SlidableProductItem extends StatelessWidget {
   final Function() onClean;
   final void Function(BuildContext) onOpenDetails;
 
-  const SlidableProductItem({
+  const SlidebleProductItem({
     required this.prod,
     required this.idx,
     required this.onClick,
