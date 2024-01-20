@@ -1,3 +1,6 @@
+import 'package:doshop_app/providers/product_in_list_provider.dart';
+import 'package:doshop_app/providers/user_tempate_provider.dart';
+import 'package:doshop_app/screens/template_details_screen/template_details_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
