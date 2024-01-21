@@ -1,4 +1,6 @@
 import 'package:doshop_app/forms/user_template_form/user_temlate_form.dart';
+import 'package:doshop_app/screens/home_screen/view/widgets/appbar_title_home.dart';
+import 'package:doshop_app/screens/onboarding_screen/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
 import 'package:doshop_app/utils/constants.dart';
@@ -20,9 +22,20 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool isLoaded = true;
-  bool isInit = false;
+  bool _isShownInto = true;
   int _currentTab = 0;
+
+  void onCloseIntro() {
+    setState(() {
+      _isShownInto = false;
+    });
+  }
+
+  void onOpenIntro() {
+    setState(() {
+      _isShownInto = true;
+    });
+  }
 
   String getTitle() {
     if (_currentTab == 0) {
@@ -41,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentScreen = const CategoriesPage();
+  Widget currentScreen = CategoriesPage();
 
   void setScreen(Widget screen, int tabInd) {
     setState(
@@ -54,82 +67,78 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
-      child: Scaffold(
-        appBar: AppBar(
-          // leading: Padding(
-          //   padding:
-          //       const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 5),
-          //   child: ElevatedButton(
-          //       onPressed: () => LocalDB.instance.deleteDB(),
-          //       child: const Text('Delete')),
-          // ),
+    return _isShownInto
+        ? OnBoardingScreen(onClose: onCloseIntro)
+        : GestureDetector(
+            onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
+            child: Scaffold(
+              appBar: AppBar(
+                // leading: Padding(
+                //   padding:
+                //       const EdgeInsets.only(top: 5, left: 10, bottom: 5, right: 5),
+                //   child: ElevatedButton(
+                //       onPressed: () => LocalDB.instance.deleteDB(),
+                //       child: const Text('Delete')),
+                // ),
 
-          title: Wrap(
-            spacing: 12,
-            children: [
-              SizedBox(
-                width: 24,
-                height: 24,
-                child: SvgPicture.asset(
-                  getIconByTab(_currentTab),
-                  fit: BoxFit.contain,
-                  colorFilter:
-                      const ColorFilter.mode(MyColors.primary, BlendMode.srcIn),
+                title: AppBarTitleHome(
+                  title: getTitle(),
+                  currentTab: _currentTab,
+                ),
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.help),
+                    onPressed: onOpenIntro,
+                  )
+                ],
+              ),
+              body: PageStorage(
+                bucket: bucket,
+                child: currentScreen,
+              ),
+              floatingActionButton: getFabByTab(context, _currentTab),
+              bottomNavigationBar: BottomAppBar(
+                color: MyColors.white,
+                shape: const CircularNotchedRectangle(),
+                notchMargin: 10,
+                child: SizedBox(
+                  height: 60,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      TabButton(
+                        title: 'Категории',
+                        setScreen: setScreen,
+                        currentTab: _currentTab,
+                        tabIndex: 0,
+                        screen: _pages[0],
+                        buttonPadding: const EdgeInsets.only(right: 20),
+                        svgPath: 'assets/icons/categories.svg',
+                      ),
+                      TabButton(
+                        title: 'Шаблоны',
+                        setScreen: setScreen,
+                        currentTab: _currentTab,
+                        tabIndex: 1,
+                        screen: _pages[1],
+                        buttonPadding: const EdgeInsets.only(left: 20),
+                        svgPath: 'assets/icons/templates.svg',
+                      ),
+                      TabButton(
+                        title: 'Списки',
+                        setScreen: setScreen,
+                        currentTab: _currentTab,
+                        tabIndex: 2,
+                        screen: _pages[2],
+                        buttonPadding: const EdgeInsets.only(left: 20),
+                        svgPath: 'assets/icons/lists.svg',
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Text(getTitle()),
-            ],
-          ),
-        ),
-        body: PageStorage(
-          bucket: bucket,
-          child: currentScreen,
-        ),
-        floatingActionButton: getFabByTab(context, _currentTab),
-        bottomNavigationBar: BottomAppBar(
-          color: MyColors.white,
-          shape: const CircularNotchedRectangle(),
-          notchMargin: 10,
-          child: SizedBox(
-            height: 60,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                TabButton(
-                  title: 'Категории',
-                  setScreen: setScreen,
-                  currentTab: _currentTab,
-                  tabIndex: 0,
-                  screen: _pages[0],
-                  buttonPadding: const EdgeInsets.only(right: 20),
-                  svgPath: 'assets/icons/categories.svg',
-                ),
-                TabButton(
-                  title: 'Шаблоны',
-                  setScreen: setScreen,
-                  currentTab: _currentTab,
-                  tabIndex: 1,
-                  screen: _pages[1],
-                  buttonPadding: const EdgeInsets.only(left: 20),
-                  svgPath: 'assets/icons/templates.svg',
-                ),
-                TabButton(
-                  title: 'Списки',
-                  setScreen: setScreen,
-                  currentTab: _currentTab,
-                  tabIndex: 2,
-                  screen: _pages[2],
-                  buttonPadding: const EdgeInsets.only(left: 20),
-                  svgPath: 'assets/icons/lists.svg',
-                ),
-              ],
             ),
-          ),
-        ),
-      ),
-    );
+          );
   }
 }
 
@@ -150,18 +159,5 @@ Widget? getFabByTab(BuildContext context, int currentTab) {
       );
     default:
       return null;
-  }
-}
-
-String getIconByTab(int currentTab) {
-  switch (currentTab) {
-    case 0:
-      return 'assets/icons/categories.svg';
-    case 1:
-      return 'assets/icons/templates.svg';
-    case 2:
-      return 'assets/icons/lists.svg';
-    default:
-      return 'assets/icons/categories.svg';
   }
 }

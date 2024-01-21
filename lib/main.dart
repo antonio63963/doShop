@@ -9,7 +9,7 @@ import 'package:doshop_app/doshop_app.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Future.delayed(const Duration(seconds: 8));
+  await Future.delayed(const Duration(seconds: 4));
   FlutterNativeSplash.remove();
 
   LocalDB.instance.database;
