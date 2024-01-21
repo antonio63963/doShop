@@ -12,6 +12,8 @@ class MyListTile extends StatelessWidget {
   final Widget? trailing;
   final Function()? onTap;
   final Function()? onLongPress;
+  final double paddingHorizontal;
+  final double paddingVertical;
 
   const MyListTile({
     super.key,
@@ -24,53 +26,59 @@ class MyListTile extends StatelessWidget {
     this.trailing,
     this.onTap,
     this.onLongPress,
+    this.paddingHorizontal = 0,
+    this.paddingVertical = 0,
   });
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: const EdgeInsets.only(
-        left: 16,
-        top: 8,
-        bottom: 8,
-        right: 8,
-      ),
-      tileColor: colorBg,
-      shape: shape,
-      leading: SizedBox(
-        width: 56,
-        height: 56,
-        child: Image.asset(img != null ? img! : DefaultValues.icon,
-            fit: BoxFit.contain),
-      ),
-      title: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Expanded(
-            child: Text(
-              title,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                  color: MyColors.white,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16),
-            ),
-          ),
-          IconFire(isFire: isFire, paddingHorizontal: 4),
-        ],
-      ),
-      subtitle: subtitle != null
-          ? Text(
-              subtitle!,
-              style: const TextStyle(
-                color: Color.fromARGB(255, 236, 236, 236),
-                fontSize: 14,
+    return Padding(
+      padding: EdgeInsets.symmetric(
+          horizontal: paddingHorizontal, vertical: paddingVertical),
+      child: ListTile(
+        contentPadding: const EdgeInsets.only(
+          left: 16,
+          top: 8,
+          bottom: 8,
+          right: 8,
+        ),
+        tileColor: colorBg,
+        shape: shape,
+        leading: SizedBox(
+          width: 56,
+          height: 56,
+          child: Image.asset(img != null ? img! : DefaultValues.icon,
+              fit: BoxFit.contain),
+        ),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Expanded(
+              child: Text(
+                title,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                    color: MyColors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16),
               ),
-            )
-          : null,
-      trailing: trailing,
-      onTap: onTap,
-      onLongPress: onLongPress,
+            ),
+            IconFire(isFire: isFire, paddingHorizontal: 4),
+          ],
+        ),
+        subtitle: subtitle != null
+            ? Text(
+                subtitle!,
+                style: const TextStyle(
+                  color: Color.fromARGB(255, 236, 236, 236),
+                  fontSize: 14,
+                ),
+              )
+            : null,
+        trailing: trailing,
+        onTap: onTap,
+        onLongPress: onLongPress,
+      ),
     );
   }
 }

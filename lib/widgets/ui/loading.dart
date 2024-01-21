@@ -9,7 +9,7 @@ class Loading extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: CircularProgressIndicator(
-        color: MyColors.accent,
+        color: MyColors.primary,
       ),
     );
   }

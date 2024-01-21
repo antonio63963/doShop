@@ -9,6 +9,7 @@ class SearchProductItem extends StatelessWidget {
   final double? paddingVertical;
   final bool isOptions;
   final Function()? onTrailing;
+  final bool isShownAmount;
 
   const SearchProductItem({
     super.key,
@@ -17,6 +18,7 @@ class SearchProductItem extends StatelessWidget {
     this.paddingVertical = 4,
     this.isOptions = false,
     this.onTrailing,
+    this.isShownAmount = true,
   });
 
   @override
@@ -77,7 +79,7 @@ class SearchProductItem extends StatelessWidget {
               fontSize: 14,
             ),
           ),
-          trailing: Wrap(
+          trailing: isShownAmount ? Wrap(
             spacing: 24,
             children: [
               Container(
@@ -99,7 +101,7 @@ class SearchProductItem extends StatelessWidget {
                 ),
               )
             ],
-          ),
+          ) : null,
           onTap: onClick,
           contentPadding: const EdgeInsets.only(
             left: 16,
