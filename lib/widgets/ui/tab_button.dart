@@ -29,40 +29,37 @@ class TabButton extends StatelessWidget {
     Color notActiveColor = MyColors.primary;
 
     return Expanded(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          MaterialButton(
-            padding: buttonPadding,
-            minWidth: 40,
-            onPressed: () => setScreen(screen, tabIndex),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                if (icon != null)
-                  Icon(
-                    icon,
-                    color:
-                        currentTab == tabIndex ? activeColor : notActiveColor,
-                  ),
-                const SizedBox(
-                  height: 5,
-                ),
-                if (svgPath != null) SvgPicture.asset(svgPath!, colorFilter: ColorFilter.mode(currentTab == tabIndex ? activeColor : notActiveColor, BlendMode.srcIn),),
-                Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 14,
-                    color:
-                        currentTab == tabIndex ? activeColor : notActiveColor,
-                  ),
-                ),
-              ],
+      child: MaterialButton(
+        minWidth: double.infinity,
+        onPressed: () => setScreen(screen, tabIndex),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            if (icon != null)
+              Icon(
+                icon,
+                color: currentTab == tabIndex ? activeColor : notActiveColor,
+              ),
+            const SizedBox(
+              height: 5,
             ),
-          ),
-        ],
+            if (svgPath != null)
+              SvgPicture.asset(
+                svgPath!,
+                colorFilter: ColorFilter.mode(
+                    currentTab == tabIndex ? activeColor : notActiveColor,
+                    BlendMode.srcIn),
+              ),
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 14,
+                color: currentTab == tabIndex ? activeColor : notActiveColor,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
