@@ -50,7 +50,6 @@ class _ProductFormState extends State<ProductForm> {
   TextEditingController getInitControllerValue(String field) {
     if (widget.product != null) {
       if (widget.product?.toJSON()[field] != null) {
-    logger.i('CHECK CONTROLLER: FieldName: $field, ${widget.product?.toJSON()[field]}');
         return TextEditingController(
             text: widget.product?.toJSON()[field] as String);
       }
@@ -125,7 +124,6 @@ class _ProductFormState extends State<ProductForm> {
       categoryTitle: widget.product?.categoryTitle,
       categorySubtitle: widget.product?.categorySubtitle,
     );
-    logger.w('FOR UPDATE: $prod');
     widget.product != null ? onUpdateProduct(prod) : onAddNewProduct(prod);
   }
 
@@ -142,7 +140,6 @@ class _ProductFormState extends State<ProductForm> {
     titleController = getInitControllerValue('title');
     subtitleController = getInitControllerValue('subtitle');
     tagController = getInitControllerValue('tag');
-    logger.i('TagController: ${tagController.text}');
     infoController = getInitControllerValue('info');
     if (widget.product != null) {
       selectedUnit =

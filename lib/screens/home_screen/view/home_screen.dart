@@ -12,7 +12,7 @@ import 'package:doshop_app/forms/shoping_list_form/shoping_list_form.dart';
 import 'package:doshop_app/screens/home_screen/view/content/shoping_lists.dart/shoping_lists_screen.dart';
 import 'package:doshop_app/screens/home_screen/view/content/categories_page/categories_page.dart';
 import 'package:doshop_app/screens/home_screen/view/content/templates_page/templates_page.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -22,18 +22,18 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  bool _isShownInto = true;
+  bool _isShownIntro = true;
   int _currentTab = 0;
 
   void onCloseIntro() {
     setState(() {
-      _isShownInto = false;
+      _isShownIntro = false;
     });
   }
 
   void onOpenIntro() {
     setState(() {
-      _isShownInto = true;
+      _isShownIntro = true;
     });
   }
 
@@ -54,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   final PageStorageBucket bucket = PageStorageBucket();
-  Widget currentScreen = CategoriesPage();
+  Widget currentScreen = const CategoriesPage();
 
   void setScreen(Widget screen, int tabInd) {
     setState(
@@ -66,8 +66,19 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    SharedPreferences.getInstance().then((prefs) {
+      bool? isIntro = prefs.getBool('isShownIntro');
+      setState(() {
+        _isShownIntro = isIntro ?? true;
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return _isShownInto
+    return _isShownIntro
         ? OnBoardingScreen(onClose: onCloseIntro)
         : GestureDetector(
             onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -80,7 +91,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 //       onPressed: () => LocalDB.instance.deleteDB(),
                 //       child: const Text('Delete')),
                 // ),
-
                 title: AppBarTitleHome(
                   title: getTitle(),
                   currentTab: _currentTab,
@@ -98,6 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               floatingActionButton: getFabByTab(context, _currentTab),
               bottomNavigationBar: BottomAppBar(
+                padding: EdgeInsets.zero,
                 color: MyColors.white,
                 shape: const CircularNotchedRectangle(),
                 notchMargin: 10,

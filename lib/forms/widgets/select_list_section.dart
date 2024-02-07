@@ -32,22 +32,33 @@ class SelectListSection extends StatelessWidget {
           ),
           ConstrainedBox(
             constraints: const BoxConstraints(maxHeight: 200),
-            child: ListView(
-              shrinkWrap: true,
-              children: lists.map((l) {
-                return RadioListTile(
-                  value: l.id,
-                  title: Text(l.title,
-                      style: const TextStyle(
-                          color: MyColors.primary, fontSize: 18)),
-                  groupValue: radioListOption,
-                  onChanged: (value) {
-                   onChangeOption(value, l.title);
-                  },
-                  contentPadding: const EdgeInsets.symmetric(vertical: 0),
-                );
-              }).toList(),
-            ),
+            child: lists.isEmpty
+                ? const Padding(
+                    padding: EdgeInsets.symmetric(vertical: 12.0),
+                    child: Text(
+                      'Создайте список!',
+                      style: TextStyle(
+                        color: MyColors.danger,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  )
+                : ListView(
+                    shrinkWrap: true,
+                    children: lists.map((l) {
+                      return RadioListTile(
+                        value: l.id,
+                        title: Text(l.title,
+                            style: const TextStyle(
+                                color: MyColors.primary, fontSize: 18)),
+                        groupValue: radioListOption,
+                        onChanged: (value) {
+                          onChangeOption(value, l.title);
+                        },
+                        contentPadding: const EdgeInsets.symmetric(vertical: 0),
+                      );
+                    }).toList(),
+                  ),
           ),
         ],
       ),

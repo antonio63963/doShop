@@ -55,7 +55,6 @@ class _UserTemplateFormState extends State<UserTemplateForm> {
   void onUpdate(UserTemplate updatedTemp) {
     if (widget.uTemp == null) return;
     final isChanged = widget.uTemp!.isChanged(updatedTemp);
-    logger.i('IS CHANGED: $isChanged');
     if (!isChanged) {
       Helper.showSnack(
           context: context, text: 'Список ${widget.uTemp?.title} не изменен');

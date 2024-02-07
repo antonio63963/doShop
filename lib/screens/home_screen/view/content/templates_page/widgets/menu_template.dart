@@ -1,3 +1,4 @@
+import 'package:doshop_app/providers/product_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,7 +38,14 @@ class _MenuTemplateState extends State<MenuTemplate> {
         case MenuOptionsValues.clean:
           if (widget.template.id == null) return;
           Provider.of<UserTemplateProvider>(context, listen: false)
-              .cleanTemplate(context, widget.template);
+              .cleanTemplate(context, widget.template)
+              .then((value) {
+            Provider.of<ProductProvider>(context, listen: false)
+                .cleanTemplateProducts();
+            Helper.showSnack(
+                context: context,
+                text: 'Шаблон "${widget.template.title}" отчищен.');
+          });
           break;
 
         case MenuOptionsValues.edit:

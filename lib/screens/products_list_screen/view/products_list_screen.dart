@@ -36,8 +36,6 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
   ShoppingList? _addToList;
   UserTemplate? _addToTemplate;
 
-  TextEditingController _searchController = TextEditingController();
-
   late ProductProvider productProvider;
   List<Product> _productsList = [];
 
@@ -78,7 +76,9 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
 
   @override
   void dispose() {
-    productProvider.onLeave();
+    if (_addToTemplate == null) {
+      productProvider.onLeave();
+    }
     super.dispose();
   }
 
@@ -106,31 +106,7 @@ class _ProductsListScreenState extends State<ProductsListScreen> {
                   '${_screenArguments.title} ${_screenArguments.subtitle ?? ''}'),
               actions: getActions(context),
             ),
-      body:
-          // !isLoaded
-          //     ? const Loading()
-          //     :
-          // PageContentWrapper(
-          //     onRefresh: () => productProvider.getProductsByCategory(
-          //         context, _screenArguments.id),
-          //     widgets: [
-          //       Input(
-          //         inputController: _searchController,
-          //       ),
-          //       const TagsSection(),
-          //       _productsList.isNotEmpty
-          //           ? _addToTemplate != null
-          //               ? const ProductsListForTemplate()
-          //               : const ProductList()
-          //           : const EmptyScreen(
-          //               message: 'Пока что нет товаров',
-          //             ),
-          //       const SizedBox(
-          //         height: 32,
-          //       )
-          //     ],
-          //   ),
-          RefreshIndicator(
+      body: RefreshIndicator(
         onRefresh: () =>
             productProvider.getProductsByCategory(context, _screenArguments.id),
         child: PageWithSearch(
@@ -203,11 +179,17 @@ void onAddToTemplate(BuildContext context, UserTemplate addToTemplate) {
   }
 
   Provider.of<UserTemplateProvider>(context, listen: false)
-      .updateTemplate(context, addToTemplate.copy(productsIds: uniqueIdsString))
-      .then((value) {
-    Navigator.pop(context);
-    Helper.showSnack(
-        context: context,
-        text: 'Добавлено ${idsList.length} товаров в "${addToTemplate.title}');
+      .addProducts(context, addToTemplate.copy(productsIds: uniqueIdsString))
+      .then((listProds) {
+    logger.i("Products List: ${listProds.toString()}");
+    if (listProds != null) {
+      Provider.of<ProductProvider>(context, listen: false)
+          .setTemplateProducts(listProds);
+      Navigator.pop(context);
+      Helper.showSnack(
+          context: context,
+          text:
+              'Добавлено ${idsList.length} товаров в "${addToTemplate.title}');
+    }
   });
 }

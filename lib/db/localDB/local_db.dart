@@ -206,12 +206,13 @@ class LocalDB implements AbstractDB {
     if (db == null) throw UnimplementedError('Db not opened!');
 
     return db.transaction((txn) async {
-      final listIdsMap =
-          await txn.rawQuery(SqlQueries.insertOrUpdateProductsInList(prodList));
-      final ids = listIdsMap.map((e) => e["id"] as int).toList().join(',');
-      logger.i('INSERT MANY PROD IN LIST: $ids, ${prodList.toString()}');
+      final ids = [];
+      for (var p in prodList) {
+        int id = await txn.rawInsert(SqlQueries.insertOrUpdateProductInList(p));
+        ids.add(id);
+      }
       final addedProds =
-          await txn.rawQuery(SqlQueries.getProductsInListByIds(ids));
+          await txn.rawQuery(SqlQueries.getProductsInListByIds(ids.join(',')));
       return addedProds.map((p) => ProductInList.fromJSON(p)).toList();
     });
   }
@@ -350,10 +351,26 @@ class LocalDB implements AbstractDB {
   }
 
   @override
+  Future<List<Product>?> addProductsToTempate(UserTemplate uTemp) async {
+    final db = await instance.database;
+    return db?.transaction((txn) async {
+      await txn.update(
+        tableUserTemplates,
+        uTemp.toJSON(),
+        where: '${UserTemplateFields.id} = ?',
+        whereArgs: [uTemp.id],
+      );
+      final addedProds =
+          await txn.rawQuery(SqlQueries.getTemplateProducts(uTemp.productsIds));
+      return addedProds.map((p) => Product.fromJSON(p)).toList();
+    });
+  }
+
+  @override
   Future<List<Product>?> getTemplateProducts(String prodsIds) async {
     final db = await instance.database;
     final resp = await db?.rawQuery(SqlQueries.getTemplateProducts(prodsIds));
-    if(resp != null) {
+    if (resp != null) {
       return resp.map((p) => Product.fromJSON(p)).toList();
     }
     logger.i('Get Template Products. response: $resp');

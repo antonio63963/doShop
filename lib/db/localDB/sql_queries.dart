@@ -89,27 +89,18 @@ class SqlQueries {
     WHERE $tableProductInList.${ProductInListFields.listId} = $listId AND $tableProductInList.${ProductInListFields.prodId} IS NULL;
   ''';
 
-  // static String insertProductInList(ProductInList product) => '''
-  //   INSERT OR REPLACE INTO $tableProductInList (${ProductInListFields.values})
-  //   VALUES (${product.toJSON()})
-  //   RETURNING id;
-  // ''';
-
-  static String insertOrUpdateProductsInList(List<ProductInList> products) {
-    final values = products.map((prod) => '''
-    (
-      (SELECT id FROM $tableProductInList WHERE prodId = ${prod.prodId}),
-      ${prod.prodId}, ${prod.listId}, "${prod.amount}", "${prod.isFire ? 1 : 0}",
-      "${prod.isDone ? 1 : 0}", "${prod.dateCreated}"
-    )
-  ''');
-
-    final valuesString = values.join(',');
+  static String insertOrUpdateProductInList(ProductInList prod) {
+    final values = '''
+      (
+        (SELECT id FROM $tableProductInList WHERE prodId = ${prod.prodId}),
+        ${prod.prodId}, ${prod.listId}, "${prod.amount}", "${prod.isFire ? 1 : 0}",
+        "${prod.isDone ? 1 : 0}", "${prod.dateCreated}"
+      )
+    ''';
     return '''
-        INSERT OR REPLACE INTO $tableProductInList (${ProductInListFields.values})
-        VALUES $valuesString
-        RETURNING id;
-      ''';
+      INSERT OR REPLACE INTO $tableProductInList (${ProductInListFields.values})
+      VALUES $values;
+    ''';
   }
 
   static String cleanShoppingList(int listId) {
@@ -157,4 +148,5 @@ class SqlQueries {
     WHERE $tableProducts.${ProductFields.id} IN ($ids)
   ''';
   }
+
 }

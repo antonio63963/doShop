@@ -46,9 +46,4 @@ class CategoriesProvider extends ErrorHandler {
               'Что-то пошло не так. Не удалось получить Список Категорий!');
     }
   }
-  // GetIt.I<AbstractDB>().getCategories().then((categoriesList) => _categories = categoriesList ?? [] ).catchError((err) {
-  //       logger.e("GetCategoriesError: $err");
-  //     setErrorAlert(context: context, message: 'Что-то пошло не так. Не удалось получить Список Категорий!');
-
-  // });
 }

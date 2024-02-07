@@ -37,23 +37,31 @@ class OutlinedIconButton extends StatelessWidget {
       ),
       child: OutlinedButton(
         style: OutlinedButton.styleFrom(
-            tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(5),
-              ),
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(
+              Radius.circular(5),
             ),
-            side: const BorderSide(color: MyColors.primary)),
+          ),
+          side: const BorderSide(
+            color: MyColors.primary,
+          ),
+        ),
         onPressed: onClick,
         child: Wrap(
           spacing: 8,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: [
-            if(icon != null)
-            Icon(icon),
-            if(svg != null) 
-            SvgPicture.asset(svg!, colorFilter: ColorFilter.mode(MyColors.primary, BlendMode.srcIn),),
+            if (icon != null) Icon(icon),
+            if (svg != null)
+              SvgPicture.asset(
+                svg!,
+                colorFilter: const ColorFilter.mode(
+                  MyColors.primary,
+                  BlendMode.srcIn,
+                ),
+              ),
             Text(
               title,
               style: theme.textTheme.bodyMedium?.copyWith(

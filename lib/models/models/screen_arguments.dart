@@ -60,16 +60,16 @@ class ProductInListDetailsScreenArguments {
   });
 }
 
-class TempateDetailsScreenArguments {
-  final int? id;
-  final String title;
-  final String? subtitle;
-  final String prodsIds;
-  TempateDetailsScreenArguments({
-    this.id,
-    required this.title,
-    this.subtitle,
-    required this.prodsIds,
-  });
-}
+// class TempateDetailsScreenArguments {
+//   final int? id;
+//   final String title;
+//   final String? subtitle;
+//   final String prodsIds;
+//   TempateDetailsScreenArguments({
+//     this.id,
+//     required this.title,
+//     this.subtitle,
+//     required this.prodsIds,
+//   });
+// }
 

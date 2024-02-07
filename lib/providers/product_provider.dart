@@ -208,13 +208,16 @@ class ProductProvider extends ErrorHandler {
 
   //select
   void increaseAmount(int? prodId) {
+    logger.i('INCREASE id: $prodId');
     if (prodId == null) return;
     final existProdIndex =
         _products.indexWhere((existProd) => prodId == existProd.id);
+        logger.i('existProdIndex: $existProdIndex, ${_products.toString()}');
     if (existProdIndex != -1) {
       _products[existProdIndex].amount +=
           ProductService.unitDelta(_products[existProdIndex].units);
       isAnySelected = true;
+      logger.i('Template Products: ${_products.toSet()}');
       notifyListeners();
     } else {
       return;
@@ -271,6 +274,7 @@ class ProductProvider extends ErrorHandler {
       isAnySelected = true;
     }
   }
+
 // for add to template
   void setIsChecked(int prodId) {
     final idx = _products.indexWhere((p) => p.id == prodId);
@@ -311,7 +315,10 @@ class ProductProvider extends ErrorHandler {
   }
 
   //Template
-    Future<void> getTemplateProducts(BuildContext context, String ids) async {
+  Future<void> getTemplateProducts(BuildContext context, String? ids) async {
+    if(ids == null) {
+      return;
+    }
     await GetIt.I<AbstractDB>().getTemplateProducts(ids).then((respose) {
       _products = respose ?? [];
       logger.i('Get Template Products: ${_products.toString()}');
@@ -321,6 +328,19 @@ class ProductProvider extends ErrorHandler {
       setErrorAlert(
           context: context, message: 'Не удалось получить продукты шаблона!');
     });
+  }
+
+  void cleanTemplateProducts() {
+    _products = [];
+    isAnySelected = false;
+    notifyListeners();
+  }
+
+  void setTemplateProducts(List<Product> prods) {
+    _products = prods;
+    isAnySelected = false;
+    logger.i('ProdProv: ${_products.toString()}');
+    notifyListeners();
   }
 
   //UTILS

@@ -32,7 +32,6 @@ class _TagInputState extends State<TagInput> {
   @override
   void initState() {
     super.initState();
-    logger.i('INIT TAG: ${widget.tagController.text}');
     setState(() {
       isInput = widget.tagController.text.isNotEmpty;
     });

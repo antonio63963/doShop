@@ -11,7 +11,7 @@ class UserTemplateProvider extends ErrorHandler {
 
   List<UserTemplate> get templates => [..._uTemps];
 
-  UserTemplate? get addToTempate => _addToTemplate?.copy();
+  UserTemplate? get addToTempate => _addToTemplate;
 
   void setAddToTemplate(int? tempId) {
     if (tempId != null) {
@@ -19,6 +19,16 @@ class UserTemplateProvider extends ErrorHandler {
     } else {
       _addToTemplate = null;
     }
+  }
+
+  String? uTemplateProductsIds(int? id) {
+    if(id == null) return null;
+    return _uTemps.firstWhere((t) => t.id == id).productsIds;
+  }
+
+  UserTemplate? userTemplateDetails(int? id) {
+    if(id == null) return null;
+    return _uTemps.firstWhere((t) => t.id == id);
   }
 
   Future<void> createTemplate(BuildContext context, UserTemplate uTemp) async {
@@ -51,11 +61,12 @@ class UserTemplateProvider extends ErrorHandler {
       return;
     }
     await GetIt.I<AbstractDB>().updateTemplate(uTemp).then((id) {
-      if (id is int) {
+      if (id != 0) {
         final idx = _uTemps.indexWhere((l) => l.id == uTemp.id);
         if (idx != -1) {
           _uTemps[idx] = uTemp;
           notifyListeners();
+          logger.i('++++Update template+++++ ${_uTemps.toString()}');
         } else {
           throw Error();
         }
@@ -66,7 +77,37 @@ class UserTemplateProvider extends ErrorHandler {
     });
   }
 
+  Future<List<Product>?> addProducts(
+      BuildContext context, UserTemplate uTemp) async {
+    logger.i('UserTempate: ${uTemp.toString()}');
+    if (uTemp.id == null) {
+      logger.e('Error Add Products to Template No ID');
+      setErrorAlert(
+          context: context, message: 'Не возможно добавить товары в Шаблон!');
+      return null;
+    }
+
+    return await GetIt.I<AbstractDB>().addProductsToTempate(uTemp).then((listProds) {
+      if (listProds != null) {
+        final idx = _uTemps.indexWhere((l) => l.id == uTemp.id);
+        if (idx != -1) {
+          _uTemps[idx] = uTemp;
+          notifyListeners();
+      logger.i('ListProds: ${listProds.toString()}');
+          return listProds;
+        } else {
+          throw Error();
+        }
+      }
+    }).catchError((err) {
+      logger.e("Update Template Error!!! $err");
+      setErrorAlert(context: context, message: 'Не удалось обновить Шаблон!');
+      return null;
+    });
+  }
+
   Future<void> cleanTemplate(BuildContext context, UserTemplate uTemp) async {
+    logger.i("Clean Template: ${uTemp.toString()}");
     if (uTemp.id == null) {
       logger.e('Error update Template No ID');
       setErrorAlert(
@@ -75,8 +116,8 @@ class UserTemplateProvider extends ErrorHandler {
     }
     await GetIt.I<AbstractDB>()
         .updateTemplate(uTemp.copy(productsIds: ''))
-        .then((id) {
-      if (id is int) {
+        .then((res) {
+      if (res != 0) {
         final idx = _uTemps.indexWhere((l) => l.id == uTemp.id);
         if (idx != -1) {
           _uTemps[idx] = uTemp;
@@ -110,4 +151,16 @@ class UserTemplateProvider extends ErrorHandler {
       setErrorAlert(context: context, message: 'Не удалось удалить Шаблон!');
     });
   }
+
+  //    Future<void> getProducts(BuildContext context, String ids) async {
+  //   await GetIt.I<AbstractDB>().getTemplateProducts(ids).then((respose) {
+  //     _templateProducts = respose ?? [];
+  //     logger.i('Get Template Products: ${_templateProducts.toString()}');
+  //     notifyListeners();
+  //   }).catchError((err) {
+  //     logger.e("Get Template Products Error!!! $err");
+  //     setErrorAlert(
+  //         context: context, message: 'Не удалось получить продукты шаблона!');
+  //   });
+  // }
 }

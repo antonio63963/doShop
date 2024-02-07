@@ -8,8 +8,21 @@ class Loading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: CircularProgressIndicator(
-        color: MyColors.primary,
+      child: Wrap(
+        alignment: WrapAlignment.center,
+        spacing: 22,
+        direction: Axis.vertical,
+        children: [
+          CircularProgressIndicator(),
+          Text(
+            'Загрузка...',
+            style: TextStyle(
+              color: MyColors.primary,
+              fontWeight: FontWeight.w600,
+              fontSize: 22,
+            ),
+          ),
+        ],
       ),
     );
   }

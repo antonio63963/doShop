@@ -31,12 +31,7 @@ class TemplatesListSection extends StatelessWidget {
                 colorBg: MyColors.primary,
                 onTap: () => Navigator.of(context).pushNamed(
                   TemplateDetailsScreen.routeName,
-                  arguments: TempateDetailsScreenArguments(
-                    id: t.id!,
-                    title: t.title,
-                    subtitle: t.subtitle,
-                    prodsIds: t.productsIds,
-                  ),
+                  arguments: t.id,
                 ),
               );
             });

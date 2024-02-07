@@ -17,6 +17,10 @@ class AddFromCategoryScreen extends StatefulWidget {
 }
 
 class _AddFromCategoryScreenState extends State<AddFromCategoryScreen> {
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late ShoppingListProvider _shoppingListProvider;
+  late UserTemplateProvider _userTemplateProvider;
+
   bool isInit = false;
   ShoppingList? _addToList;
   UserTemplate? _addToTemplate;
@@ -25,11 +29,13 @@ class _AddFromCategoryScreenState extends State<AddFromCategoryScreen> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!isInit) {
-      _addToList =
-          Provider.of<ShoppingListProvider>(context, listen: false).addToList;
+      _shoppingListProvider =
+          Provider.of<ShoppingListProvider>(context, listen: false);
+      _userTemplateProvider =
+          Provider.of<UserTemplateProvider>(context, listen: false);
 
-      _addToTemplate = Provider.of<UserTemplateProvider>(context, listen: false)
-          .addToTempate;
+      _addToList = _shoppingListProvider.addToList;
+      _addToTemplate = _userTemplateProvider.addToTempate;
 
       if (_addToList == null && _addToTemplate == null ||
           _addToList != null && _addToTemplate != null) {
@@ -39,31 +45,37 @@ class _AddFromCategoryScreenState extends State<AddFromCategoryScreen> {
     isInit = true;
   }
 
+  void cleanInitialData() {
+    if (_addToList != null) {
+      _shoppingListProvider.setAddToList(null);
+    }
+    if (_addToTemplate != null) {
+      _userTemplateProvider.setAddToTemplate(null);
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
-    if (_addToList != null) {
-      Provider.of<ShoppingListProvider>(context, listen: false)
-          .setAddToList(null);
-    }
-    if (_addToTemplate != null) {
-      Provider.of<UserTemplateProvider>(context, listen: false)
-          .setAddToTemplate(null);
-    }
+    cleanInitialData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _addToList != null ? AppBarAddToList(
-        listId: _addToList!.id!,
-        listTitle: _addToList!.title,
-        backToList: () => Navigator.pop(context),
-      ): AppBarAddToList(
-        listId: _addToTemplate!.id!,
-        listTitle: _addToTemplate!.title,
-        backToList: () => Navigator.pop(context),
-      ),
+      key: _scaffoldKey,
+      appBar: _addToList != null
+          ? AppBarAddToList(
+              listId: _addToList!.id!,
+              listTitle: _addToList!.title,
+              backToList: () {
+                Navigator.of(context).pop();
+              })
+          : AppBarAddToList(
+              listId: _addToTemplate!.id!,
+              listTitle: _addToTemplate!.title,
+              backToList: () => Navigator.pop(context),
+            ),
       body: const CategoriesPage(),
     );
   }

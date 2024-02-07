@@ -46,13 +46,18 @@ class _MenuShoppingDetailsState extends State<MenuTemplateDetails> {
           };
           break;
         case MenuTdetails.cleanTemplate:
-          Provider.of<UserTemplateProvider>(context).cleanTemplate(
-            context,
-            UserTemplate(
-                id: widget.templateId,
-                title: widget.templateTitle,
-                productsIds: ''),
-          );
+          Provider.of<UserTemplateProvider>(context, listen: false)
+              .cleanTemplate(
+                context,
+                UserTemplate(
+                    id: widget.templateId,
+                    title: widget.templateTitle,
+                    productsIds: ''),
+              )
+              .then(
+                (value) => Provider.of<ProductProvider>(context, listen: false)
+                    .cleanTemplateProducts(),
+              );
           break;
 
         case MenuTdetails.cleanAmount:

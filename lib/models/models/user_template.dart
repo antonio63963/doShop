@@ -1,3 +1,5 @@
+import 'package:doshop_app/utils/constants.dart';
+
 const String tableUserTemplates = 'userTemplates';
 
 class UserTemplateFields {
@@ -30,12 +32,8 @@ class UserTemplate {
       subtitle: json[UserTemplateFields.subtitle] != null
           ? json[UserTemplateFields.subtitle] as String
           : null,
-      img: json[UserTemplateFields.img] as String,
+      img: json[UserTemplateFields.img] != null ? json[UserTemplateFields.img] as String : DefaultValues.img,
       productsIds: json[UserTemplateFields.productsIds] as String,
-      // json[UserTemplateFields.productsIds] != null &&
-      //         (json[UserTemplateFields.productsIds] as String).isNotEmpty
-      //     ? (json[UserTemplateFields.productsIds] as String).split(',') as List<int>
-      //     : [],
     );
   }
 

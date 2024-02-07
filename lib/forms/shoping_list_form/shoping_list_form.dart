@@ -69,7 +69,6 @@ class _ShoppingListFormState extends State<ShoppingListForm> {
   void onUpdate(ShoppingList newList) {
     if (widget.list == null) return;
     final isChanged = widget.list!.isChanged(newList);
-    logger.i('IS CHANGED: $isChanged');
     if (!isChanged) {
       Helper.showSnack(
           context: context, text: 'Список ${widget.list?.title} не изменен');

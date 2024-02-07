@@ -17,7 +17,7 @@ class DotsIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: const Alignment(0, .75),
+      alignment: const Alignment(0, .55),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [

@@ -145,9 +145,11 @@ class _SelectedProductModalState extends State<SelectedProductModal> {
                   lists: lists,
                 ),
                 ButtonsFormRow(
+                  isSaveActive: lists.isNotEmpty,
                   onClose: onClose,
                   onSubmit: () {},
-                )
+                ),
+                SizedBox(height: 32),
               ],
             ),
           );

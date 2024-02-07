@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:badges/badges.dart' as badges;
 
 import 'package:doshop_app/utils/constants.dart';
 import 'package:doshop_app/models/exports.dart';
@@ -30,21 +29,22 @@ class _TemplateDetailsScreenState extends State<TemplateDetailsScreen> {
   int? id;
   bool isInit = false;
   bool isLoaded = false;
-  TempateDetailsScreenArguments? _screenArgs;
+  int? tempId;
   late ProductProvider _productProvider;
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (!isInit) {
-      _screenArgs = ModalRoute.of(context)!.settings.arguments
-          as TempateDetailsScreenArguments;
-      if (_screenArgs?.id == null || _screenArgs?.prodsIds == null) {
+      tempId = ModalRoute.of(context)!.settings.arguments as int;
+      if (tempId == null) {
         Navigator.pop(context);
       }
+      final prodsIds = Provider.of<UserTemplateProvider>(context, listen: false)
+          .uTemplateProductsIds(tempId);
       _productProvider = Provider.of<ProductProvider>(context);
       _productProvider
-          .getTemplateProducts(context, _screenArgs!.prodsIds)
+          .getTemplateProducts(context, prodsIds)
           .then((value) {
         isLoaded = true;
       });
@@ -55,10 +55,12 @@ class _TemplateDetailsScreenState extends State<TemplateDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final tProducts = _productProvider.templateProducts;
+    final template = Provider.of<UserTemplateProvider>(context)
+        .userTemplateDetails(tempId);
     logger.f('Details Temp: ${tProducts.toString()}');
     return Scaffold(
       appBar: AppBar(
-        title: Text('Шаблон ${_screenArgs?.title}'),
+        title: Text('Шаблон ${template?.title}'),
         actions: [
           IconButton(
             onPressed: () => Navigator.of(context)
@@ -70,17 +72,20 @@ class _TemplateDetailsScreenState extends State<TemplateDetailsScreen> {
           ),
           MenuTemplateDetails(
             context: context,
-            templateTitle: _screenArgs?.title ?? '',
-            templateId: _screenArgs!.id!,
+            templateTitle: template?.title ?? '',
+            templateId: template!.id!,
           )
         ],
       ),
       body: !isLoaded
           ? const Loading()
           : PageContentWrapper(
-              onRefresh: () =>
-                  Provider.of<ProductProvider>(context, listen: false)
-                      .getTemplateProducts(context, _screenArgs!.prodsIds),
+              onRefresh: () async {
+                template.productsIds.isEmpty
+                    ? null
+                    : Provider.of<ProductProvider>(context, listen: false)
+                        .getTemplateProducts(context, template.productsIds);
+              },
               paddingHorizontal: AppPadding.bodyHorizontal,
               widgets: [
                 ...tProducts.entries.map((entry) {
@@ -137,7 +142,7 @@ class _TemplateDetailsScreenState extends State<TemplateDetailsScreen> {
               icon: Icons.format_list_bulleted_add,
               onClick: () {
                 Provider.of<UserTemplateProvider>(context, listen: false)
-                    .setAddToTemplate(_screenArgs!.id);
+                    .setAddToTemplate(tempId);
                 //to avoid 2 params at the same time:
                 Provider.of<ShoppingListProvider>(context, listen: false)
                     .setAddToList(null);
